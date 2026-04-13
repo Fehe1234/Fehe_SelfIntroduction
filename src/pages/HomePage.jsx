@@ -141,7 +141,7 @@ export default function HomePage() {
               {item.body && <p className="timeline-body">{item.body}</p>}
               {item.extra && <p className="timeline-body">{item.extra}</p>}
               {item.projects && item.projects.map((proj, pi) => (
-                <p key={pi} className="timeline-body" style={{ marginTop: '0.6rem', paddingTop: '0.6rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem' }}>
+                <p key={pi} className="timeline-body" style={{ marginTop: pi === 0 ? '0.6rem' : '0.3rem', paddingTop: pi === 0 ? '0.6rem' : 0, borderTop: pi === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
                   <strong style={{ color: 'var(--sky-deep)' }}>프로젝트</strong>
                   &nbsp; {proj.name} — {proj.role}{' '}
                   <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>({proj.period})</span>
