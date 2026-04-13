@@ -2,9 +2,7 @@ import { useState } from 'react'
 
 const HOBBY_TABS = [
   { key: 'music',  label: '음악' },
-  { key: 'rhythm', label: '리듬게임' },
-  { key: 'food',   label: '좋아하는 음식' },
-  { key: 'coding', label: '코딩' },
+  { key: 'rhythm', label: '게임' },
 ]
 
 function GameCard({ icon, iconStyle, name, full, desc, tags }) {
@@ -98,37 +96,8 @@ function RhythmPanel() {
   )
 }
 
-function FoodPanel() {
-  return (
-    <div className="game-cards">
-      <GameCard
-        icon="🛵"
-        iconStyle={{ background: 'linear-gradient(135deg,#f97316,#ef4444)' }}
-        name="배달음식"
-        full="집에서 즐기는 음식"
-        desc="집에서 편하게 즐기는 배달음식을 좋아합니다."
-        tags={['배달의민족', '쿠팡이츠']}
-      />
-    </div>
-  )
-}
 
-function CodingPanel() {
-  return (
-    <div className="game-cards">
-      <GameCard
-        icon="</>"
-        iconStyle={{ background: 'linear-gradient(135deg,#5865f2,#3b4fd6)' }}
-        name="디스코드 봇 코딩"
-        full="Discord Bot Development"
-        desc="디스코드 서버 운영 경험을 바탕으로 직접 봇을 개발하고 있습니다. 서버 관리 자동화, 커뮤니티 기능 구현 등 다양한 봇을 제작합니다."
-        tags={['Discord', 'Bot', '개발']}
-      />
-    </div>
-  )
-}
-
-const PANELS = { music: MusicPanel, rhythm: RhythmPanel, food: FoodPanel, coding: CodingPanel }
+const PANELS = { music: MusicPanel, rhythm: RhythmPanel }
 
 export default function HobbyPage() {
   const [activeTab, setActiveTab] = useState('music')
