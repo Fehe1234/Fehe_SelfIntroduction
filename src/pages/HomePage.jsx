@@ -83,7 +83,7 @@ export default function HomePage() {
         <div className="hero-bubble">
           <img
             className="hero-avatar"
-            src="/AI그림4.png"
+            src="/profile1.png"
             alt="페헤 프로필"
           />
           <p className="hero-label">Hello! I&apos;m</p>
