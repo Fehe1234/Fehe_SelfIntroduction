@@ -4,7 +4,7 @@
 
 ## 🔗 링크
 
-- **사이트**: [feheselfintroduction.netlify.app](https://feheselfintroduction.netlify.app)
+- **사이트**: [feheselfintroduction.netlify.app](https://feheselfintroduction.netlify.app/)
 - **YouTube**: [@fehe1234](https://www.youtube.com/@fehe1234)
 - **GitHub**: [Fehe1234](https://github.com/Fehe1234)
 - **Steam**: [프로필](https://steamcommunity.com/profiles/76561199008770006/)
