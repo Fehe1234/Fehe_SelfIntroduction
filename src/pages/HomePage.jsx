@@ -80,7 +80,7 @@ export default function HomePage() {
         <div className="hero-bubble">
           <img
             className="hero-avatar"
-            src="https://shared.fastly.steamstatic.com/community_assets/images/items/2861700/b036c56af898fa4129423731f4edfaaf0b88f9cb.gif"
+            src="/AI그림4.png"
             alt="페헤 프로필"
           />
           <p className="hero-label">Hello! I&apos;m</p>
