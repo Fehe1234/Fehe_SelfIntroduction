@@ -26,7 +26,10 @@ const TIMELINE = [
     year: '2024',
     heading: '전문대학교 입학',
     body: '컴퓨터공학과에 진학하여 본격적으로 소프트웨어 개발을 공부하기 시작했습니다.',
-    project: true,
+    projects: [
+      { name: 'CarScope', role: '팀장으로 개발에 임함', period: '2025년 2학기' },
+      { name: 'WatchMan', role: '프론트 개발자로 임함', period: '2026년 1학기' },
+    ],
   },
   {
     year: '2025 — 2026',
@@ -137,13 +140,13 @@ export default function HomePage() {
               <h2 className="timeline-heading">{item.heading}</h2>
               {item.body && <p className="timeline-body">{item.body}</p>}
               {item.extra && <p className="timeline-body">{item.extra}</p>}
-              {item.project && (
-                <p className="timeline-body" style={{ marginTop: '0.6rem', paddingTop: '0.6rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem' }}>
+              {item.projects && item.projects.map((proj, pi) => (
+                <p key={pi} className="timeline-body" style={{ marginTop: '0.6rem', paddingTop: '0.6rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem' }}>
                   <strong style={{ color: 'var(--sky-deep)' }}>프로젝트</strong>
-                  &nbsp; CarScope — 팀장으로 개발에 임함{' '}
-                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>(2025년 2학기)</span>
+                  &nbsp; {proj.name} — {proj.role}{' '}
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>({proj.period})</span>
                 </p>
-              )}
+              ))}
               {item.discord && (
                 <a className="timeline-link" href="https://discord.gg/6K2CT7fUZA" target="_blank" rel="noopener noreferrer">
                   <IconDiscord /> Discord 서버 참가
