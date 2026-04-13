@@ -1,0 +1,87 @@
+/* ── HOBBY PAGE ── */
+.hobby-page {
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
+  padding: calc(var(--header-h) + 3rem) 2rem calc(var(--footer-h) + 4rem);
+}
+
+.game-cards {
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+
+.game-card {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 1.5rem; padding: 1.5rem 1.75rem;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px var(--shadow), 0 1px 0 rgba(255,255,255,0.9) inset;
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.game-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(107,189,224,0.2);
+}
+
+.game-icon {
+  width: 52px; height: 52px; border-radius: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.game-info { flex: 1; }
+.game-name {
+  font-size: 1.05rem; font-weight: 800; color: var(--text); margin-bottom: 0.2rem;
+}
+.game-full {
+  font-size: 0.72rem; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.04em; margin-bottom: 0.55rem;
+}
+.game-desc {
+  font-size: 0.875rem; color: var(--text-soft); line-height: 1.7;
+}
+.game-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem;
+}
+.game-tag {
+  padding: 0.2rem 0.65rem; border-radius: 999px;
+  font-size: 0.7rem; font-weight: 700;
+  background: var(--sky-light); color: var(--sky-deep);
+  border: 1px solid rgba(107,189,224,0.35);
+}
+
+.hobby-tabs {
+  display: flex; gap: 0.3rem; margin-bottom: 1.75rem;
+  border-bottom: 1.5px solid var(--border); padding-bottom: 0;
+}
+.hobby-tab {
+  padding: 0.55rem 1.1rem; border: none; background: transparent; cursor: pointer;
+  font-family: inherit; font-size: 0.85rem; font-weight: 700;
+  color: var(--text-muted); border-radius: 0.75rem 0.75rem 0 0;
+  position: relative; bottom: -1.5px;
+  border-bottom: 2.5px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.hobby-tab:hover { color: var(--text-soft); }
+.hobby-tab.active {
+  color: var(--sky-deep);
+  border-bottom-color: var(--sky-deep);
+  background: rgba(107,189,224,0.06);
+}
+
+.hobby-panel { display: none; }
+.hobby-panel.active { display: block; }
+
+.sub-label {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin: 1.5rem 0 0.75rem 0.25rem;
+}
+.sub-label:first-child { margin-top: 0; }
+
+@media (max-width: 540px) {
+  .hobby-page { padding: calc(var(--header-h) + 2rem) 1.25rem calc(var(--footer-h) + 3rem); }
+  .game-card { flex-direction: column; gap: 0.9rem; }
+}

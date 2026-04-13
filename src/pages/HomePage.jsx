@@ -1,0 +1,187 @@
+import { IconGithub, IconYoutube, IconSteam, IconDiscord } from '../components/icons'
+
+const TIMELINE = [
+  {
+    year: '2014',
+    heading: '인터넷 활동 시작',
+    body: '페헤라는 이름으로 인터넷 활동을 시작했습니다. 이때부터 온라인 커뮤니티와 콘텐츠 제작에 관심을 갖게 되었습니다.',
+  },
+  {
+    year: '2020',
+    heading: '디스코드 서버 활동 본격화',
+    body: '본격적인 디스코드 서버 활동을 시작하며 커뮤니티를 확장했습니다. 다양한 사람들과 교류하며 개발자이자 인플루언서로서의 역량을 키워나갔습니다.',
+  },
+  {
+    year: '2022',
+    heading: '유튜버 서버 매니저',
+    body: null,
+    extra: (
+      <>
+        10만명 구독자를 가진 유튜버의 서버 매니저로 약 1년 반 동안 활동했습니다.<br />
+        <small style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>* 해당 유튜버는 비공개입니다.</small>
+      </>
+    ),
+  },
+  {
+    year: '2024',
+    heading: '전문대학교 입학',
+    body: '컴퓨터공학과에 진학하여 본격적으로 소프트웨어 개발을 공부하기 시작했습니다.',
+    project: true,
+  },
+  {
+    year: '2025 — 2026',
+    heading: '키오스크 회사 국가근로장학생',
+    body: '원격 프로그램 활용, VAN 프로그램 활용',
+  },
+  {
+    year: '2024. 05. 16 — 무기한',
+    heading: 'Hello! VRChat World! 디스코드 서버 운영',
+    body: 'VRChat 비공식 친목 서버 Hello! VRChat World!를 개설하여 현재까지 운영 중입니다. VRChat 유저들이 편하게 모여 교류할 수 있는 커뮤니티를 만들어가고 있습니다.',
+    discord: true,
+  },
+]
+
+const SKILLS = [
+  {
+    label: '언어',
+    items: ['Python', 'JavaScript', 'TypeScript', 'PHP', 'JSP', 'HTML / CSS', 'Flutter', 'React', 'C#', 'C++', 'Java'],
+    cls: 'lang',
+  },
+  {
+    label: 'DB',
+    items: ['MySQL', 'Firebase'],
+    cls: 'db',
+  },
+  {
+    label: '서버',
+    items: ['Node.js', 'Linux (Kali)', 'Linux (Ubuntu)'],
+    cls: 'server',
+  },
+  {
+    label: '디자인',
+    items: [{ name: 'Photoshop (기본)', style: { background: 'rgba(49,103,211,0.1)', color: '#1a56c4', borderColor: 'rgba(49,103,211,0.35)' } }],
+    cls: 'custom',
+  },
+  {
+    label: '하드웨어',
+    items: [
+      { name: '라즈베리파이', style: { background: 'rgba(220,38,38,0.1)', color: '#b91c1c', borderColor: 'rgba(220,38,38,0.3)' } },
+      { name: '아두이노',     style: { background: 'rgba(220,38,38,0.1)', color: '#b91c1c', borderColor: 'rgba(220,38,38,0.3)' } },
+    ],
+    cls: 'custom',
+  },
+]
+
+export default function HomePage() {
+  return (
+    <>
+      {/* ── Hero ── */}
+      <section className="hero">
+        <div className="hero-bubble">
+          <img
+            className="hero-avatar"
+            src="https://shared.fastly.steamstatic.com/community_assets/images/items/2861700/b036c56af898fa4129423731f4edfaaf0b88f9cb.gif"
+            alt="페헤 프로필"
+          />
+          <p className="hero-label">Hello! I&apos;m</p>
+          <h1 className="hero-name">페헤</h1>
+          <p className="hero-sub">Developer &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Community Builder</p>
+          <div className="hero-badges">
+            <span className="badge">개발자</span>
+            <span className="badge">인플루언서</span>
+            <span className="badge">커뮤니티</span>
+          </div>
+          <div className="hero-links">
+            <a className="hero-link gh" href="https://github.com/Fehe1234" target="_blank" rel="noopener noreferrer">
+              <IconGithub /> GitHub
+            </a>
+            <a className="hero-link yt" href="https://www.youtube.com/@fehe1234" target="_blank" rel="noopener noreferrer">
+              <IconYoutube /> YouTube
+            </a>
+            <a className="hero-link steam" href="https://steamcommunity.com/profiles/76561199008770006/" target="_blank" rel="noopener noreferrer">
+              <IconSteam /> Steam
+            </a>
+          </div>
+        </div>
+
+        <div className="scroll-hint">
+          <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <polyline points="19 12 12 19 5 12"/>
+          </svg>
+          scroll
+        </div>
+      </section>
+
+      {/* ── Timeline ── */}
+      <main className="section">
+        <div className="section-header">
+          <div className="section-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <line x1="8" y1="2" x2="8" y2="14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+              <line x1="2" y1="8" x2="14" y2="8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <div className="section-title">
+            History
+            <small>페헤의 활동 기록</small>
+          </div>
+        </div>
+
+        <div className="timeline">
+          {TIMELINE.map((item, i) => (
+            <div className="timeline-card" key={i}>
+              <div className="card-top">
+                <span className="timeline-year">{item.year}</span>
+              </div>
+              <h2 className="timeline-heading">{item.heading}</h2>
+              {item.body && <p className="timeline-body">{item.body}</p>}
+              {item.extra && <p className="timeline-body">{item.extra}</p>}
+              {item.project && (
+                <p className="timeline-body" style={{ marginTop: '0.6rem', paddingTop: '0.6rem', borderTop: '1px solid var(--border)', fontSize: '0.82rem' }}>
+                  <strong style={{ color: 'var(--sky-deep)' }}>프로젝트</strong>
+                  &nbsp; CarScope — 팀장으로 개발에 임함{' '}
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>(2025년 2학기)</span>
+                </p>
+              )}
+              {item.discord && (
+                <a className="timeline-link" href="https://discord.gg/6K2CT7fUZA" target="_blank" rel="noopener noreferrer">
+                  <IconDiscord /> Discord 서버 참가
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* ── Skills ── */}
+      <section className="skills-section">
+        <div className="section-header" style={{ marginBottom: '1.5rem' }}>
+          <div className="section-icon" style={{ background: 'linear-gradient(135deg,#60a5fa,#3b82f6)' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <div className="section-title">
+            기술 스택
+            <small>사용 가능한 언어 및 도구</small>
+          </div>
+        </div>
+
+        {SKILLS.map((cat, i) => (
+          <div className="skill-card" key={i}>
+            <p className="skill-cat-label">{cat.label}</p>
+            <div className="skill-badges">
+              {cat.items.map((item, j) =>
+                typeof item === 'string'
+                  ? <span className={`skill-badge ${cat.cls}`} key={j}>{item}</span>
+                  : <span className="skill-badge" key={j} style={item.style}>{item.name}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
+    </>
+  )
+}

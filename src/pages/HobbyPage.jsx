@@ -1,0 +1,170 @@
+import { useState } from 'react'
+
+const HOBBY_TABS = [
+  { key: 'music',  label: '음악' },
+  { key: 'rhythm', label: '리듬게임' },
+  { key: 'food',   label: '좋아하는 음식' },
+  { key: 'coding', label: '코딩' },
+]
+
+function GameCard({ icon, iconStyle, name, full, desc, tags }) {
+  return (
+    <div className="game-card">
+      <div className="game-icon" style={iconStyle}>{icon}</div>
+      <div className="game-info">
+        <p className="game-name">{name}</p>
+        <p className="game-full">{full}</p>
+        <p className="game-desc">{desc}</p>
+        <div className="game-tags">
+          {tags.map(t => <span className="game-tag" key={t}>{t}</span>)}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MusicPanel() {
+  return (
+    <div className="game-cards">
+      <GameCard
+        icon="♪"
+        iconStyle={{ background: 'linear-gradient(135deg,#e879f9,#a855f7)' }}
+        name="동방 플랑도르S"
+        full="U.N. Owen Was Her? — 東方紅魔郷"
+        desc="ZUN이 제작한 동방 프로젝트의 대표곡으로, 동방홍마향에 등장하는 플랑드르 스칼렛의 테마곡입니다. 강렬하고 광기 넘치는 멜로디로 수많은 어레인지 버전이 탄생한 전설적인 곡입니다."
+        tags={['동방 프로젝트', 'ZUN', '동방홍마향']}
+      />
+    </div>
+  )
+}
+
+function RhythmPanel() {
+  return (
+    <div className="game-cards">
+      <p className="sub-label">아케이드</p>
+      <GameCard
+        icon="SD"
+        iconStyle={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}
+        name="SDVX"
+        full="SOUND VOLTEX"
+        desc="KONAMI의 아케이드 리듬게임으로, 두 개의 아날로그 노브와 버튼을 조합해 플레이하는 독특한 조작감이 특징입니다."
+        tags={['KONAMI', '아날로그 노브']}
+      />
+      <GameCard
+        icon="mai"
+        iconStyle={{ background: 'linear-gradient(135deg,#f59e0b,#ef4444)' }}
+        name="maimai"
+        full="maimai DX"
+        desc="SEGA의 아케이드 리듬게임으로, 원형 디스플레이 주변의 버튼과 터치 패널을 활용해 플레이합니다."
+        tags={['SEGA', '터치 패널']}
+      />
+      <GameCard
+        icon="CHU"
+        iconStyle={{ background: 'linear-gradient(135deg,#06b6d4,#3b82f6)' }}
+        name="CHUNITHM"
+        full="CHUNITHM"
+        desc="SEGA의 아케이드 리듬게임으로, 슬라이더와 에어 센서를 활용하는 독창적인 조작 방식이 특징입니다."
+        tags={['SEGA', '에어 센서']}
+      />
+
+      <p className="sub-label">PC 게임</p>
+      <GameCard
+        icon="DM"
+        iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
+        name="DJMAX RESPECT V"
+        full="DJMAX RESPECT V"
+        desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
+        tags={['NEOWIZ', 'PC', 'Steam']}
+      />
+      <GameCard
+        icon="VR"
+        iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
+        name="VRChat"
+        full="VRChat"
+        desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
+        tags={['VRChat Inc.', 'PC / VR', '소셜']}
+      />
+
+      <p className="sub-label">콘솔 게임</p>
+      <GameCard
+        icon="BS"
+        iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
+        name="Beat Saber"
+        full="Beat Saber"
+        desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
+        tags={['Beat Games', 'VR', '콘솔']}
+      />
+    </div>
+  )
+}
+
+function FoodPanel() {
+  return (
+    <div className="game-cards">
+      <GameCard
+        icon="🛵"
+        iconStyle={{ background: 'linear-gradient(135deg,#f97316,#ef4444)' }}
+        name="배달음식"
+        full="집에서 즐기는 음식"
+        desc="집에서 편하게 즐기는 배달음식을 좋아합니다."
+        tags={['배달의민족', '쿠팡이츠']}
+      />
+    </div>
+  )
+}
+
+function CodingPanel() {
+  return (
+    <div className="game-cards">
+      <GameCard
+        icon="</>"
+        iconStyle={{ background: 'linear-gradient(135deg,#5865f2,#3b4fd6)' }}
+        name="디스코드 봇 코딩"
+        full="Discord Bot Development"
+        desc="디스코드 서버 운영 경험을 바탕으로 직접 봇을 개발하고 있습니다. 서버 관리 자동화, 커뮤니티 기능 구현 등 다양한 봇을 제작합니다."
+        tags={['Discord', 'Bot', '개발']}
+      />
+    </div>
+  )
+}
+
+const PANELS = { music: MusicPanel, rhythm: RhythmPanel, food: FoodPanel, coding: CodingPanel }
+
+export default function HobbyPage() {
+  const [activeTab, setActiveTab] = useState('music')
+  const Panel = PANELS[activeTab]
+
+  return (
+    <div className="hobby-page">
+      <div className="section-header">
+        <div className="section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </div>
+        <div className="section-title">
+          취미
+          <small>페헤의 관심사</small>
+        </div>
+      </div>
+
+      <div className="hobby-tabs">
+        {HOBBY_TABS.map(tab => (
+          <button
+            key={tab.key}
+            className={`hobby-tab ${activeTab === tab.key ? 'active' : ''}`}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="hobby-panel active">
+        <Panel />
+      </div>
+    </div>
+  )
+}
