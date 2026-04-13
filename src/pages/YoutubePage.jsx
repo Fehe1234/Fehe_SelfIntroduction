@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { IconYoutube } from '../components/icons'
 
 const CHANNEL_ID = 'UCY0LBUJ0a7JCBkkQ_ux0kew'
@@ -20,20 +20,16 @@ function YtCard({ item }) {
   )
 }
 
-export default function YoutubePage({ active }) {
+export default function YoutubePage() {
   const [ytTab, setYtTab]         = useState('home')
   const [homeItems, setHomeItems] = useState([])
   const [liveItems, setLiveItems] = useState([])
   const [status, setStatus]       = useState('loading')
   const [error, setError]         = useState('')
-  const loadedRef = useRef(false)
 
   useEffect(() => {
-    if (active && !loadedRef.current) {
-      loadedRef.current = true
-      loadYoutube()
-    }
-  }, [active])
+    loadYoutube()
+  }, [])
 
   async function loadYoutube() {
     setStatus('loading')

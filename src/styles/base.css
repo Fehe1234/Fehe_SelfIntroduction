@@ -54,6 +54,3 @@ body {
   50%      { opacity:0.55; transform:scale(1); }
 }
 
-/* ── 페이지 전환 ── */
-.page { display: none; }
-.page.active { display: block; }

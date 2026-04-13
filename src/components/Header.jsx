@@ -1,40 +1,54 @@
+import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { IconHome, IconYoutube, IconHobby, IconGithub, IconSteam } from './icons'
 
-export default function Header({ activePage, drawerOpen, onToggleDrawer, onCloseDrawer, onSwitchPage }) {
+export default function Header() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [drawerOpen, setDrawerOpen] = useState(false)
+
+  const activePage = location.pathname === '/' ? 'home' : location.pathname.slice(1)
+
+  function switchPage(path) {
+    navigate(path)
+    setDrawerOpen(false)
+    window.scrollTo({ top: 0 })
+  }
+
   return (
     <>
       <header>
-        <button className="header-logo" onClick={() => onSwitchPage('home')}>
+        <button className="header-logo" onClick={() => switchPage('/')}>
           페헤<span>/ Fehe</span>
         </button>
         <button
           className={`hamburger ${drawerOpen ? 'open' : ''}`}
           aria-label="메뉴"
-          onClick={onToggleDrawer}
+          onClick={() => setDrawerOpen(o => !o)}
         >
           <span /><span /><span />
         </button>
       </header>
 
-      <div className={`overlay ${drawerOpen ? 'open' : ''}`} onClick={onCloseDrawer} />
+      <div className={`overlay ${drawerOpen ? 'open' : ''}`} onClick={() => setDrawerOpen(false)} />
 
       <nav className={`drawer ${drawerOpen ? 'open' : ''}`}>
         <p className="drawer-label">메뉴</p>
         <button
           className={`drawer-btn ${activePage === 'home' ? 'active' : ''}`}
-          onClick={() => onSwitchPage('home')}
+          onClick={() => switchPage('/')}
         >
           <IconHome /> 홈
         </button>
         <button
           className={`drawer-btn ${activePage === 'youtube' ? 'active' : ''}`}
-          onClick={() => onSwitchPage('youtube')}
+          onClick={() => switchPage('/youtube')}
         >
           <IconYoutube /> YouTube 영상
         </button>
         <button
           className={`drawer-btn ${activePage === 'hobby' ? 'active' : ''}`}
-          onClick={() => onSwitchPage('hobby')}
+          onClick={() => switchPage('/hobby')}
         >
           <IconHobby /> 취미
         </button>
@@ -47,7 +61,7 @@ export default function Header({ activePage, drawerOpen, onToggleDrawer, onClose
           href="https://www.youtube.com/@fehe1234"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onCloseDrawer}
+          onClick={() => setDrawerOpen(false)}
         >
           <IconYoutube /> 유튜브 채널
         </a>
@@ -56,7 +70,7 @@ export default function Header({ activePage, drawerOpen, onToggleDrawer, onClose
           href="https://github.com/Fehe1234"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onCloseDrawer}
+          onClick={() => setDrawerOpen(false)}
         >
           <IconGithub /> GitHub
         </a>
@@ -65,7 +79,7 @@ export default function Header({ activePage, drawerOpen, onToggleDrawer, onClose
           href="https://steamcommunity.com/profiles/76561199008770006/"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onCloseDrawer}
+          onClick={() => setDrawerOpen(false)}
           style={{ color: '#1b6fa8' }}
         >
           <IconSteam /> Steam
