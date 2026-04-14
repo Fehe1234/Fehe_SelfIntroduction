@@ -109,7 +109,7 @@ function MusicPanel() {
           tags={['보컬로이드', 'ナナホシ管弦楽団', '巡音ルカ', 'SERRA']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="리듬게임 수록곡" count={5}>
+      <CollapsibleGroup label="리듬게임 수록곡" count={6}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
           name="竹 (feat. Choko)"
@@ -144,6 +144,13 @@ function MusicPanel() {
           full="t+pazolite — maimai GreeN 원곡"
           desc="t+pazolite가 제작한 멜로딕 개버 곡으로 maimai GreeN에 수록된 것을 시작으로 CHUNITHM, Groove Coaster 등 다양한 리듬게임에 이식된 명곡입니다."
           tags={['t+pazolite', 'maimai', 'CHUNITHM', 'Groove Coaster']}
+        />
+        <GameCard
+          image="https://i.namu.wiki/i/ozhHL13HYAitmd6CYKZk66YESzgn-o8LZMmPFxYefnjFU1lS1TrrAHFT4l33t4BXXzAY0VKN95jw9nMEXU0seZXOrIo_eYcBf-RssVKCAS95oDTtCVg1rwBw0nHzrmJdgaYEBfD_20YBPmPfi-ppSw.webp"
+          name="666"
+          full="RoughSketch — SOUND VOLTEX"
+          desc="RoughSketch가 제작한 SOUND VOLTEX 수록곡입니다. 강렬한 하드코어 사운드와 고난도 패턴으로 리듬게임 유저들에게 잘 알려진 곡입니다."
+          tags={['RoughSketch', 'SOUND VOLTEX', 'SDVX']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="DJMAX" count={9}>
