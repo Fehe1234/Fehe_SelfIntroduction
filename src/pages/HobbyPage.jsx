@@ -75,6 +75,13 @@ function MusicPanel() {
           desc="IOSYS가 동방지령전의 고메이지 사토리 테마곡 'ハートフェルトファンシー'를 원곡으로 제작한 어레인지 곡입니다. 경쾌한 베이스라인과 독특한 제목으로 많은 사랑을 받는 곡입니다."
           tags={['동방 프로젝트', 'IOSYS', '동방지령전']}
         />
+        <GameCard
+          image="https://lh3.googleusercontent.com/KA_o7yhf4OzGaHj4CN3zd5SncZHi4eTR4SDD_-d4U5DhhB74T3pintSlHx9cVg_X4NxSLUeUpe254Zw=w544-h544-l90-rj"
+          name="Ultimate taste"
+          full="동방 프로젝트 어레인지"
+          desc="동방 프로젝트를 원곡으로 한 어레인지 곡입니다."
+          tags={['동방 프로젝트']}
+        />
       </CollapsibleGroup>
     </div>
   )
