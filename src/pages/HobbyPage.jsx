@@ -79,7 +79,7 @@ function MusicPanel() {
           tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="보컬로이드" count={3}>
+      <CollapsibleGroup label="보컬로이드" count={2}>
         <GameCard
           image="https://lh3.googleusercontent.com/YSDUjBs7wGeo6Vef4j0SZoHNpWiyLgqERx7JVB4sxEvdPOW6oWNRj3Z3nSiSHrrqd_JOS6LwcnIKeic=w544-h544-l90-rj"
           name="失敗作少女 (MARETU Remix)"
@@ -93,13 +93,6 @@ function MusicPanel() {
           full="TAK feat. 初音ミク & 重音テト"
           desc="TAK이 제작한 초음 미쿠와 카사네 테토의 듀엣 곡입니다. 유튜브 4000만 뷰를 달성한 인기곡으로, 두 캐릭터의 유쾌한 라이벌 관계를 담은 가사가 특징입니다."
           tags={['보컬로이드', 'TAK', '初音ミク', '重音テト']}
-        />
-        <GameCard
-          image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
-          name="ワールドイズマイン (かぐや&月見ヤチヨ ver.) [CPK! Remix]"
-          full="ryo (supercell) — 超かぐや姫！ 삽입곡"
-          desc="ryo(supercell)의 명곡 'World Is Mine'을 Netflix 애니메이션 超かぐや姫！의 삽입곡으로 리믹스한 버전입니다. かぐや(cv.夏吉ゆうこ)와 月見ヤチヨ(cv.早見沙織)가 듀엣으로 노래합니다."
-          tags={['보컬로이드', 'ryo (supercell)', '超かぐや姫！', 'Netflix']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={1}>
@@ -127,7 +120,16 @@ function MusicPanel() {
           tags={['DJMAX', 'TAK', 'V EXTENSION']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="애니메이션" count={1}>
+      <CollapsibleGroup label="애니메이션" count={2}>
+        <CollapsibleGroup nested label="超かぐや姫！" count={1}>
+          <GameCard
+            image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
+            name="ワールドイズマイン (かぐや&月見ヤチヨ ver.) [CPK! Remix]"
+            full="ryo (supercell) — 超かぐや姫！ 삽입곡"
+            desc="ryo(supercell)의 명곡 'World Is Mine'을 Netflix 애니메이션 超かぐや姫！의 삽입곡으로 리믹스한 버전입니다. かぐや(cv.夏吉ゆうこ)와 月見ヤチヨ(cv.早見沙織)가 듀엣으로 노래합니다."
+            tags={['超かぐや姫！', 'ryo (supercell)', 'Netflix']}
+          />
+        </CollapsibleGroup>
         <CollapsibleGroup nested label="체인소 맨" count={2}>
           <GameCard
             image="https://lh3.googleusercontent.com/VGf2lFXKQdSyrz2g3Czj66doPtUxvJBrWDK6UFeOj8zRqS-tgs_D8FG5-8pYTX-Uh9FxZBDJIXtN1nKF=w544-h544-l90-rj"
