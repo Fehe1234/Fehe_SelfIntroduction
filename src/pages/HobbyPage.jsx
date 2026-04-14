@@ -51,7 +51,7 @@ function MusicPanel() {
       <CollapsibleGroup label="동방 프로젝트" count={4}>
         <GameCard
           image="https://lh3.googleusercontent.com/nkVcEQAFBSf7ZqWy-xa6LB2Us60QNTNL74E3iHlu1TBXHW1LUNGWts0jzkpWvSW8PYdmgYG_WeNZJKxDHA=w544-h544-l90-rj"
-          name="동방 플랑도르S"
+          name="最終鬼畜妹フランドール・Ｓ"
           full="U.N. Owen Was Her? — 東方紅魔郷"
           desc="ZUN이 제작한 동방 프로젝트의 대표곡으로, 동방홍마향에 등장하는 플랑드르 스칼렛의 테마곡입니다. 강렬하고 광기 넘치는 멜로디로 수많은 어레인지 버전이 탄생한 전설적인 곡입니다."
           tags={['동방 프로젝트', 'ZUN', '동방홍마향']}
