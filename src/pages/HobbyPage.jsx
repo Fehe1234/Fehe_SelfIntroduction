@@ -321,7 +321,7 @@ function RhythmPanel() {
           tags={['SEGA', '에어 센서']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="PC 게임" count={3}>
+      <CollapsibleGroup label="PC 게임" count={4}>
         <GameCard
           icon="DM"
           iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
@@ -345,6 +345,14 @@ function RhythmPanel() {
           full="Curious Fox Sox — Steam"
           desc="뒷좌석에서 부모님의 싸움을 피해 핸드헬드 게임을 하는 공포 게임입니다. 게임 속 세계가 현실을 반영하기 시작하며 뒷좌석으로 침입하려는 괴물을 막아야 합니다."
           tags={['공포', 'Steam', 'Curious Fox Sox']}
+        />
+        <GameCard
+          icon="PS"
+          iconStyle={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}
+          name="A Pet Shop After Dark"
+          full="A Pet Shop After Dark — Steam"
+          desc="밤에 혼자 남겨진 펫샵을 배경으로 한 공포 게임입니다."
+          tags={['공포', 'Steam']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="콘솔 게임" count={1}>
