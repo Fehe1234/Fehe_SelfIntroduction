@@ -101,7 +101,7 @@ function MusicPanel() {
           tags={['보컬로이드', 'ryo (supercell)', '超かぐや姫！', 'Netflix']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="리듬게임 수록곡" count={2}>
+      <CollapsibleGroup label="리듬게임 수록곡" count={1}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
           name="竹 (feat. Choko)"
@@ -109,6 +109,8 @@ function MusicPanel() {
           desc="立秋가 제작한 오리지널 곡으로, SOUND VOLTEX와 Arcaea 등 다양한 리듬게임에 수록된 곡입니다."
           tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
         />
+      </CollapsibleGroup>
+      <CollapsibleGroup label="DJMAX" count={1}>
         <GameCard
           image="https://lh3.googleusercontent.com/4AL25VSiv__SDFNleL0U59TcC8Q-b5KoyIazIsja-J6a1J9kbz3JCi3jdN-k3QOVpTSmhvDp4wkcXKw=w544-h544-l90-rj"
           name="glory day (Extended ver.)"
