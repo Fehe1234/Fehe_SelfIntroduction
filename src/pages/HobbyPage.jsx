@@ -83,6 +83,13 @@ function MusicPanel() {
           tags={['동방 프로젝트']}
         />
       </CollapsibleGroup>
+      <GameCard
+        image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
+        name="竹 (feat. Choko)"
+        full="立秋 (Rissyuu) feat. ちょこ"
+        desc="立秋가 제작한 오리지널 곡으로, SOUND VOLTEX와 Arcaea 등 다양한 리듬게임에 수록된 곡입니다."
+        tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
+      />
     </div>
   )
 }
