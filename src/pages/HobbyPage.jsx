@@ -73,9 +73,9 @@ function MusicPanel() {
         <GameCard
           image="https://lh3.googleusercontent.com/KA_o7yhf4OzGaHj4CN3zd5SncZHi4eTR4SDD_-d4U5DhhB74T3pintSlHx9cVg_X4NxSLUeUpe254Zw=w544-h544-l90-rj"
           name="Ultimate taste"
-          full="동방 프로젝트 어레인지"
-          desc="동방 프로젝트를 원곡으로 한 어레인지 곡입니다."
-          tags={['동방 프로젝트']}
+          full="U.N.オーエンは彼女なのか？ アレンジ — 東方紅魔郷"
+          desc="ぱらどっと(Paradot)가 동방홍마향의 플랑드르 스칼렛 테마곡 'U.N. Owen Was Her?'를 원곡으로 제작한 어레인지 곡입니다. Arcaea 등 리듬게임에도 수록되었습니다."
+          tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={1}>
