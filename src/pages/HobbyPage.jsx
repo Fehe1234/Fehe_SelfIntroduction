@@ -109,13 +109,27 @@ function MusicPanel() {
           tags={['보컬로이드', 'ナナホシ管弦楽団', '巡音ルカ', 'SERRA']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="리듬게임 수록곡" count={1}>
+      <CollapsibleGroup label="리듬게임 수록곡" count={3}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
           name="竹 (feat. Choko)"
           full="立秋 (Rissyuu) feat. ちょこ"
           desc="立秋가 제작한 오리지널 곡으로, SOUND VOLTEX와 Arcaea 등 다양한 리듬게임에 수록된 곡입니다."
           tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/oInw8XQxQ5zShP_A0WnA9pDGeBoVq0dB5WgzM62wmikCv_wBcOni3hsHXHAHq54twt1FelYrOSdIKG5m=w544-h544-l90-rj"
+          name="Brain Power"
+          full="NOMA — SOUND VOLTEX 수록"
+          desc="NOMA가 제작한 J-Core 곡으로 SOUND VOLTEX에 수록되어 큰 인기를 얻었습니다. Cytus, Rotaeno 등 다양한 리듬게임에도 이식된 곡으로, 인터넷 밈으로도 널리 알려진 명곡입니다."
+          tags={['NOMA', 'SOUND VOLTEX', 'J-Core', 'Cytus']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/Damg11FsGi3Bugbvsh46iRxA6ewM9JDY4G6zoe7laOzCr1MzZnN-o3PCbF8AOeTv733-eaLgY44ac5TG=w544-h544-l90-rj"
+          name="Freedom Dive↓"
+          full="xi — BMS 원곡"
+          desc="xi가 BMS 콘테스트를 위해 제작한 오리지널 곡으로, osu!와 SOUND VOLTEX 등 수많은 리듬게임에 이식된 전설적인 초고난도 곡입니다."
+          tags={['xi', 'BMS', 'osu!', 'SOUND VOLTEX']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="DJMAX" count={3}>
