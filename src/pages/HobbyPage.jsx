@@ -121,7 +121,35 @@ function MusicPanel() {
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="애니메이션" count={2}>
-        <CollapsibleGroup nested label="超かぐや姫！" count={1}>
+        <CollapsibleGroup nested label="超かぐや姫！" count={5}>
+          <GameCard
+            image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
+            name="星降る海 - Starry Sea"
+            full="超かぐや姫！ 오리지널 삽입곡"
+            desc="Netflix 애니메이션 超かぐや姫！의 오리지널 삽입곡입니다."
+            tags={['超かぐや姫！', 'Netflix']}
+          />
+          <GameCard
+            image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
+            name="ray (超かぐや姫！ Version)"
+            full="TAKU INOUE — Kalafina 원곡 (魔法少女まどか☆マギカ OP) 커버"
+            desc="마법소녀 마도카 마기카의 오프닝 테마 'ray'를 TAKU INOUE가 편곡하여 超かぐや姫！ 버전으로 재탄생시킨 곡입니다. かぐや(cv.夏吉ゆうこ)와 月見ヤチヨ(cv.早見沙織)가 노래합니다."
+            tags={['超かぐや姫！', 'TAKU INOUE', 'Kalafina', '마도카 마기카']}
+          />
+          <GameCard
+            image="https://lh3.googleusercontent.com/H2hyZlbMuwfHye6UoON1M0aIFeCGeI7yvaaOnoxAOY5qbV1LDQrMWTgvCJ57s3tfYf1SLFBAP35GcpQljg=w544-h544-l90-rj"
+            name="メルト (かぐや ver.) [CPK! Remix]"
+            full="ryo (supercell) — 初音ミク 원곡 커버"
+            desc="ryo(supercell)의 명곡 'Melt'를 超かぐや姫！ 버전으로 리믹스한 곡입니다. かぐや(cv.夏吉ゆうこ)의 보컬로 새롭게 재탄생했습니다."
+            tags={['超かぐや姫！', 'ryo (supercell)', '初音ミク']}
+          />
+          <GameCard
+            image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
+            name="ハッピーシンセサイザ (Cover)"
+            full="EasyPop 원곡 커버 — 超かぐや姫！"
+            desc="EasyPop의 명곡 'Happy Synthesizer'를 超かぐや姫！ 버전으로 커버한 곡입니다."
+            tags={['超かぐや姫！', 'EasyPop']}
+          />
           <GameCard
             image="https://lh3.googleusercontent.com/lYY90gjZzj-KcJRg6ecDp3okUJlXuMv4f-fcakUAKuZmxmIWbvVj4QHhl_X-imyEcj1Kk7It_SEozll2=w544-h544-l90-rj"
             name="ワールドイズマイン (かぐや&月見ヤチヨ ver.) [CPK! Remix]"
