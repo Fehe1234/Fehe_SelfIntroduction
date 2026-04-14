@@ -93,7 +93,7 @@ function MusicPanel() {
           tags={['동방 프로젝트', 'cool&create', 'ビートまりお', '동방홍마향']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="보컬로이드" count={3}>
+      <CollapsibleGroup label="보컬로이드" count={4}>
         <GameCard
           image="https://lh3.googleusercontent.com/YSDUjBs7wGeo6Vef4j0SZoHNpWiyLgqERx7JVB4sxEvdPOW6oWNRj3Z3nSiSHrrqd_JOS6LwcnIKeic=w544-h544-l90-rj"
           name="失敗作少女 (MARETU Remix)"
@@ -114,6 +114,13 @@ function MusicPanel() {
           full="ナナホシ管弦楽団 feat. 巡音ルカ 원곡 — SERRA Cover"
           desc="ナナホシ管弦楽団이 巡音ルカを보컬로 제작한 보컬로이드 곡을 SERRA가 커버한 버전입니다. 독특한 기타 솔로와 서정적인 가사가 특징인 곡으로 유튜브 100만 뷰를 달성한 인기곡입니다."
           tags={['보컬로이드', 'ナナホシ管弦楽団', '巡音ルカ', 'SERRA']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/vp1M4sPY4qAKebggZtSMVYyFq1YI6ANUG0ktBgZMgRJd7WFG1C6apLtFyYWNPWOiJNGOudt_xqNo4rNY=w544-h544-l90-rj"
+          name="ループザルーム (feat. Hatsune Miku)"
+          full="ルシノ (rusino) feat. 初音ミク"
+          desc="ルシノ(rusino)가 제작한 보컬로이드 곡으로, 백룸과 리미널 스페이스를 테마로 한 곡입니다. 빌보드 재팬 차트 미국 1위를 달성하며 국제적으로 큰 화제를 모았습니다."
+          tags={['보컬로이드', 'ルシノ', 'rusino', '初音ミク']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={6}>
