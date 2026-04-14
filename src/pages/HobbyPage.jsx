@@ -49,7 +49,7 @@ function CollapsibleGroup({ label, count, nested, children }) {
 function MusicPanel() {
   return (
     <div className="game-cards">
-      <CollapsibleGroup label="동방 프로젝트" count={5}>
+      <CollapsibleGroup label="동방 프로젝트" count={6}>
         <GameCard
           image="https://lh3.googleusercontent.com/nkVcEQAFBSf7ZqWy-xa6LB2Us60QNTNL74E3iHlu1TBXHW1LUNGWts0jzkpWvSW8PYdmgYG_WeNZJKxDHA=w544-h544-l90-rj"
           name="最終鬼畜妹フランドール・Ｓ"
@@ -84,6 +84,13 @@ function MusicPanel() {
           full="Alstroemeria Records — Bad Apple!! アレンジ — 東方妙有夢"
           desc="Alstroemeria Records가 동방묘유몽의 'Bad Apple!!'을 원곡으로 nomico의 보컬을 얹어 제작한 어레인지 곡입니다. 흑백 실루엣 MV로 전 세계적으로 유명해진 동방 어레인지의 전설적인 명곡입니다."
           tags={['동방 프로젝트', 'Alstroemeria Records', 'nomico', '동방묘유몽']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/8ECujnPWR2ch4nC-uN-8gNQR6A7C-eYbQcPvPpmTGbvlMjfeMs_-xEVX_tbASbcLD450SnaPgmN3IampZw=w544-h544-l90-rj"
+          name="ナイト・オブ・ナイツ"
+          full="cool&create (ビートまりお) — 月時計～ルナ・ダイアル アレンジ — 東方紅魔郷"
+          desc="cool&create의 ビートまりお가 동방홍마향의 이자요이 사쿠야 테마곡 '월시계～루나 다이얼'을 원곡으로 제작한 어레인지 곡입니다. 동방 어레인지를 대표하는 전설적인 명곡 중 하나입니다."
+          tags={['동방 프로젝트', 'cool&create', 'ビートまりお', '동방홍마향']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="보컬로이드" count={3}>
