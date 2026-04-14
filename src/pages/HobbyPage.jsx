@@ -5,10 +5,13 @@ const HOBBY_TABS = [
   { key: 'rhythm', label: '게임' },
 ]
 
-function GameCard({ icon, iconStyle, name, full, desc, tags }) {
+function GameCard({ icon, iconStyle, image, name, full, desc, tags }) {
   return (
     <div className="game-card">
-      <div className="game-icon" style={iconStyle}>{icon}</div>
+      {image
+        ? <img src={image} alt={name} style={{ width: '64px', height: '64px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0 }} />
+        : <div className="game-icon" style={iconStyle}>{icon}</div>
+      }
       <div className="game-info">
         <p className="game-name">{name}</p>
         <p className="game-full">{full}</p>
@@ -52,24 +55,21 @@ function MusicPanel() {
     <div className="game-cards">
       <CollapsibleGroup label="동방 프로젝트">
         <GameCard
-          icon="♪"
-          iconStyle={{ background: 'linear-gradient(135deg,#e879f9,#a855f7)' }}
+          image="https://lh3.googleusercontent.com/nkVcEQAFBSf7ZqWy-xa6LB2Us60QNTNL74E3iHlu1TBXHW1LUNGWts0jzkpWvSW8PYdmgYG_WeNZJKxDHA=w544-h544-l90-rj"
           name="동방 플랑도르S"
           full="U.N. Owen Was Her? — 東方紅魔郷"
           desc="ZUN이 제작한 동방 프로젝트의 대표곡으로, 동방홍마향에 등장하는 플랑드르 스칼렛의 테마곡입니다. 강렬하고 광기 넘치는 멜로디로 수많은 어레인지 버전이 탄생한 전설적인 곡입니다."
           tags={['동방 프로젝트', 'ZUN', '동방홍마향']}
         />
         <GameCard
-          icon="♪"
-          iconStyle={{ background: 'linear-gradient(135deg,#38bdf8,#6366f1)' }}
+          image="https://lh3.googleusercontent.com/FoDhaEo0MbLk_ZMzm5AkMHCz7_OArkPqCYlr2xBHnx_-BYNss9ponHJHl4Lx1ghyJNfCI41t4rt1MDO0UA=w544-h544-l90-rj"
           name="魔理沙は大変なものを盗んでいきました"
           full="恋色マスタースパーク アレンジ — 東方永夜抄"
           desc="IOSYS가 동방영야초의 키리사메 마리사 테마곡 '연색 마스터 스파크'를 원곡으로 제작한 어레인지 곡입니다. 중독성 강한 멜로디와 가사로 동방 팬덤을 대표하는 명곡 중 하나입니다."
           tags={['동방 프로젝트', 'IOSYS', '동방영야초']}
         />
         <GameCard
-          icon="♪"
-          iconStyle={{ background: 'linear-gradient(135deg,#fb923c,#f43f5e)' }}
+          image="https://lh3.googleusercontent.com/bHhfTAG1RM5ad3DXctqHZZIxsF1ghZoPIuTytJxwzmvRJpA9XyU6PKKl7xzrD5bLdpj4u0drUfy591qq=w544-h544-l90-rj"
           name="ベースラインやってる？笑"
           full="Can I friend you on Bassbook? lol — ハートフェルトファンシー アレンジ — 東方地霊殿"
           desc="IOSYS가 동방지령전의 고메이지 사토리 테마곡 'ハートフェルトファンシー'를 원곡으로 제작한 어레인지 곡입니다. 경쾌한 베이스라인과 독특한 제목으로 많은 사랑을 받는 곡입니다."
