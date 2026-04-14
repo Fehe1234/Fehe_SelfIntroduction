@@ -74,7 +74,7 @@ const SKILLS = [
     cls: 'custom',
   },
   {
-    label: '툴',
+    label: 'IDE / 에디터',
     items: [
       { name: 'Visual Studio Code', style: { background: 'rgba(0,122,204,0.1)', color: '#007acc', borderColor: 'rgba(0,122,204,0.35)' } },
       { name: 'Visual Studio',      style: { background: 'rgba(0,122,204,0.1)', color: '#007acc', borderColor: 'rgba(0,122,204,0.35)' } },
