@@ -356,6 +356,24 @@ function RhythmPanel() {
           tags={['Beat Games', 'VR', '콘솔']}
         />
       </CollapsibleGroup>
+      <CollapsibleGroup label="보유 기기" count={2}>
+        <GameCard
+          icon="Q2"
+          iconStyle={{ background: 'linear-gradient(135deg,#5b21b6,#7c3aed)' }}
+          name="Meta Quest 2"
+          full="Meta Quest 2"
+          desc="Meta의 독립형 VR 헤드셋으로, Beat Saber 및 VRChat을 즐기는 데 사용 중입니다."
+          tags={['Meta', 'VR', '스탠드얼론']}
+        />
+        <GameCard
+          icon="SW"
+          iconStyle={{ background: 'linear-gradient(135deg,#e11d48,#dc2626)' }}
+          name="닌텐도 스위치 OLED"
+          full="Nintendo Switch OLED"
+          desc="닌텐도의 하이브리드 게임 콘솔로, 7인치 OLED 디스플레이가 탑재된 모델입니다."
+          tags={['Nintendo', '콘솔', '하이브리드']}
+        />
+      </CollapsibleGroup>
     </div>
   )
 }
