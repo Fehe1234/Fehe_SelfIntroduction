@@ -146,7 +146,7 @@ function MusicPanel() {
           tags={['t+pazolite', 'maimai', 'CHUNITHM', 'Groove Coaster']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="DJMAX" count={3}>
+      <CollapsibleGroup label="DJMAX" count={9}>
         <GameCard
           image="https://lh3.googleusercontent.com/4AL25VSiv__SDFNleL0U59TcC8Q-b5KoyIazIsja-J6a1J9kbz3JCi3jdN-k3QOVpTSmhvDp4wkcXKw=w544-h544-l90-rj"
           name="glory day (Extended ver.)"
@@ -167,6 +167,48 @@ function MusicPanel() {
           full="KATOMORI — DJMAX RESPECT V V LIBERTY DLC"
           desc="KATOMORI가 제작한 DJMAX RESPECT V V LIBERTY DLC 수록곡입니다. 빠른 템포와 강렬한 전자음이 특징으로, 후반부의 신시사이저 하이라이트가 인상적인 고난도 리듬게임 곡입니다."
           tags={['DJMAX', 'KATOMORI', 'V LIBERTY']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/Tizk95WT1rlFdsRPdFtMCenQTCJYGzVOcP3Q0urYFQluzuVdai742HcnIf-QI7LGgh6E_ZgBD9FZ8f28=w544-h544-l90-rj"
+          name="Kakera"
+          full="CLTH — DJMAX RESPECT V V LIBERTY II DLC"
+          desc="CLTH이 제작한 DJMAX RESPECT V V LIBERTY II DLC 수록곡입니다."
+          tags={['DJMAX', 'CLTH', 'V LIBERTY II']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/ov18Qe1aPI1RC9y9dZHz5ZBJcXCM5BuyKdbYZMIVHNZLmyqIFzkr3EtJLOCaDaWc-j-KovnegvuBg4Cf4A=w544-h544-l90-rj"
+          name="Mad (feat. WAMI)"
+          full="ESAI feat. WaMi — DJMAX RESPECT V V LIBERTY II DLC"
+          desc="ESAI가 제작하고 WaMi가 보컬을 맡은 DJMAX RESPECT V V LIBERTY II DLC 수록곡입니다."
+          tags={['DJMAX', 'ESAI', 'WaMi', 'V LIBERTY II']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/US0PZAgS6JRmilirNakfOJEw1He7swjdop4fgFdySgAXr4nLWu4JnP9JridO0dkkLYxnV2FtvyeGDYBYbw=w544-h544-l90-rj"
+          name="AURORA"
+          full="DJMAX RESPECT V 수록곡"
+          desc="DJMAX RESPECT V 2주년 기념으로 추가된 수록곡입니다."
+          tags={['DJMAX']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/Ak15D_jWaO2DBfYxQGcRiTZXQ5yi-J6pWeJDPvf2mH0q7c28O5TcM2GgP6o8a2Z3XnJByfpTfYkIHSU1Yw=w544-h544-l90-rj"
+          name="Final Hour (Game Ver.)"
+          full="Pure 100% feat. Chloe — DJMAX RESPECT V V LIBERTY DLC"
+          desc="Pure 100%가 제작하고 Chloe가 보컬을 맡은 DJMAX RESPECT V의 V LIBERTY DLC 6번째 타이틀 테마곡입니다. 오리지널 버전에 없는 파트가 포함된 게임 전용 버전입니다."
+          tags={['DJMAX', 'Pure 100%', 'Chloe', 'V LIBERTY']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/ov18Qe1aPI1RC9y9dZHz5ZBJcXCM5BuyKdbYZMIVHNZLmyqIFzkr3EtJLOCaDaWc-j-KovnegvuBg4Cf4A=w544-h544-l90-rj"
+          name="TOXIC (Extended Ver.) (feat. Shabel Tonya)"
+          full="INFX & MIIM feat. Shabel Tonya — DJMAX RESPECT V V LIBERTY II DLC"
+          desc="INFX & MIIM이 제작하고 버튜버 Shabel Tonya가 보컬을 맡은 DJMAX RESPECT V V LIBERTY II DLC 수록곡입니다."
+          tags={['DJMAX', 'INFX', 'MIIM', 'Shabel Tonya', 'V LIBERTY II']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/OY5kGq4pdUR89oq1UNSk5g00wK0ym2pUoMBjsLz3XLFuvib37Q9CFgK4T30Re8IZZ8pcHP6lRPABHXG9=w544-h544-l90-rj"
+          name="Shining Light (feat. Shabel Tonya)"
+          full="DJMAX RESPECT V V EXTENSION 5 DLC"
+          desc="버튜버 Shabel Tonya가 보컬로 참여한 DJMAX RESPECT V V EXTENSION 5 DLC 수록곡입니다."
+          tags={['DJMAX', 'Shabel Tonya', 'V EXTENSION 5']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="애니메이션" count={2}>
