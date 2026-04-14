@@ -49,7 +49,7 @@ function CollapsibleGroup({ label, count, nested, children }) {
 function MusicPanel() {
   return (
     <div className="game-cards">
-      <CollapsibleGroup label="동방 프로젝트" count={4}>
+      <CollapsibleGroup label="동방 프로젝트" count={5}>
         <GameCard
           image="https://lh3.googleusercontent.com/nkVcEQAFBSf7ZqWy-xa6LB2Us60QNTNL74E3iHlu1TBXHW1LUNGWts0jzkpWvSW8PYdmgYG_WeNZJKxDHA=w544-h544-l90-rj"
           name="最終鬼畜妹フランドール・Ｓ"
@@ -77,6 +77,13 @@ function MusicPanel() {
           full="U.N.オーエンは彼女なのか？ アレンジ — 東方紅魔郷"
           desc="ぱらどっと(Paradot)가 동방홍마향의 플랑드르 스칼렛 테마곡 'U.N. Owen Was Her?'를 원곡으로 제작한 어레인지 곡입니다. Arcaea 등 리듬게임에도 수록되었습니다."
           tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/kPrHv2vpwhp3oS0xywItx9FWsi_weVy4ZhM5q0rsUu2-BoZ5cxnAhuHQV7eDkzG6ZApys83zhjgSIX0=w544-h544-l90-rj"
+          name="Bad Apple!! feat.nomico"
+          full="Alstroemeria Records — Bad Apple!! アレンジ — 東方妙有夢"
+          desc="Alstroemeria Records가 동방묘유몽의 'Bad Apple!!'을 원곡으로 nomico의 보컬을 얹어 제작한 어레인지 곡입니다. 흑백 실루엣 MV로 전 세계적으로 유명해진 동방 어레인지의 전설적인 명곡입니다."
+          tags={['동방 프로젝트', 'Alstroemeria Records', 'nomico', '동방묘유몽']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="보컬로이드" count={3}>
