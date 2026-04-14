@@ -73,6 +73,17 @@ const SKILLS = [
     ],
     cls: 'custom',
   },
+  {
+    label: '툴',
+    items: [
+      { name: 'Visual Studio Code', style: { background: 'rgba(0,122,204,0.1)', color: '#007acc', borderColor: 'rgba(0,122,204,0.35)' } },
+      { name: 'Visual Studio',      style: { background: 'rgba(0,122,204,0.1)', color: '#007acc', borderColor: 'rgba(0,122,204,0.35)' } },
+      { name: 'Eclipse',            style: { background: 'rgba(44,109,167,0.1)', color: '#2c6da7', borderColor: 'rgba(44,109,167,0.35)' } },
+      { name: 'Python IDLE',        style: { background: 'rgba(55,118,171,0.1)', color: '#3776ab', borderColor: 'rgba(55,118,171,0.35)' } },
+      { name: 'Arduino IDE',        style: { background: 'rgba(0,151,156,0.1)', color: '#00979c', borderColor: 'rgba(0,151,156,0.35)' } },
+    ],
+    cls: 'custom',
+  },
 ]
 
 export default function HomePage() {
