@@ -78,6 +78,15 @@ function MusicPanel() {
           tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
         />
       </CollapsibleGroup>
+      <CollapsibleGroup label="보컬로이드" count={1}>
+        <GameCard
+          image="https://lh3.googleusercontent.com/YSDUjBs7wGeo6Vef4j0SZoHNpWiyLgqERx7JVB4sxEvdPOW6oWNRj3Z3nSiSHrrqd_JOS6LwcnIKeic=w544-h544-l90-rj"
+          name="失敗作少女 (MARETU Remix)"
+          full="かいりきベア feat. 初音ミク — MARETU Remix"
+          desc="かいりきベア가 초음 미쿠를 보컬로 제작한 곡을 MARETU가 리믹스한 버전입니다. 원곡과 리믹스 모두 니코니코 전당입성을 달성한 명곡입니다."
+          tags={['보컬로이드', 'かいりきベア', 'MARETU', '初音ミク']}
+        />
+      </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={1}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
