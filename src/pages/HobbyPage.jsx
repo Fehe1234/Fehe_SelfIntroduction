@@ -21,25 +21,61 @@ function GameCard({ icon, iconStyle, name, full, desc, tags }) {
   )
 }
 
+function CollapsibleGroup({ label, children }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div style={{ marginBottom: '0.5rem' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '0.5rem',
+          width: '100%', background: 'none', border: 'none', cursor: 'pointer',
+          padding: '0.5rem 0.2rem', marginBottom: open ? '0.6rem' : 0,
+        }}
+      >
+        <svg
+          width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+        <span className="sub-label" style={{ margin: 0 }}>{label}</span>
+      </button>
+      {open && <div>{children}</div>}
+    </div>
+  )
+}
+
 function MusicPanel() {
   return (
     <div className="game-cards">
-      <GameCard
-        icon="♪"
-        iconStyle={{ background: 'linear-gradient(135deg,#e879f9,#a855f7)' }}
-        name="동방 플랑도르S"
-        full="U.N. Owen Was Her? — 東方紅魔郷"
-        desc="ZUN이 제작한 동방 프로젝트의 대표곡으로, 동방홍마향에 등장하는 플랑드르 스칼렛의 테마곡입니다. 강렬하고 광기 넘치는 멜로디로 수많은 어레인지 버전이 탄생한 전설적인 곡입니다."
-        tags={['동방 프로젝트', 'ZUN', '동방홍마향']}
-      />
-      <GameCard
-        icon="♪"
-        iconStyle={{ background: 'linear-gradient(135deg,#38bdf8,#6366f1)' }}
-        name="魔理沙は大変なものを盗んでいきました"
-        full="恋色マスタースパーク アレンジ — 東方永夜抄"
-        desc="IOSYS가 동방영야초의 키리사메 마리사 테마곡 '연색 마스터 스파크'를 원곡으로 제작한 어레인지 곡입니다. 중독성 강한 멜로디와 가사로 동방 팬덤을 대표하는 명곡 중 하나입니다."
-        tags={['동방 프로젝트', 'IOSYS', '동방영야초']}
-      />
+      <CollapsibleGroup label="동방 프로젝트">
+        <GameCard
+          icon="♪"
+          iconStyle={{ background: 'linear-gradient(135deg,#e879f9,#a855f7)' }}
+          name="동방 플랑도르S"
+          full="U.N. Owen Was Her? — 東方紅魔郷"
+          desc="ZUN이 제작한 동방 프로젝트의 대표곡으로, 동방홍마향에 등장하는 플랑드르 스칼렛의 테마곡입니다. 강렬하고 광기 넘치는 멜로디로 수많은 어레인지 버전이 탄생한 전설적인 곡입니다."
+          tags={['동방 프로젝트', 'ZUN', '동방홍마향']}
+        />
+        <GameCard
+          icon="♪"
+          iconStyle={{ background: 'linear-gradient(135deg,#38bdf8,#6366f1)' }}
+          name="魔理沙は大変なものを盗んでいきました"
+          full="恋色マスタースパーク アレンジ — 東方永夜抄"
+          desc="IOSYS가 동방영야초의 키리사메 마리사 테마곡 '연색 마스터 스파크'를 원곡으로 제작한 어레인지 곡입니다. 중독성 강한 멜로디와 가사로 동방 팬덤을 대표하는 명곡 중 하나입니다."
+          tags={['동방 프로젝트', 'IOSYS', '동방영야초']}
+        />
+        <GameCard
+          icon="♪"
+          iconStyle={{ background: 'linear-gradient(135deg,#fb923c,#f43f5e)' }}
+          name="ベースラインやってる？笑"
+          full="Can I friend you on Bassbook? lol — ハートフェルトファンシー アレンジ — 東方地霊殿"
+          desc="IOSYS가 동방지령전의 고메이지 사토리 테마곡 'ハートフェルトファンシー'를 원곡으로 제작한 어레인지 곡입니다. 경쾌한 베이스라인과 독특한 제목으로 많은 사랑을 받는 곡입니다."
+          tags={['동방 프로젝트', 'IOSYS', '동방지령전']}
+        />
+      </CollapsibleGroup>
     </div>
   )
 }
