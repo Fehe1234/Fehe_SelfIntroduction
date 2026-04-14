@@ -109,7 +109,7 @@ function MusicPanel() {
           tags={['보컬로이드', 'ナナホシ管弦楽団', '巡音ルカ', 'SERRA']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="리듬게임 수록곡" count={3}>
+      <CollapsibleGroup label="리듬게임 수록곡" count={5}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
           name="竹 (feat. Choko)"
@@ -130,6 +130,20 @@ function MusicPanel() {
           full="xi — BMS 원곡"
           desc="xi가 BMS 콘테스트를 위해 제작한 오리지널 곡으로, osu!와 SOUND VOLTEX 등 수많은 리듬게임에 이식된 전설적인 초고난도 곡입니다."
           tags={['xi', 'BMS', 'osu!', 'SOUND VOLTEX']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/pWi4f8rB0xt88SEWsMMzizcoDZOlyoPG9tMSlyKGRHvtOG15g1ZN9IMeqBu1IDWfHx9073rA0x84LfeU=w544-h544-l90-rj"
+          name="Oshama Scramble! (uncut edition)"
+          full="t+pazolite — maimai ORANGE PLUS 원곡"
+          desc="t+pazolite가 제작한 곡으로 maimai를 시작으로 Arcaea, CHUNITHM 등 다양한 리듬게임에 이식된 인기곡입니다. SEGA 도쿄 조이폴리스 어트랙션에서 처음 선보인 곡입니다."
+          tags={['t+pazolite', 'maimai', 'Arcaea', 'CHUNITHM']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/pWi4f8rB0xt88SEWsMMzizcoDZOlyoPG9tMSlyKGRHvtOG15g1ZN9IMeqBu1IDWfHx9073rA0x84LfeU=w544-h544-l90-rj"
+          name="Garakuta Doll Play (uncut edition)"
+          full="t+pazolite — maimai GreeN 원곡"
+          desc="t+pazolite가 제작한 멜로딕 개버 곡으로 maimai GreeN에 수록된 것을 시작으로 CHUNITHM, Groove Coaster 등 다양한 리듬게임에 이식된 명곡입니다."
+          tags={['t+pazolite', 'maimai', 'CHUNITHM', 'Groove Coaster']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="DJMAX" count={3}>
