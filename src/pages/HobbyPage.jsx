@@ -24,11 +24,12 @@ function GameCard({ icon, iconStyle, image, name, full, desc, tags }) {
   )
 }
 
-function CollapsibleGroup({ label, count, children }) {
+function CollapsibleGroup({ label, count, nested, children }) {
   const [open, setOpen] = useState(false)
+  const n = nested ? ' nested' : ''
   return (
-    <div className="collapsible-group">
-      <button className={`collapsible-group-btn${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)}>
+    <div className={`collapsible-group${nested ? ' nested' : ''}`}>
+      <button className={`collapsible-group-btn${n}${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)}>
         <span className="collapsible-group-accent" />
         <span className="collapsible-group-label">{label}</span>
         {count != null && <span className="collapsible-group-count">{count}</span>}
@@ -40,7 +41,7 @@ function CollapsibleGroup({ label, count, children }) {
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </button>
-      {open && <div className="collapsible-group-body">{children}</div>}
+      {open && <div className={`collapsible-group-body${nested ? ' nested' : ''}`}>{children}</div>}
     </div>
   )
 }
@@ -125,6 +126,17 @@ function MusicPanel() {
           desc="TAK이 제작한 DJMAX RESPECT V의 V EXTENSION 시리즈 테마곡입니다. glory day의 보컬 DyoN Joo가 3년 만에 다시 참여했으며, 원제 'glory MAX'에 BEXTER가 제안한 부제가 합쳐져 최종 제목이 완성되었습니다."
           tags={['DJMAX', 'TAK', 'V EXTENSION']}
         />
+      </CollapsibleGroup>
+      <CollapsibleGroup label="애니메이션" count={1}>
+        <CollapsibleGroup nested label="체인소 맨" count={1}>
+          <GameCard
+            image="https://lh3.googleusercontent.com/Gn65QHGx26uZBC6Xtnn31y8TdqoIKqoa9az2Yw8ThFnA8EpszdJCoaCMbEiRjKa6kvStFWT9SkQHf0M=w544-h544-l90-rj"
+            name="JANE DOE"
+            full="米津玄師 × 宇多田ヒカル — チェンソーマン 극장판: 레제 편 엔딩"
+            desc="Kenshi Yonezu와 Hikaru Utada가 함께 제작한 체인소맨 극장판 레제 편의 엔딩 테마입니다. 두 아티스트의 이름을 건 특별한 협업곡으로, 덴지와 레제의 얽힌 운명을 담아냈습니다."
+            tags={['체인소 맨', '米津玄師', '宇多田ヒカル', '극장판']}
+          />
+        </CollapsibleGroup>
       </CollapsibleGroup>
     </div>
   )
