@@ -110,13 +110,20 @@ function MusicPanel() {
           tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="DJMAX" count={1}>
+      <CollapsibleGroup label="DJMAX" count={2}>
         <GameCard
           image="https://lh3.googleusercontent.com/4AL25VSiv__SDFNleL0U59TcC8Q-b5KoyIazIsja-J6a1J9kbz3JCi3jdN-k3QOVpTSmhvDp4wkcXKw=w544-h544-l90-rj"
           name="glory day (Extended ver.)"
           full="Prod. BEXTER X Mycin.T — DJMAX"
           desc="BEXTER와 Mycin.T가 제작한 DJMAX 시리즈의 수록곡입니다. DEEMO, Cytus 등 다양한 리듬게임에도 이식된 인기곡입니다."
           tags={['DJMAX', 'BEXTER', 'Mycin.T', 'DEEMO', 'Cytus']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/1VOEK9eGXKL1vRqf4oFMQHIC0ofGCSl1EUgabyuebokDg1UfUmKZuUBKAeCbbxo_K1ZBjMCvlbAQ91Rj=w544-h544-l90-rj"
+          name="glory MAX -나의 최대치로 너와 함께할게-"
+          full="TAK — DJMAX RESPECT V"
+          desc="TAK이 제작한 DJMAX RESPECT V의 V EXTENSION 시리즈 테마곡입니다. glory day의 보컬 DyoN Joo가 3년 만에 다시 참여했으며, 원제 'glory MAX'에 BEXTER가 제안한 부제가 합쳐져 최종 제목이 완성되었습니다."
+          tags={['DJMAX', 'TAK', 'V EXTENSION']}
         />
       </CollapsibleGroup>
     </div>
