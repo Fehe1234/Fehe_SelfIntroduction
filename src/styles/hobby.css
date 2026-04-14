@@ -81,6 +81,64 @@
 }
 .sub-label:first-child { margin-top: 0; }
 
+/* ── Collapsible Group ── */
+.collapsible-group { margin-bottom: 0.75rem; }
+
+.collapsible-group-btn {
+  display: flex; align-items: center; gap: 0.75rem;
+  width: 100%; background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 1rem; padding: 0.75rem 1.1rem;
+  cursor: pointer; font-family: inherit;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px var(--shadow);
+  transition: box-shadow 0.2s, border-color 0.2s;
+  margin-bottom: 0;
+}
+.collapsible-group-btn:hover {
+  border-color: var(--sky-deep);
+  box-shadow: 0 4px 20px rgba(107,189,224,0.15);
+}
+.collapsible-group-btn.open {
+  border-color: var(--sky-deep);
+  border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+}
+
+.collapsible-group-accent {
+  width: 4px; height: 28px; border-radius: 999px; flex-shrink: 0;
+  background: linear-gradient(180deg, var(--sky-mid, #6bbde0), var(--sky-deep));
+}
+
+.collapsible-group-label {
+  flex: 1; text-align: left;
+  font-size: 0.82rem; font-weight: 800; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text);
+}
+
+.collapsible-group-count {
+  font-size: 0.7rem; font-weight: 700;
+  color: var(--sky-deep); background: var(--sky-light);
+  border: 1px solid rgba(107,189,224,0.35);
+  padding: 0.15rem 0.55rem; border-radius: 999px;
+}
+
+.collapsible-group-chevron {
+  transition: transform 0.25s ease;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.collapsible-group-chevron.open { transform: rotate(90deg); }
+
+.collapsible-group-body {
+  border: 1.5px solid var(--sky-deep);
+  border-top: none;
+  border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;
+  padding: 1rem 1rem 0.75rem;
+  background: rgba(107,189,224,0.03);
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
 @media (max-width: 540px) {
   .hobby-page { padding: calc(var(--header-h) + 2rem) 1.25rem calc(var(--footer-h) + 3rem); }
   .game-card { flex-direction: column; gap: 0.9rem; }

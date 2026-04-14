@@ -24,28 +24,23 @@ function GameCard({ icon, iconStyle, image, name, full, desc, tags }) {
   )
 }
 
-function CollapsibleGroup({ label, children }) {
+function CollapsibleGroup({ label, count, children }) {
   const [open, setOpen] = useState(false)
   return (
-    <div style={{ marginBottom: '0.5rem' }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{
-          display: 'flex', alignItems: 'center', gap: '0.5rem',
-          width: '100%', background: 'none', border: 'none', cursor: 'pointer',
-          padding: '0.5rem 0.2rem', marginBottom: open ? '0.6rem' : 0,
-        }}
-      >
+    <div className="collapsible-group">
+      <button className={`collapsible-group-btn${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)}>
+        <span className="collapsible-group-accent" />
+        <span className="collapsible-group-label">{label}</span>
+        {count != null && <span className="collapsible-group-count">{count}</span>}
         <svg
-          width="14" height="14" viewBox="0 0 24 24" fill="none"
-          stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-          style={{ transition: 'transform 0.2s', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0 }}
+          className={`collapsible-group-chevron${open ? ' open' : ''}`}
+          width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
-        <span className="sub-label" style={{ margin: 0 }}>{label}</span>
       </button>
-      {open && <div>{children}</div>}
+      {open && <div className="collapsible-group-body">{children}</div>}
     </div>
   )
 }
@@ -53,7 +48,7 @@ function CollapsibleGroup({ label, children }) {
 function MusicPanel() {
   return (
     <div className="game-cards">
-      <CollapsibleGroup label="동방 프로젝트">
+      <CollapsibleGroup label="동방 프로젝트" count={4}>
         <GameCard
           image="https://lh3.googleusercontent.com/nkVcEQAFBSf7ZqWy-xa6LB2Us60QNTNL74E3iHlu1TBXHW1LUNGWts0jzkpWvSW8PYdmgYG_WeNZJKxDHA=w544-h544-l90-rj"
           name="동방 플랑도르S"
@@ -83,13 +78,15 @@ function MusicPanel() {
           tags={['동방 프로젝트']}
         />
       </CollapsibleGroup>
-      <GameCard
-        image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
-        name="竹 (feat. Choko)"
-        full="立秋 (Rissyuu) feat. ちょこ"
-        desc="立秋가 제작한 오리지널 곡으로, SOUND VOLTEX와 Arcaea 등 다양한 리듬게임에 수록된 곡입니다."
-        tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
-      />
+      <CollapsibleGroup label="리듬게임 수록곡" count={1}>
+        <GameCard
+          image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
+          name="竹 (feat. Choko)"
+          full="立秋 (Rissyuu) feat. ちょこ"
+          desc="立秋가 제작한 오리지널 곡으로, SOUND VOLTEX와 Arcaea 등 다양한 리듬게임에 수록된 곡입니다."
+          tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
+        />
+      </CollapsibleGroup>
     </div>
   )
 }
