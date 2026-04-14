@@ -118,7 +118,7 @@ function MusicPanel() {
           tags={['立秋', 'Rissyuu', 'SOUND VOLTEX', 'Arcaea']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="DJMAX" count={2}>
+      <CollapsibleGroup label="DJMAX" count={3}>
         <GameCard
           image="https://lh3.googleusercontent.com/4AL25VSiv__SDFNleL0U59TcC8Q-b5KoyIazIsja-J6a1J9kbz3JCi3jdN-k3QOVpTSmhvDp4wkcXKw=w544-h544-l90-rj"
           name="glory day (Extended ver.)"
@@ -132,6 +132,13 @@ function MusicPanel() {
           full="TAK — DJMAX RESPECT V"
           desc="TAK이 제작한 DJMAX RESPECT V의 V EXTENSION 시리즈 테마곡입니다. glory day의 보컬 DyoN Joo가 3년 만에 다시 참여했으며, 원제 'glory MAX'에 BEXTER가 제안한 부제가 합쳐져 최종 제목이 완성되었습니다."
           tags={['DJMAX', 'TAK', 'V EXTENSION']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/Ak15D_jWaO2DBfYxQGcRiTZXQ5yi-J6pWeJDPvf2mH0q7c28O5TcM2GgP6o8a2Z3XnJByfpTfYkIHSU1Yw=w544-h544-l90-rj"
+          name="Rhythm In My Head"
+          full="KATOMORI — DJMAX RESPECT V V LIBERTY DLC"
+          desc="KATOMORI가 제작한 DJMAX RESPECT V V LIBERTY DLC 수록곡입니다. 빠른 템포와 강렬한 전자음이 특징으로, 후반부의 신시사이저 하이라이트가 인상적인 고난도 리듬게임 곡입니다."
+          tags={['DJMAX', 'KATOMORI', 'V LIBERTY']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="애니메이션" count={2}>
