@@ -294,59 +294,60 @@ function MusicPanel() {
 function RhythmPanel() {
   return (
     <div className="game-cards">
-      <p className="sub-label">아케이드</p>
-      <GameCard
-        icon="SD"
-        iconStyle={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}
-        name="SDVX"
-        full="SOUND VOLTEX"
-        desc="KONAMI의 아케이드 리듬게임으로, 두 개의 아날로그 노브와 버튼을 조합해 플레이하는 독특한 조작감이 특징입니다."
-        tags={['KONAMI', '아날로그 노브']}
-      />
-      <GameCard
-        icon="mai"
-        iconStyle={{ background: 'linear-gradient(135deg,#f59e0b,#ef4444)' }}
-        name="maimai"
-        full="maimai DX"
-        desc="SEGA의 아케이드 리듬게임으로, 원형 디스플레이 주변의 버튼과 터치 패널을 활용해 플레이합니다."
-        tags={['SEGA', '터치 패널']}
-      />
-      <GameCard
-        icon="CHU"
-        iconStyle={{ background: 'linear-gradient(135deg,#06b6d4,#3b82f6)' }}
-        name="CHUNITHM"
-        full="CHUNITHM"
-        desc="SEGA의 아케이드 리듬게임으로, 슬라이더와 에어 센서를 활용하는 독창적인 조작 방식이 특징입니다."
-        tags={['SEGA', '에어 센서']}
-      />
-
-      <p className="sub-label">PC 게임</p>
-      <GameCard
-        icon="DM"
-        iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
-        name="DJMAX RESPECT V"
-        full="DJMAX RESPECT V"
-        desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
-        tags={['NEOWIZ', 'PC', 'Steam']}
-      />
-      <GameCard
-        icon="VR"
-        iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
-        name="VRChat"
-        full="VRChat"
-        desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
-        tags={['VRChat Inc.', 'PC / VR', '소셜']}
-      />
-
-      <p className="sub-label">콘솔 게임</p>
-      <GameCard
-        icon="BS"
-        iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
-        name="Beat Saber"
-        full="Beat Saber"
-        desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
-        tags={['Beat Games', 'VR', '콘솔']}
-      />
+      <CollapsibleGroup label="아케이드" count={3}>
+        <GameCard
+          icon="SD"
+          iconStyle={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}
+          name="SDVX"
+          full="SOUND VOLTEX"
+          desc="KONAMI의 아케이드 리듬게임으로, 두 개의 아날로그 노브와 버튼을 조합해 플레이하는 독특한 조작감이 특징입니다."
+          tags={['KONAMI', '아날로그 노브']}
+        />
+        <GameCard
+          icon="mai"
+          iconStyle={{ background: 'linear-gradient(135deg,#f59e0b,#ef4444)' }}
+          name="maimai"
+          full="maimai DX"
+          desc="SEGA의 아케이드 리듬게임으로, 원형 디스플레이 주변의 버튼과 터치 패널을 활용해 플레이합니다."
+          tags={['SEGA', '터치 패널']}
+        />
+        <GameCard
+          icon="CHU"
+          iconStyle={{ background: 'linear-gradient(135deg,#06b6d4,#3b82f6)' }}
+          name="CHUNITHM"
+          full="CHUNITHM"
+          desc="SEGA의 아케이드 리듬게임으로, 슬라이더와 에어 센서를 활용하는 독창적인 조작 방식이 특징입니다."
+          tags={['SEGA', '에어 센서']}
+        />
+      </CollapsibleGroup>
+      <CollapsibleGroup label="PC 게임" count={2}>
+        <GameCard
+          icon="DM"
+          iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
+          name="DJMAX RESPECT V"
+          full="DJMAX RESPECT V"
+          desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
+          tags={['NEOWIZ', 'PC', 'Steam']}
+        />
+        <GameCard
+          icon="VR"
+          iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
+          name="VRChat"
+          full="VRChat"
+          desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
+          tags={['VRChat Inc.', 'PC / VR', '소셜']}
+        />
+      </CollapsibleGroup>
+      <CollapsibleGroup label="콘솔 게임" count={1}>
+        <GameCard
+          icon="BS"
+          iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
+          name="Beat Saber"
+          full="Beat Saber"
+          desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
+          tags={['Beat Games', 'VR', '콘솔']}
+        />
+      </CollapsibleGroup>
     </div>
   )
 }
