@@ -79,7 +79,7 @@ function MusicPanel() {
           tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="보컬로이드" count={2}>
+      <CollapsibleGroup label="보컬로이드" count={3}>
         <GameCard
           image="https://lh3.googleusercontent.com/YSDUjBs7wGeo6Vef4j0SZoHNpWiyLgqERx7JVB4sxEvdPOW6oWNRj3Z3nSiSHrrqd_JOS6LwcnIKeic=w544-h544-l90-rj"
           name="失敗作少女 (MARETU Remix)"
@@ -93,6 +93,13 @@ function MusicPanel() {
           full="TAK feat. 初音ミク & 重音テト"
           desc="TAK이 제작한 초음 미쿠와 카사네 테토의 듀엣 곡입니다. 유튜브 4000만 뷰를 달성한 인기곡으로, 두 캐릭터의 유쾌한 라이벌 관계를 담은 가사가 특징입니다."
           tags={['보컬로이드', 'TAK', '初音ミク', '重音テト']}
+        />
+        <GameCard
+          image="https://i.ytimg.com/vi/DEBIiKV8L_s/hq720.jpg?sqp=-oaymwEXCNUGEOADIAQqCwjVARCqCBh4INgESFo&rs=AMzJL3nmFZ6LtESichMcx47X0RgLDQ0fSA"
+          name="抜錨 (Cover)"
+          full="ナナホシ管弦楽団 feat. 巡音ルカ 원곡 — SERRA Cover"
+          desc="ナナホシ管弦楽団이 巡音ルカを보컬로 제작한 보컬로이드 곡을 SERRA가 커버한 버전입니다. 독특한 기타 솔로와 서정적인 가사가 특징인 곡으로 유튜브 100만 뷰를 달성한 인기곡입니다."
+          tags={['보컬로이드', 'ナナホシ管弦楽団', '巡音ルカ', 'SERRA']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={1}>
