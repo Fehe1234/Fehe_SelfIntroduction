@@ -296,21 +296,24 @@ function RhythmPanel() {
     <div className="game-cards">
       <CollapsibleGroup label="아케이드" count={3}>
         <GameCard
-          image="https://i.namu.wiki/i/3cFqRw2D29sfjEHcyV4BKo88goQKL7QCgEddqF5vHJDgVTe906MjbmXHmBVEJfsLPTyCT75Rd5BL3D_2LADGF7B4z3_5aP_7veumaUML_pri1hw4YwTtu2beOQ6b8vzYsbQxayXUtSFFZwdbSJWJtQ.webp"
+          icon="SD"
+          iconStyle={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)' }}
           name="SOUND VOLTEX"
           full="SOUND VOLTEX EXCEED GEAR"
           desc="KONAMI의 아케이드 리듬게임으로, 두 개의 아날로그 노브와 버튼을 조합해 플레이하는 독특한 조작감이 특징입니다."
           tags={['KONAMI', '아날로그 노브']}
         />
         <GameCard
-          image="https://i.namu.wiki/i/-X0y3b4gyWivN74betHZxRk2yY5u1DB7oDfRJiILDhvNa7tDerz8EMuL88MQsQMlSWQVciIGEPYDlKZI0ZjlLmi1spajuOTsKoEPLzJoJXVxu1Ofjhiin8unU9bMxvE5g31fBgD6zlUZSefLpv_cUw.webp"
+          icon="mai"
+          iconStyle={{ background: 'linear-gradient(135deg,#f59e0b,#ef4444)' }}
           name="maimai DX"
           full="maimai DX UNiVERSE PLUS"
           desc="SEGA의 아케이드 리듬게임으로, 원형 디스플레이 주변의 버튼과 터치 패널을 활용해 플레이합니다."
           tags={['SEGA', '터치 패널']}
         />
         <GameCard
-          image="https://i.namu.wiki/i/l5wCa7cG2jBH4dFyBI63aOsNFUigMeUX1gXCp7_mrRHYTbKr8bCHzUh20_Wh03n_NJFMqJrnGGQX23sAHeufBqGwl2V_wHBBqE7q2TYoQyAZxMpNWL54khIcmGHxTcOcb2Nto_9eYm9A-u7xl8l-WA.webp"
+          icon="CHU"
+          iconStyle={{ background: 'linear-gradient(135deg,#06b6d4,#3b82f6)' }}
           name="CHUNITHM"
           full="CHUNITHM SUN PLUS"
           desc="SEGA의 아케이드 리듬게임으로, 슬라이더와 에어 센서를 활용하는 독창적인 조작 방식이 특징입니다."
@@ -319,14 +322,16 @@ function RhythmPanel() {
       </CollapsibleGroup>
       <CollapsibleGroup label="PC 게임" count={3}>
         <GameCard
-          image="https://i.namu.wiki/i/VpQkNRSvR8Cka4VfYIElY64FluqPVtsilCsBB6neIE_m_TSiluQkf9cP7brpmNfSHG44lZKiF7BwJ-LclMU1LAJy3-MGOYqhvJkjzcP0xrfNLrziMuDJn4OcZaRvI5NTkJpafmt-jP6qGF7jQ5tg.webp"
+          icon="DM"
+          iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
           name="DJMAX RESPECT V"
           full="DJMAX RESPECT V"
           desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
           tags={['NEOWIZ', 'PC', 'Steam']}
         />
         <GameCard
-          image="https://i.namu.wiki/i/_QZ_fQHUmix0tV-85sko76xkliqZtG7gLDAEzNX1Qa3rExc0n56j6wHB2llpri85TdEP4KFgWHx2JPC6IA48BBs8BLVucM3ReI0Sl0hsu32S2zhG2CcH2dfzDfAHy-uRkBxhRBJexzruXQH4Cew2nw.webp"
+          icon="VR"
+          iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
           name="VRChat"
           full="VRChat"
           desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
@@ -343,7 +348,8 @@ function RhythmPanel() {
       </CollapsibleGroup>
       <CollapsibleGroup label="콘솔 게임" count={1}>
         <GameCard
-          image="https://i.namu.wiki/i/-TKXveuiAKuG-TTTATd0moRLn4kMihKc136NHDQghpukWDsw3P1ftZsza-dpuM5pPNhtpdiw7TqSu8x8MOOkQR_SQbH9LpJFJGiAztslP3fuBxvE_I0oxkFm3plhotkcuau9vHqmf-lSbVcKhAN24Q.webp"
+          icon="BS"
+          iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
           name="Beat Saber"
           full="Beat Saber"
           desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
