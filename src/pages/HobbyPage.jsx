@@ -128,7 +128,14 @@ function MusicPanel() {
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="애니메이션" count={1}>
-        <CollapsibleGroup nested label="체인소 맨" count={1}>
+        <CollapsibleGroup nested label="체인소 맨" count={2}>
+          <GameCard
+            image="https://lh3.googleusercontent.com/VGf2lFXKQdSyrz2g3Czj66doPtUxvJBrWDK6UFeOj8zRqS-tgs_D8FG5-8pYTX-Uh9FxZBDJIXtN1nKF=w544-h544-l90-rj"
+            name="IRIS OUT"
+            full="米津玄師 — チェンソーマン 극장판: 레제 편"
+            desc="Kenshi Yonezu가 제작한 체인소맨 극장판 레제 편의 주제곡입니다. JANE DOE와 함께 더블 A사이드 싱글로 발매되었습니다."
+            tags={['체인소 맨', '米津玄師', '극장판']}
+          />
           <GameCard
             image="https://lh3.googleusercontent.com/Gn65QHGx26uZBC6Xtnn31y8TdqoIKqoa9az2Yw8ThFnA8EpszdJCoaCMbEiRjKa6kvStFWT9SkQHf0M=w544-h544-l90-rj"
             name="JANE DOE"
