@@ -78,13 +78,20 @@ function MusicPanel() {
           tags={['동방 프로젝트', 'Paradot', '동방홍마향', 'Arcaea']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="보컬로이드" count={1}>
+      <CollapsibleGroup label="보컬로이드" count={2}>
         <GameCard
           image="https://lh3.googleusercontent.com/YSDUjBs7wGeo6Vef4j0SZoHNpWiyLgqERx7JVB4sxEvdPOW6oWNRj3Z3nSiSHrrqd_JOS6LwcnIKeic=w544-h544-l90-rj"
           name="失敗作少女 (MARETU Remix)"
           full="かいりきベア feat. 初音ミク — MARETU Remix"
           desc="かいりきベア가 초음 미쿠를 보컬로 제작한 곡을 MARETU가 리믹스한 버전입니다. 원곡과 리믹스 모두 니코니코 전당입성을 달성한 명곡입니다."
           tags={['보컬로이드', 'かいりきベア', 'MARETU', '初音ミク']}
+        />
+        <GameCard
+          image="https://lh3.googleusercontent.com/bFw1V4bmysN7lcKpq6KKTaWSxs7XwaxTSM5cQEDfeqQmWdSaSICrwmoewJvYfl_e6KirgC54kZEVr5Af=w544-h544-l90-rj"
+          name="PPPP (feat. Hatsune Miku, Kasane Teto)"
+          full="TAK feat. 初音ミク & 重音テト"
+          desc="TAK이 제작한 초음 미쿠와 카사네 테토의 듀엣 곡입니다. 유튜브 4000만 뷰를 달성한 인기곡으로, 두 캐릭터의 유쾌한 라이벌 관계를 담은 가사가 특징입니다."
+          tags={['보컬로이드', 'TAK', '初音ミク', '重音テト']}
         />
       </CollapsibleGroup>
       <CollapsibleGroup label="리듬게임 수록곡" count={1}>
