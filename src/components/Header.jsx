@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { IconHome, IconYoutube, IconHobby, IconGithub, IconSteam } from './icons'
+import { IconHome, IconYoutube, IconHobby, IconDiary, IconGithub, IconSteam } from './icons'
 
 export default function Header() {
   const navigate = useNavigate()
   const location = useLocation()
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const activePage = location.pathname === '/' ? 'home' : location.pathname.slice(1)
+  const activePage = location.pathname === '/' ? 'home' : location.pathname.replace(/^\//, '').split('/')[0]
 
   function switchPage(path) {
     navigate(path)
@@ -51,6 +51,12 @@ export default function Header() {
           onClick={() => switchPage('/hobby')}
         >
           <IconHobby /> 취미
+        </button>
+        <button
+          className={`drawer-btn ${activePage === 'diary' ? 'active' : ''}`}
+          onClick={() => switchPage('/diary')}
+        >
+          <IconDiary /> 일기
         </button>
 
         <div className="drawer-divider" />

@@ -6,6 +6,8 @@ import MusicPlayer from './components/MusicPlayer'
 import HomePage from './pages/HomePage'
 import YoutubePage from './pages/YoutubePage'
 import HobbyPage from './pages/HobbyPage'
+import DiaryPage from './pages/DiaryPage'
+import DiaryWritePage from './pages/DiaryWritePage'
 
 export default function App() {
   return (
@@ -13,9 +15,11 @@ export default function App() {
       <BgDeco />
       <Header />
       <Routes>
-        <Route path="/"        element={<HomePage />} />
-        <Route path="/youtube" element={<YoutubePage />} />
-        <Route path="/hobby"   element={<HobbyPage />} />
+        <Route path="/"            element={<HomePage />} />
+        <Route path="/youtube"     element={<YoutubePage />} />
+        <Route path="/hobby"       element={<HobbyPage />} />
+        <Route path="/diary"       element={<DiaryPage />} />
+        <Route path="/diary/write" element={<DiaryWritePage />} />
       </Routes>
       <Footer />
       <MusicPlayer />
