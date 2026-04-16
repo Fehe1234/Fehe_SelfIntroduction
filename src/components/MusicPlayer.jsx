@@ -118,6 +118,11 @@ export default function MusicPlayer() {
           setPlaying(isPlaying)
           if (isPlaying) startTimer()
           else clearInterval(timerRef.current)
+          // 곡이 끝나면 처음부터 다시 재생
+          if (e.data === window.YT.PlayerState.ENDED) {
+            e.target.seekTo(0)
+            e.target.playVideo()
+          }
         },
       },
     })
