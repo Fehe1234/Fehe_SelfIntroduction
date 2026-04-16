@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db } from '../firebase'
+import { db, rtdb } from '../firebase'
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/firestore'
+import { ref, get } from 'firebase/database'
 
-const PW = 'alphaman0912'
+async function fetchPW() {
+  const snap = await get(ref(rtdb, 'app/pw'))
+  return snap.val()
+}
 
 function PasswordModal({ onClose, onSuccess }) {
   const [input, setInput] = useState('')
   const [error, setError] = useState(false)
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
-    if (input === PW) {
+    const pw = await fetchPW()
+    if (input === pw) {
       onSuccess()
     } else {
       setError(true)
