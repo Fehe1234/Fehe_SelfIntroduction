@@ -6,6 +6,7 @@ import { ref, get } from 'firebase/database'
 
 async function fetchPW() {
   const snap = await get(ref(rtdb, 'app/pw'))
+  console.log('fetchPW result:', snap.val())
   return snap.val()
 }
 
