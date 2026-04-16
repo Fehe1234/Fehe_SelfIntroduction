@@ -62,9 +62,13 @@ export default function MusicPlayer() {
       },
       events: {
         onReady(e) {
-          e.target.setVolume(40)
-          setReady(true)
+          e.target.mute()
           e.target.playVideo()
+          setTimeout(() => {
+            e.target.unMute()
+            e.target.setVolume(40)
+          }, 100)
+          setReady(true)
           setPlaying(true)
           startTimer()
         },
