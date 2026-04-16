@@ -19,7 +19,8 @@ export default function App() {
       <Routes>
         <Route path="/"            element={<HomePage />} />
         <Route path="/youtube"     element={<YoutubePage />} />
-        <Route path="/hobby"       element={<HobbyPage />} />
+        <Route path="/hobby"        element={<HobbyPage />} />
+        <Route path="/hobby/:tab"   element={<HobbyPage />} />
         <Route path="/diary"       element={<DiaryPage />} />
         <Route path="/diary/write" element={<DiaryWritePage />} />
         <Route path="/test-gate"   element={<TestGatePage />} />

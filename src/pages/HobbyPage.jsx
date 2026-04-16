@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const HOBBY_TABS = [
   { key: 'music',  label: '음악' },
@@ -395,7 +396,9 @@ function DevicePanel() {
 const PANELS = { music: MusicPanel, rhythm: RhythmPanel, device: DevicePanel }
 
 export default function HobbyPage() {
-  const [activeTab, setActiveTab] = useState('music')
+  const { tab } = useParams()
+  const navigate = useNavigate()
+  const activeTab = PANELS[tab] ? tab : 'music'
   const Panel = PANELS[activeTab]
 
   return (
@@ -415,13 +418,13 @@ export default function HobbyPage() {
       </div>
 
       <div className="hobby-tabs">
-        {HOBBY_TABS.map(tab => (
+        {HOBBY_TABS.map(t => (
           <button
-            key={tab.key}
-            className={`hobby-tab ${activeTab === tab.key ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.key)}
+            key={t.key}
+            className={`hobby-tab ${activeTab === t.key ? 'active' : ''}`}
+            onClick={() => navigate(`/hobby/${t.key}`)}
           >
-            {tab.label}
+            {t.label}
           </button>
         ))}
       </div>
