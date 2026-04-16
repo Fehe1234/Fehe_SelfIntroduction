@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db, rtdb } from '../firebase'
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/firestore'
-import { ref, get } from 'firebase/database'
+import { db } from '../firebase'
+import { collection, getDocs, deleteDoc, doc, orderBy, query, getDoc } from 'firebase/firestore'
 
 async function fetchPW() {
-  const snap = await get(ref(rtdb, 'sessions/app/pw'))
-  return snap.val()
+  const snap = await getDoc(doc(db, 'config', 'admin'))
+  return snap.exists() ? snap.data().pw : null
 }
 
 function PasswordModal({ onClose, onSuccess }) {
