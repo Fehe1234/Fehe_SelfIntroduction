@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 export default function DiaryWritePage() {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     if (sessionStorage.getItem('diary_auth') !== '1') {
@@ -12,22 +15,26 @@ export default function DiaryWritePage() {
     }
   }, [navigate])
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
     if (!title.trim() || !content.trim()) return
 
-    const posts = JSON.parse(localStorage.getItem('diary_entries') || '[]')
-    const now = new Date()
-    const date = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`
-    posts.push({
-      id: Date.now().toString(),
-      title: title.trim(),
-      content: content.trim(),
-      date,
-    })
-    localStorage.setItem('diary_entries', JSON.stringify(posts))
-    sessionStorage.removeItem('diary_auth')
-    navigate('/diary')
+    setSaving(true)
+    try {
+      const now = new Date()
+      const date = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`
+      await addDoc(collection(db, 'diary'), {
+        title: title.trim(),
+        content: content.trim(),
+        date,
+        createdAt: serverTimestamp(),
+      })
+      sessionStorage.removeItem('diary_auth')
+      navigate('/diary')
+    } catch {
+      alert('저장 중 오류가 발생했습니다.')
+      setSaving(false)
+    }
   }
 
   return (
@@ -71,9 +78,9 @@ export default function DiaryWritePage() {
         <button
           type="submit"
           className="diary-submit-btn"
-          disabled={!title.trim() || !content.trim()}
+          disabled={!title.trim() || !content.trim() || saving}
         >
-          저장하기
+          {saving ? '저장 중...' : '저장하기'}
         </button>
       </form>
     </div>
