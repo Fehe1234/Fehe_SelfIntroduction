@@ -93,7 +93,7 @@ export default function MusicPlayer() {
     playerRef.current = new window.YT.Player(containerRef.current, {
       videoId: VIDEO_ID,
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         loop: 1,
         playlist: VIDEO_ID,
         controls: 0,
@@ -103,15 +103,10 @@ export default function MusicPlayer() {
       },
       events: {
         onReady(e) {
-          e.target.mute()
-          e.target.playVideo()
-          setTimeout(() => {
-            e.target.unMute()
-            e.target.setVolume(DEFAULT_VOL)
-          }, 100)
+          e.target.setVolume(DEFAULT_VOL)
+          e.target.stopVideo()
           setReady(true)
-          setPlaying(true)
-          startTimer()
+          setPlaying(false)
         },
         onStateChange(e) {
           const isPlaying = e.data === window.YT.PlayerState.PLAYING
