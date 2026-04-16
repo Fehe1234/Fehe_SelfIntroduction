@@ -192,6 +192,15 @@ export default function EasterEgg() {
         )
         break
 
+      case 'cd /secret':
+      case 'cd/secret':
+        out.push({ type: 'accent', text: '접속 중...' })
+        setTimeout(() => {
+          setOpen(false)
+          window.location.href = '/secret'
+        }, 800)
+        break
+
       case 'sudo rm -rf /':
       case 'sudo rm -rf':
       case 'rm -rf /':
