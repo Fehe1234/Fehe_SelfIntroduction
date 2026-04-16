@@ -6,39 +6,143 @@
   z-index: 200;
 }
 
-.music-btn {
+.music-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  width: 240px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 6px 28px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset;
+}
+
+/* 곡 정보 행 */
+.music-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.9rem 0.5rem 0.75rem;
-  border: 1.5px solid var(--border);
-  border-radius: 999px;
-  background: var(--card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px var(--shadow);
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.72rem;
-  font-weight: 700;
+  gap: 0.6rem;
+}
+
+.music-note-icon {
+  flex-shrink: 0;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky-mid, #6bbde0), var(--sky-deep));
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s;
+}
+.music-note-icon.spin {
+  animation: music-spin 3s linear infinite;
+}
+@keyframes music-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.music-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.music-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.music-artist {
+  font-size: 0.65rem;
+  font-weight: 600;
   color: var(--text-muted);
-  letter-spacing: 0.04em;
-  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.music-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(107,189,224,0.2);
-  border-color: var(--sky-deep);
+/* 재생/정지 버튼 */
+.music-toggle {
+  align-self: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--sky-light);
   color: var(--sky-deep);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  margin-left: auto;
+}
+.music-toggle:hover { transform: scale(1.1); }
+.music-toggle.playing {
+  background: linear-gradient(135deg, var(--sky-mid, #6bbde0), var(--sky-deep));
+  color: #fff;
 }
 
-.music-btn.playing {
-  border-color: var(--sky-deep);
-  color: var(--sky-deep);
-  background: rgba(107,189,224,0.08);
+/* 재생바 */
+.music-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  cursor: pointer;
 }
 
-.music-label {
-  line-height: 1;
+.music-progress-bg {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: visible;
+}
+
+.music-progress-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sky-mid, #6bbde0), var(--sky-deep));
+  transition: width 0.4s linear;
+  pointer-events: none;
+}
+
+.music-progress-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--sky-deep);
+  box-shadow: 0 0 0 2px rgba(107,189,224,0.3);
+  pointer-events: none;
+  transition: left 0.4s linear;
+}
+
+.music-time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* 재생바 호버 */
+.music-progress-wrap:hover .music-progress-bg {
+  height: 6px;
+}
+.music-progress-wrap:hover .music-progress-thumb {
+  width: 12px; height: 12px;
+}
+
+@media (max-width: 540px) {
+  .music-card { width: 200px; }
 }
