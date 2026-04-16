@@ -184,10 +184,11 @@ export default function EasterEgg() {
         out.push(
           { type: 'output', text: '...찾았군요.' },
           { type: 'output', text: '' },
-          { type: 'accent', text: '비밀번호는 페헤의 이름과 숫자의 조합입니다.' },
-          { type: 'output', text: '이미 알고 계신 분도 있겠죠?' },
+          { type: 'accent', text: '여기까지 왔다면, 더 깊이 들어갈 용기도 있겠죠.' },
           { type: 'output', text: '' },
-          { type: 'output', text: '힌트: /diary 에서 사용됩니다.' },
+          { type: 'info',   text: '  $ cd /secret' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '무엇을 발견하게 될지는... 직접 확인하세요.' },
         )
         break
 
