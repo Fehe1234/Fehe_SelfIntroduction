@@ -5,8 +5,7 @@ import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/fi
 import { ref, get } from 'firebase/database'
 
 async function fetchPW() {
-  const snap = await get(ref(rtdb, 'app/pw'))
-  console.log('fetchPW result:', snap.val())
+  const snap = await get(ref(rtdb, 'sessions/app/pw'))
   return snap.val()
 }
 
