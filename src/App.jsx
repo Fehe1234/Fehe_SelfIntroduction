@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import MusicPlayer from './components/MusicPlayer'
 import VisitorGate from './components/VisitorGate'
 import EasterEgg from './components/EasterEgg'
+import VersionWatcher from './components/VersionWatcher'
 import HomePage from './pages/HomePage'
 import YoutubePage from './pages/YoutubePage'
 import HobbyPage from './pages/HobbyPage'
@@ -31,6 +32,7 @@ export default function App() {
       <Footer />
       <MusicPlayer />
       <EasterEgg />
+      <VersionWatcher />
     </VisitorGate>
   )
 }
