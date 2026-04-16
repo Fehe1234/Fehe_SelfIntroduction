@@ -1,0 +1,44 @@
+/* ── MUSIC PLAYER ── */
+.music-player {
+  position: fixed;
+  bottom: calc(var(--footer-h) + 1rem);
+  right: 1.25rem;
+  z-index: 200;
+}
+
+.music-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem 0.5rem 0.75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px var(--shadow);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.music-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(107,189,224,0.2);
+  border-color: var(--sky-deep);
+  color: var(--sky-deep);
+}
+
+.music-btn.playing {
+  border-color: var(--sky-deep);
+  color: var(--sky-deep);
+  background: rgba(107,189,224,0.08);
+}
+
+.music-label {
+  line-height: 1;
+}
