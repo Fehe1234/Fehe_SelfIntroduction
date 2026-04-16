@@ -10,3 +10,13 @@ footer {
   border-top: 1.5px solid var(--border);
 }
 footer span { color: var(--sky-deep); font-weight: 700; }
+.footer-ghost {
+  position: absolute;
+  font-size: 0.55rem;
+  color: transparent;
+  user-select: none;
+  bottom: 2px;
+  letter-spacing: 0.02em;
+  transition: color 2s ease;
+}
+.footer-ghost:hover { color: var(--text-muted); }
