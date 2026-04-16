@@ -195,6 +195,13 @@ export default function HomePage() {
             </div>
           </div>
         ))}
+
+        <div className="skill-card cert-card">
+          <p className="skill-cat-label">자격증</p>
+          <div className="skill-badges">
+            <span className="cert-empty">취득한 자격증이 없습니다.</span>
+          </div>
+        </div>
       </section>
     </>
   )
