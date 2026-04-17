@@ -30,19 +30,52 @@ function Glitch({ text }) {
   )
 }
 
+function AccessDenied() {
+  const navigate = useNavigate()
+  const [count, setCount] = useState(3)
+
+  useEffect(() => {
+    const t = setInterval(() => setCount(c => c - 1), 1000)
+    const r = setTimeout(() => navigate('/', { replace: true }), 3200)
+    return () => { clearInterval(t); clearTimeout(r) }
+  }, [navigate])
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, background: '#06060f',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexDirection: 'column', gap: '1rem',
+      fontFamily: "'Menlo','Monaco','Consolas',monospace", color: '#e6edf3',
+    }}>
+      <p style={{ color: '#f85149', fontSize: '0.75rem', letterSpacing: '0.15em', fontWeight: 700 }}>
+        [ ACCESS DENIED ]
+      </p>
+      <p style={{ fontSize: '1.1rem', fontWeight: 700 }}>
+        경로는 알고 있군요.
+      </p>
+      <p style={{ color: '#8b949e', fontSize: '0.88rem', textAlign: 'center', lineHeight: 1.8 }}>
+        하지만 이 문은 URL로 열리지 않습니다.<br />
+        열쇠는 다른 곳에 있어요.
+      </p>
+      <p style={{ color: '#484f58', fontSize: '0.75rem', marginTop: '0.5rem' }}>
+        {count}초 후 돌아갑니다...
+      </p>
+    </div>
+  )
+}
+
 export default function SecretPage() {
   const navigate = useNavigate()
+  const [authed] = useState(() => !!sessionStorage.getItem('secret_auth'))
   const [visibleCount, setVisibleCount] = useState(0)
   const [showBack, setShowBack] = useState(false)
   const [stars, setStars] = useState([])
 
   useEffect(() => {
-    if (!sessionStorage.getItem('secret_auth')) {
-      navigate('/', { replace: true })
-      return
-    }
-    sessionStorage.removeItem('secret_auth')
-  }, [navigate])
+    if (authed) sessionStorage.removeItem('secret_auth')
+  }, [authed])
+
+  if (!authed) return <AccessDenied />
 
   useEffect(() => {
     setStars(
