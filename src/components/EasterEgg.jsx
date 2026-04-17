@@ -151,7 +151,7 @@ function VRNovel({ onEnd }) {
       <div className="vr-novel-location">📍 어느 조용한 카페</div>
 
       {/* 하단 대화창 */}
-      <div className="vr-novel-box" onClick={e => e.stopPropagation()}>
+      <div className="vr-novel-box" onClick={e => { e.stopPropagation(); if (e.target.tagName !== 'BUTTON') advance() }}>
         <div className="vr-novel-name">{node.speaker}</div>
         <p className={`vr-novel-text${node.action ? ' action' : ''}`}>
           {displayed}
