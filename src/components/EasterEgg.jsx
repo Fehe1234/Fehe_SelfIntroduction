@@ -105,7 +105,6 @@ export default function EasterEgg() {
           { type: 'info', text: '│  date      현재 시각                      │' },
           { type: 'info', text: '│  ping      연결 테스트                    │' },
           { type: 'info', text: '│  matrix    ???                            │' },
-          { type: 'info', text: '│  secret    힌트가 있을지도...             │' },
           { type: 'info', text: '│  clear     화면 지우기                    │' },
           { type: 'info', text: '│  exit      터미널 닫기                    │' },
           { type: 'info', text: '└───────────────────────────────────────────┘' },
@@ -117,6 +116,8 @@ export default function EasterEgg() {
           { type: 'output', text: '페헤 (Fehe)' },
           { type: 'output', text: '개발자 · 인플루언서 · 커뮤니티 빌더' },
           { type: 'output', text: 'uid=1234(fehe) gid=1234(fehe) groups=developer,creator' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '...그리고 당신이 아직 모르는 곳이 하나 있습니다.' },
         )
         break
 
@@ -148,7 +149,7 @@ export default function EasterEgg() {
           { type: 'output', text: 'drwxr-xr-x  /youtube    →  YouTube 영상' },
           { type: 'output', text: 'drwxr-xr-x  /hobby      →  취미' },
           { type: 'output', text: 'drwxr-xr-x  /diary      →  일기' },
-          { type: 'output', text: '-rw-------  /.secret    →  ???' },
+          { type: 'output', text: '??????????  /???????    →  [접근 권한 없음]' },
         )
         break
 
@@ -182,13 +183,11 @@ export default function EasterEgg() {
 
       case 'secret':
         out.push(
-          { type: 'output', text: '...찾았군요.' },
+          { type: 'output', text: '...이 명령어를 알고 있었군요.' },
           { type: 'output', text: '' },
-          { type: 'accent', text: '여기까지 왔다면, 더 깊이 들어갈 용기도 있겠죠.' },
+          { type: 'accent', text: '닫혀 있는 문은 잠겨 있는 문이 아닙니다.' },
           { type: 'output', text: '' },
-          { type: 'info',   text: '  $ cd /secret' },
-          { type: 'output', text: '' },
-          { type: 'output', text: '무엇을 발견하게 될지는... 직접 확인하세요.' },
+          { type: 'output', text: '디렉터리는 이미 존재합니다 — 이름만 알면 들어갈 수 있어요.' },
         )
         break
 
