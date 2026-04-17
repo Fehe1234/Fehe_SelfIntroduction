@@ -292,6 +292,200 @@ export default function EasterEgg() {
     const out = []
     out.push({ type: 'input', text: `fehe@site ~ % ${raw}` })
 
+    // ── 인자 포함 명령어 처리 ──
+    if (cmd.startsWith('echo ')) {
+      out.push({ type: 'output', text: raw.trim().slice(5) })
+      addLines(out); return
+    }
+    if (cmd.startsWith('cat ')) {
+      const f = cmd.slice(4).trim()
+      if (f === '.bash_history' || f === '~/.bash_history') {
+        out.push(
+          { type: 'output', text: '    1  cd /home/fehe' },
+          { type: 'output', text: '    2  ls -la 인생' },
+          { type: 'output', text: '    3  rm -rf 걱정' },
+          { type: 'output', text: '    4  git commit -m "오늘도 살아있음"' },
+          { type: 'output', text: '    5  ssh 현실  # Connection refused' },
+          { type: 'output', text: '    6  cd /vr && ./vrchat' },
+          { type: 'output', text: '    7  sleep 99999  # 항상 부족함' },
+        )
+      } else if (f === 'readme.md' || f === 'readme' || f === './readme.md') {
+        out.push(
+          { type: 'accent', text: '# 페헤 (Fehe)' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '2014년부터 인터넷에 존재해온 개발자.' },
+          { type: 'output', text: '현실보다 가상에 더 자주 접속합니다.' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '## 연락처' },
+          { type: 'output', text: '이 터미널이 유일한 연락 수단입니다.' },
+        )
+      } else if (f === '/etc/passwd') {
+        out.push(
+          { type: 'output', text: 'root:x:0:0:전지전능:/root:/bin/bash' },
+          { type: 'output', text: 'fehe:x:1234:1234:페헤,VRChat,개발자:/home/fehe:/bin/zsh' },
+          { type: 'output', text: 'visitor:x:9999:9999:당신:/tmp:/bin/false' },
+        )
+      } else {
+        out.push({ type: 'error', text: `cat: ${f}: No such file or directory` })
+      }
+      addLines(out); return
+    }
+    if (cmd.startsWith('ssh')) {
+      out.push(
+        { type: 'error', text: 'ssh: connect to host 현실 port 22: Connection refused' },
+        { type: 'output', text: '현실은 이 방향으로 접근할 수 없습니다.' },
+      )
+      addLines(out); return
+    }
+    if (cmd.startsWith('curl') || cmd.startsWith('wget')) {
+      out.push(
+        { type: 'error', text: `${cmd.split(' ')[0]}: (6) Could not resolve host: 현실` },
+        { type: 'output', text: '현실 서버가 응답하지 않습니다.' },
+      )
+      addLines(out); return
+    }
+    if (cmd.startsWith('chmod')) {
+      out.push(
+        { type: 'error', text: 'chmod: Operation not permitted' },
+        { type: 'output', text: '이 세계의 권한 설정은 변경할 수 없습니다.' },
+      )
+      addLines(out); return
+    }
+    if (cmd.startsWith('mkdir')) {
+      const name = raw.trim().slice(6).trim() || '폴더'
+      const msgs = { '꿈': `mkdir: ${name}: File exists`, '미래': `mkdir: ${name}: Permission denied` }
+      out.push({ type: msgs[name] ? 'error' : 'output', text: msgs[name] ?? `mkdir: ${name}: 생성됨 (곧 사라질 수 있음)` })
+      addLines(out); return
+    }
+    if (cmd.startsWith('touch')) {
+      const name = raw.trim().slice(6).trim() || '파일'
+      out.push({ type: 'output', text: `touch: '${name}' 은 이미 당신의 마음속에 있습니다.` })
+      addLines(out); return
+    }
+    if (cmd.startsWith('git')) {
+      if (cmd === 'git log' || cmd === 'git log --oneline') {
+        out.push(
+          { type: 'accent', text: 'commit 3f4a8b2 (HEAD -> main, origin/main)' },
+          { type: 'output', text: 'Author: 페헤 <fehe@internet.life>' },
+          { type: 'output', text: 'Date:   오늘' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '    feat: 오늘도 살아있음' },
+          { type: 'output', text: '' },
+          { type: 'accent', text: 'commit a1b2c3d' },
+          { type: 'output', text: 'Author: 페헤 <fehe@internet.life>' },
+          { type: 'output', text: 'Date:   며칠 전' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '    fix: 현실 버그 수정 시도 (실패)' },
+          { type: 'output', text: '' },
+          { type: 'accent', text: 'commit f76baa6' },
+          { type: 'output', text: 'Author: 페헤 <fehe@internet.life>' },
+          { type: 'output', text: 'Date:   2014' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '    init: 페헤라는 이름으로 인터넷 시작' },
+        )
+      } else if (cmd === 'git status') {
+        out.push(
+          { type: 'accent', text: 'On branch main' },
+          { type: 'output', text: "Your branch is ahead of '현실' by 3,650 commits." },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'Changes not staged for commit:' },
+          { type: 'error',  text: '        modified:   삶.txt' },
+          { type: 'error',  text: '        modified:   꿈.md' },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'Untracked files:' },
+          { type: 'info',   text: '        미래.unknown' },
+        )
+      } else if (cmd === 'git diff') {
+        out.push(
+          { type: 'info',   text: 'diff --git a/삶.txt b/삶.txt' },
+          { type: 'output', text: '--- a/삶.txt' },
+          { type: 'output', text: '+++ b/삶.txt' },
+          { type: 'output', text: '@@ -1,2 +1,3 @@' },
+          { type: 'error',  text: '-현실이 가끔 힘들다' },
+          { type: 'accent', text: '+현실이 가끔 힘들지만' },
+          { type: 'accent', text: '+VRChat이 있다' },
+        )
+      } else if (cmd.startsWith('git push')) {
+        out.push(
+          { type: 'output', text: 'Enumerating objects: 3, done.' },
+          { type: 'output', text: 'Counting objects: 100% (3/3), done.' },
+          { type: 'error',  text: '! [rejected]  main -> 현실 (non-fast-forward)' },
+          { type: 'output', text: 'hint: 마음은 fast-forward 되지 않습니다.' },
+        )
+      } else {
+        out.push(
+          { type: 'output', text: 'usage: git <command> [<args>]' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '자주 쓰는 명령어:' },
+          { type: 'accent', text: '  git log      인생 로그 확인' },
+          { type: 'accent', text: '  git status   현재 상태 확인' },
+          { type: 'accent', text: '  git diff      달라진 것들' },
+          { type: 'accent', text: '  git push      마음 전달 (실패율 높음)' },
+        )
+      }
+      addLines(out); return
+    }
+    if (cmd.startsWith('npm')) {
+      if (cmd === 'npm start') {
+        out.push(
+          { type: 'accent', text: '> fehe@2014 start' },
+          { type: 'output', text: '삶 시작됨  (경고: 불확실성 및 랜덤 이벤트 포함)' },
+        )
+      } else if (cmd.startsWith('npm install')) {
+        const pkg = raw.trim().slice(12).trim() || '패키지'
+        out.push(
+          { type: 'output', text: `npm warn ERESOLVE could not resolve '${pkg}'` },
+          { type: 'error',  text: `npm error 404 Not Found - '${pkg}' is not in this registry` },
+          { type: 'output', text: '행복 패키지는 npm에 없습니다. 직접 만드세요.' },
+        )
+      } else if (cmd === 'npm run build') {
+        out.push(
+          { type: 'output', text: '> fehe@2014 build' },
+          { type: 'output', text: 'Building 미래...' },
+          { type: 'error',  text: "error TS2304: Cannot find name '확신'" },
+          { type: 'output', text: '미래는 여전히 undefined 입니다.' },
+        )
+      } else {
+        out.push({ type: 'output', text: 'npm <command>' },
+          { type: 'accent', text: '  start    삶 시작' },
+          { type: 'accent', text: '  install  패키지 설치 (행복 없음)' },
+          { type: 'accent', text: '  build    미래 빌드 (항상 실패)' },
+        )
+      }
+      addLines(out); return
+    }
+    if (cmd.startsWith('man ')) {
+      const topic = cmd.slice(4).trim()
+      if (topic === 'fehe') {
+        out.push(
+          { type: 'info',   text: 'FEHE(1)               사용자 매뉴얼               FEHE(1)' },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'NAME' },
+          { type: 'output', text: '       fehe - 인터넷에 사는 개발자' },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'SYNOPSIS' },
+          { type: 'output', text: '       fehe [--vr] [--code] [--sleep NEVER]' },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'DESCRIPTION' },
+          { type: 'output', text: '       2014년부터 인터넷에서 활동하는 개발자.' },
+          { type: 'output', text: '       현실보다 가상에서 더 잘 작동함.' },
+          { type: 'output', text: '' },
+          { type: 'output', text: 'BUGS' },
+          { type: 'output', text: '       가끔 현실을 잊음. 의도된 동작일 수 있음.' },
+        )
+      } else {
+        out.push({ type: 'error', text: `No manual entry for ${topic}` })
+      }
+      addLines(out); return
+    }
+    if (cmd.startsWith('sudo ') && !cmd.includes('rm -rf')) {
+      out.push(
+        { type: 'error', text: `sudo: 페헤만 sudo 권한이 있습니다.` },
+        { type: 'error', text: '이 사건은 기록되었습니다.' },
+      )
+      addLines(out); return
+    }
+
     switch (cmd) {
       case 'help':
         out.push(
@@ -399,6 +593,132 @@ export default function EasterEgg() {
         addLines(out)
         setSecretModal(true)
         return
+
+      case 'pwd':
+        out.push({ type: 'output', text: '/home/fehe/internet/2014–present' })
+        break
+
+      case 'uname':
+      case 'uname -a':
+        out.push({ type: 'output', text: 'FehOS 2.14.0 페헤-PC #1 SMP 2014 x86_64 GNU/감성' })
+        break
+
+      case 'uptime':
+        out.push(
+          { type: 'output', text: `up 10 years, 3 months  load average: 0.42, 0.37, 0.41` },
+          { type: 'output', text: '현재 접속자: 1명 (당신)' },
+        )
+        break
+
+      case 'neofetch': {
+        const art = [
+          '      .  *  .    ',
+          '   *    .    *   ',
+          '  .  *    .  .   ',
+          '    .  *  .   *  ',
+          '  *  .  .   .  . ',
+          '  .   *    *  .  ',
+          '    .   .  .  *  ',
+          '  *  .   .   .   ',
+          '    .  *  .  .   ',
+        ]
+        const info = [
+          '\x1b페헤@terminal',
+          '─────────────────────',
+          'OS: FehOS 2026 (감성 에디션)',
+          'Host: 인터넷 어딘가',
+          'Uptime: 2014년부터 현재까지',
+          'Shell: zsh 5.9 (감성 모드)',
+          'Terminal: 페헤 v1.0.0',
+          'CPU: 감성 코어 × 4  @3.14GHz',
+          'Memory: 추억 12.8GB / ∞ GB',
+        ]
+        art.forEach((a, i) => {
+          const label = info[i] ?? ''
+          out.push({ type: i < 2 ? 'accent' : 'output', text: `${a}  ${label}` })
+        })
+        break
+      }
+
+      case 'ps':
+      case 'ps aux':
+      case 'ps -aux':
+        out.push(
+          { type: 'info',   text: '  PID  TTY        TIME  CMD' },
+          { type: 'output', text: '    1  ?       00:00:01  init (페헤의 일상)' },
+          { type: 'output', text: '   42  ?       01:23:07  vrchat (현실 탈출 중)' },
+          { type: 'output', text: '  314  pts/0   03:14:15  coding (프로젝트 n개)' },
+          { type: 'error',  text: '  404  ?       ??:??:??  sleep (항상 부족함)' },
+          { type: 'accent', text: ' 1337  pts/1   00:00:00  terminal (지금 이거)' },
+        )
+        break
+
+      case 'top':
+      case 'htop':
+        out.push(
+          { type: 'info',   text: '  페헤@terminal  ─  Tasks: 4 total  ─  load: 0.42' },
+          { type: 'output', text: '' },
+          { type: 'output', text: '  PID   %CPU  %MEM  CMD' },
+          { type: 'accent', text: '   42   78.3   3.2  vrchat' },
+          { type: 'output', text: '  314   12.1   1.8  coding' },
+          { type: 'error',  text: '  404    0.0   9.9  생각 (백그라운드)' },
+          { type: 'output', text: ' 1337    0.1   0.1  terminal' },
+        )
+        break
+
+      case 'history':
+        if (cmdHistory.length === 0) {
+          out.push({ type: 'output', text: '(이번 세션에 입력한 명령어가 없습니다.)' })
+        } else {
+          cmdHistory.slice().reverse().forEach((c, i) =>
+            out.push({ type: 'output', text: `  ${String(i + 1).padStart(3)}  ${c}` })
+          )
+        }
+        break
+
+      case 'alias':
+        out.push(
+          { type: 'output', text: "alias ll='ls -alF'" },
+          { type: 'output', text: "alias vr='접속 --현실탈출'" },
+          { type: 'output', text: "alias gs='git status'" },
+          { type: 'output', text: "alias ..='cd ..  # 과거로는 돌아갈 수 없음'" },
+          { type: 'output', text: "alias 꿈='sleep 99999'" },
+        )
+        break
+
+      case 'env':
+      case 'export':
+        out.push(
+          { type: 'output', text: 'USER=페헤' },
+          { type: 'output', text: 'HOME=/home/fehe/internet' },
+          { type: 'output', text: 'SHELL=/bin/zsh' },
+          { type: 'output', text: 'LANG=ko_KR.UTF-8' },
+          { type: 'output', text: 'TERM=xterm-256감성' },
+          { type: 'output', text: 'MOOD=오늘도_괜찮음' },
+          { type: 'output', text: 'REALITY=선택사항' },
+          { type: 'output', text: 'VR=필수' },
+        )
+        break
+
+      case 'vim':
+      case 'vi':
+      case 'nano':
+        out.push(
+          { type: 'info',   text: '[No Name]                           0,0-1  All' },
+          { type: 'output', text: '~' },
+          { type: 'output', text: '~  이 에디터에서 나가려면 ESC → :q! 를 입력하세요.' },
+          { type: 'output', text: '~  (저도 처음엔 10분 걸렸어요.)' },
+          { type: 'output', text: '~' },
+          { type: 'error',  text: '-- INSERT --' },
+        )
+        break
+
+      case ':q!':
+      case ':q':
+      case ':wq':
+        out.push({ type: 'output', text: 'vim이 닫혔습니다. 수정 사항은 저장되지 않았습니다.' })
+        out.push({ type: 'output', text: '(삶도 가끔 이렇게 닫힙니다.)' })
+        break
 
       case 'sudo rm -rf /':
       case 'sudo rm -rf':
