@@ -19,7 +19,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'M PLUS Rounded 1c', 'Apple SD Gothic Neo', sans-serif;
-  background: linear-gradient(160deg, #a8c8dc 0%, #bdd8e8 50%, #cce2ef 100%);
+  background: linear-gradient(160deg, #8fb8d0 0%, #a8ccde 45%, #bddaeb 100%);
   min-height: 100vh;
   color: var(--text);
   overflow-x: hidden;
