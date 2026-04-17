@@ -130,17 +130,57 @@ export default function EasterEgg() {
         )
         break
 
-      case 'vr':
-        out.push(
-          { type: 'output', text: 'VRChat에 접속하는 중...' },
-          { type: 'output', text: '▓▓▓▓▓▓▓▓░░░░░░░░  Loading world...' },
-          { type: 'output', text: 'World: Hello! VRChat World! ✔' },
-          { type: 'output', text: 'Spawning avatar... ✔' },
-          { type: 'output', text: '' },
-          { type: 'accent', text: '...사실 이건 그냥 터미널입니다.' },
-          { type: 'output', text: '진짜 VRChat은 취미 → 게임 탭에서 확인하세요.' },
-        )
+      case 'vr': {
+        const steps = [
+          [0,   [
+            { type: 'output', text: '[SYS] VRChat 클라이언트 초기화 중...' },
+          ]],
+          [400, [
+            { type: 'accent', text: '[OK]  Steam 연결됨' },
+            { type: 'accent', text: '[OK]  헤드셋 감지: Meta Quest 2  ↔  USB 3.0' },
+            { type: 'accent', text: '[OK]  컨트롤러 페어링: L ✔  R ✔' },
+          ]],
+          [900, [
+            { type: 'error',  text: '[!!]  경고: 현실 감각이 일시적으로 차단됩니다.' },
+            { type: 'output', text: '' },
+            { type: 'output', text: '      월드 불러오는 중...' },
+          ]],
+          [1300, [
+            { type: 'output', text: '      ████░░░░░░░░░░░░░░░░  20%' },
+          ]],
+          [1600, [
+            { type: 'output', text: '      ████████░░░░░░░░░░░░  40%' },
+          ]],
+          [1850, [
+            { type: 'output', text: '      ████████████░░░░░░░░  60%' },
+          ]],
+          [2050, [
+            { type: 'output', text: '      ████████████████░░░░  80%' },
+          ]],
+          [2200, [
+            { type: 'accent', text: '      ████████████████████  100%  ✔' },
+            { type: 'output', text: '' },
+            { type: 'output', text: '      월드: 어느 조용한 카페  ·  5 / 10명  ·  ping 9ms' },
+            { type: 'output', text: '' },
+            { type: 'output', text: '      아바타 스폰 중...' },
+          ]],
+          [2700, [
+            { type: 'accent', text: '[OK]  페헤 v4.2 로드됨  (물리 연산: ON)' },
+            { type: 'output', text: '' },
+            { type: 'info',   text: '      ── 입 장 완 료 ──' },
+            { type: 'output', text: '' },
+          ]],
+          [3300, [
+            { type: 'output', text: '      > 누군가 손을 흔들며 인사한다.' },
+            { type: 'output', text: '      > 페헤는 오늘도 여기 있다.' },
+            { type: 'output', text: '      > 현실과 가상 사이, 그 어딘가에서.' },
+            { type: 'output', text: '' },
+            { type: 'output', text: '      (진짜 VRChat은 취미 → 게임 탭에서 확인하세요.)' },
+          ]],
+        ]
+        steps.forEach(([delay, ls]) => setTimeout(() => addLines(ls), delay))
         break
+      }
 
       case 'ls':
         out.push(
