@@ -46,6 +46,142 @@ function MatrixRain({ onDone }) {
   )
 }
 
+/* ── VR 비주얼 노벨 대화 트리 ── */
+const VR_STORY = {
+  intro: {
+    speaker: '???',
+    text: '...처음 보는 분이시네요. 이 카페에 자주 오세요?',
+    choices: [
+      { label: '아, 네. 자주 와요.', next: 'a1' },
+      { label: '처음이에요.', next: 'b1' },
+      { label: '(말없이 주위를 둘러본다)', next: 'c1' },
+    ],
+  },
+
+  // 경로 A
+  a1: { speaker: '???', text: '그렇군요. 저는 매일 오는데 한 번도 못 봤네요.', next: 'a2' },
+  a2: {
+    speaker: '???',
+    text: '...혹시 다른 시간대에 오시는 건가요?',
+    choices: [
+      { label: '네, 주로 밤에 와요.', next: 'merge' },
+      { label: '아, 사실 오늘 처음이에요.', next: 'a3' },
+    ],
+  },
+  a3: { speaker: '???', text: '어머. 거짓말을 하셨군요.', next: 'a4' },
+  a4: { speaker: '???', text: '...귀엽네요.', next: 'merge' },
+
+  // 경로 B
+  b1: { speaker: '???', text: '처음이시구나. 잘 오셨어요.', next: 'b2' },
+  b2: {
+    speaker: '???',
+    text: '여기 분위기, 마음에 드세요?',
+    choices: [
+      { label: '네, 좋은 것 같아요.', next: 'b3a' },
+      { label: '아직 잘 모르겠어요.', next: 'b3b' },
+    ],
+  },
+  b3a: { speaker: '???', text: '그죠? 저는 현실이 답답할 때 여기 와요.', next: 'merge' },
+  b3b: { speaker: '???', text: '괜찮아요. 여기는 그냥 있어도 되는 곳이에요.', next: 'merge' },
+
+  // 경로 C
+  c1: { speaker: '???', text: '...', next: 'c2' },
+  c2: { speaker: '???', text: '말이 없는 분이시네요. 그것도 좋아요.', next: 'c3' },
+  c3: { speaker: '???', text: '여긴 조용한 사람이 어울리는 곳이거든요.', next: 'merge' },
+
+  // 합류
+  merge: { speaker: '???', text: '이상하게 들릴 수도 있는데...', next: 'merge2' },
+  merge2: {
+    speaker: '???',
+    text: '여기 오면 현실이 조금 멀어지는 것 같아서 좋아요.',
+    choices: [
+      { label: '저도요.', next: 'end_a' },
+      { label: '현실에서 도망치는 건가요?', next: 'end_b' },
+      { label: '(아무 말도 하지 않는다)', next: 'end_c' },
+    ],
+  },
+
+  // 엔딩 분기
+  end_a:  { speaker: '???', text: '...그렇군요.', next: 'end_wave' },
+  end_b:  { speaker: '???', text: '도망이라기보다... 숨 고르기, 라고 하면 될까요.', next: 'end_wave' },
+  end_c:  { speaker: '???', text: '...', next: 'end_c2' },
+  end_c2: { speaker: '???', text: '(아바타가 조용히 고개를 끄덕인다)', action: true, next: 'end_wave' },
+
+  end_wave: { speaker: '???', text: '(아바타가 손을 흔든다)', action: true, next: 'end_final' },
+  end_final: { speaker: '???', text: '또 봐요.', next: null },
+}
+
+/* ── VR 비주얼 노벨 컴포넌트 ── */
+function VRNovel({ onEnd }) {
+  const [key, setKey] = useState('intro')
+  const [displayed, setDisplayed] = useState('')
+  const [done, setDone] = useState(false)
+
+  const node = VR_STORY[key]
+
+  useEffect(() => {
+    setDisplayed('')
+    setDone(false)
+    let i = 0
+    const text = node.text
+    const speed = text === '...' ? 200 : 28
+    const timer = setInterval(() => {
+      i++
+      setDisplayed(text.slice(0, i))
+      if (i >= text.length) { clearInterval(timer); setDone(true) }
+    }, speed)
+    return () => clearInterval(timer)
+  }, [key])
+
+  function skip() {
+    if (!done) { setDisplayed(node.text); setDone(true) }
+  }
+
+  function advance() {
+    if (!done) { skip(); return }
+    if (node.next) setKey(node.next)
+    else onEnd()
+  }
+
+  function choose(next) { setKey(next) }
+
+  return (
+    <div className="vr-novel" onClick={(!done || (!node.choices && node.next !== null)) ? advance : undefined}>
+      {/* 위쪽 장소 표시 */}
+      <div className="vr-novel-location">📍 어느 조용한 카페</div>
+
+      {/* 하단 대화창 */}
+      <div className="vr-novel-box" onClick={e => e.stopPropagation()}>
+        <div className="vr-novel-name">{node.speaker}</div>
+        <p className={`vr-novel-text${node.action ? ' action' : ''}`}>
+          {displayed}
+          {!done && <span className="vr-cursor">▌</span>}
+        </p>
+
+        {done && node.choices && (
+          <div className="vr-choices">
+            {node.choices.map((c, i) => (
+              <button key={i} className="vr-choice" onClick={() => choose(c.next)}>
+                {c.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {done && !node.choices && node.next !== null && (
+          <div className="vr-advance" onClick={advance}>▼</div>
+        )}
+
+        {done && node.next === null && (
+          <div className="vr-choices">
+            <button className="vr-choice vr-end" onClick={onEnd}>[ 접속 종료 ]</button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 /* ── 시크릿 접근 모달 ── */
 function SecretModal({ onClose, onSuccess }) {
   const [input, setInput] = useState('')
@@ -113,10 +249,10 @@ export default function EasterEgg() {
   const [histIdx, setHistIdx] = useState(-1)
   const [matrix, setMatrix] = useState(false)
   const [secretModal, setSecretModal] = useState(false)
+  const [vrNovel, setVrNovel] = useState(false)
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
 
-  /* 백틱으로 열기/닫기 */
   useEffect(() => {
     function onKey(e) {
       if (e.key === '`') { e.preventDefault(); setOpen(o => !o) }
@@ -125,12 +261,10 @@ export default function EasterEgg() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  /* 열릴 때 포커스 */
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 50)
   }, [open])
 
-  /* 항상 맨 아래로 스크롤 */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [lines])
@@ -195,49 +329,33 @@ export default function EasterEgg() {
         break
 
       case 'vr': {
+        out.length = 0
         const steps = [
-          [0,   [
-            { type: 'input', text: `fehe@site ~ % ${raw}` },
-            { type: 'output', text: '[SYS] VRChat 클라이언트 초기화 중...' },
-          ]],
-          [400, [
-            { type: 'accent', text: '[OK]  Steam 연결됨' },
-            { type: 'accent', text: '[OK]  헤드셋 감지: Meta Quest 2  ↔  USB 3.0' },
-            { type: 'accent', text: '[OK]  컨트롤러 페어링: L ✔  R ✔' },
-          ]],
-          [900, [
-            { type: 'error',  text: '[!!]  경고: 현실 감각이 일시적으로 차단됩니다.' },
-            { type: 'output', text: '' },
-            { type: 'output', text: '      월드 불러오는 중...' },
-          ]],
+          [0,    [{ type: 'input',  text: `fehe@site ~ % ${raw}` },
+                  { type: 'output', text: '[SYS] VRChat 클라이언트 초기화 중...' }]],
+          [400,  [{ type: 'accent', text: '[OK]  Steam 연결됨' },
+                  { type: 'accent', text: '[OK]  헤드셋 감지: Meta Quest 2  ↔  USB 3.0' },
+                  { type: 'accent', text: '[OK]  컨트롤러 페어링: L ✔  R ✔' }]],
+          [900,  [{ type: 'error',  text: '[!!]  경고: 현실 감각이 일시적으로 차단됩니다.' },
+                  { type: 'output', text: '' },
+                  { type: 'output', text: '      월드 불러오는 중...' }]],
           [1300, [{ type: 'output', text: '      ████░░░░░░░░░░░░░░░░  20%' }]],
           [1600, [{ type: 'output', text: '      ████████░░░░░░░░░░░░  40%' }]],
           [1850, [{ type: 'output', text: '      ████████████░░░░░░░░  60%' }]],
           [2050, [{ type: 'output', text: '      ████████████████░░░░  80%' }]],
-          [2200, [
-            { type: 'accent', text: '      ████████████████████  100%  ✔' },
-            { type: 'output', text: '' },
-            { type: 'output', text: '      월드: 어느 조용한 카페  ·  5 / 10명  ·  ping 9ms' },
-            { type: 'output', text: '' },
-            { type: 'output', text: '      아바타 스폰 중...' },
-          ]],
-          [2700, [
-            { type: 'accent', text: '[OK]  페헤 v4.2 로드됨  (물리 연산: ON)' },
-            { type: 'output', text: '' },
-            { type: 'info',   text: '      ── 입 장 완 료 ──' },
-            { type: 'output', text: '' },
-          ]],
-          [3300, [
-            { type: 'output', text: '      > 누군가 손을 흔들며 인사한다.' },
-            { type: 'output', text: '      > 페헤는 오늘도 여기 있다.' },
-            { type: 'output', text: '      > 현실과 가상 사이, 그 어딘가에서.' },
-            { type: 'output', text: '' },
-            { type: 'output', text: '      (진짜 VRChat은 취미 → 게임 탭에서 확인하세요.)' },
-          ]],
+          [2200, [{ type: 'accent', text: '      ████████████████████  100%  ✔' },
+                  { type: 'output', text: '' },
+                  { type: 'output', text: '      월드: 어느 조용한 카페  ·  5 / 10명  ·  ping 9ms' },
+                  { type: 'output', text: '' },
+                  { type: 'output', text: '      아바타 스폰 중...' }]],
+          [2700, [{ type: 'accent', text: '[OK]  페헤 v4.2 로드됨  (물리 연산: ON)' },
+                  { type: 'output', text: '' },
+                  { type: 'info',   text: '      ── 입 장 완 료 ──' },
+                  { type: 'output', text: '' }]],
+          [3300, [{ type: 'output', text: '      > 누군가 손을 흔들며 인사한다.' }]],
         ]
-        // vr는 input 라인을 steps[0]에 포함했으므로 out의 input 라인 제거 후 steps만 실행
-        out.length = 0
         steps.forEach(([delay, ls]) => setTimeout(() => addLines(ls), delay))
+        setTimeout(() => setVrNovel(true), 4400)
         addLines(out)
         return
       }
@@ -338,8 +456,9 @@ export default function EasterEgg() {
         return next
       })
     } else if (e.key === 'Escape') {
-      if (secretModal) setSecretModal(false)
-      else setOpen(false)
+      if (vrNovel) { setVrNovel(false); return }
+      if (secretModal) { setSecretModal(false); return }
+      setOpen(false)
     } else if (e.key === '`') {
       e.preventDefault()
       setOpen(false)
@@ -354,7 +473,6 @@ export default function EasterEgg() {
         <div className="ee-backdrop" onClick={() => setOpen(false)}>
           <div className="ee-terminal" onClick={e => e.stopPropagation()}>
 
-            {/* 타이틀바 */}
             <div className="ee-titlebar">
               <div className="ee-dots">
                 <span className="ee-dot red" onClick={() => setOpen(false)} title="닫기" />
@@ -365,7 +483,6 @@ export default function EasterEgg() {
               <span style={{ width: 52 }} />
             </div>
 
-            {/* 출력 영역 */}
             <div className="ee-body" onClick={() => inputRef.current?.focus()}>
               {lines.map((line, i) => (
                 <div key={i} className={`ee-line ee-line-${line.type}`}>
@@ -375,7 +492,6 @@ export default function EasterEgg() {
               <div ref={bottomRef} />
             </div>
 
-            {/* 입력 */}
             <div className="ee-input-row">
               <span className="ee-prompt">fehe@site ~ %</span>
               <input
@@ -390,7 +506,17 @@ export default function EasterEgg() {
               />
             </div>
 
-            {/* 시크릿 접근 모달 */}
+            {vrNovel && (
+              <VRNovel onEnd={() => {
+                setVrNovel(false)
+                addLines([
+                  { type: 'output', text: '' },
+                  { type: 'output', text: '      > 접속이 종료됩니다.' },
+                  { type: 'output', text: '' },
+                ])
+              }} />
+            )}
+
             {secretModal && (
               <SecretModal
                 onClose={() => setSecretModal(false)}

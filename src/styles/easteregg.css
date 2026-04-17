@@ -144,6 +144,110 @@
   .ee-input { font-size: 0.75rem; }
 }
 
+/* ── VR 비주얼 노벨 ── */
+.vr-novel {
+  position: absolute;
+  top: 44px; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 6;
+  cursor: pointer;
+  background: linear-gradient(to bottom, rgba(6,8,14,0.15) 0%, rgba(6,8,14,0.6) 50%);
+}
+
+.vr-novel-location {
+  align-self: flex-start;
+  margin: 0.75rem 1rem;
+  font-family: 'Menlo','Monaco','Consolas',monospace;
+  font-size: 0.68rem;
+  color: #8b949e;
+  background: rgba(13,17,23,0.7);
+  border: 1px solid #21262d;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.vr-novel-box {
+  background: rgba(13,17,23,0.93);
+  border-top: 1px solid #30363d;
+  padding: 1rem 1.25rem 1.1rem;
+  cursor: default;
+}
+
+.vr-novel-name {
+  font-family: 'Menlo','Monaco','Consolas',monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6bbde0;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(107,189,224,0.12);
+  border-left: 2px solid #6bbde0;
+  display: inline-block;
+}
+
+.vr-novel-text {
+  font-family: 'Menlo','Monaco','Consolas',monospace;
+  font-size: 0.84rem;
+  color: #e6edf3;
+  line-height: 1.75;
+  min-height: 1.75em;
+  margin: 0.5rem 0 0.75rem;
+}
+.vr-novel-text.action { color: #8b949e; font-style: italic; }
+
+.vr-cursor {
+  display: inline-block;
+  color: #6bbde0;
+  animation: blink 0.9s step-end infinite;
+}
+@keyframes blink { 0%,100% { opacity:1 } 50% { opacity:0 } }
+
+.vr-advance {
+  font-size: 0.7rem;
+  color: #484f58;
+  text-align: right;
+  animation: bounce 1.2s ease-in-out infinite;
+  cursor: pointer;
+}
+@keyframes bounce { 0%,100% { transform:translateY(0) } 50% { transform:translateY(3px) } }
+
+.vr-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.vr-choice {
+  background: rgba(30,36,44,0.9);
+  border: 1px solid #30363d;
+  color: #c9d1d9;
+  font-family: 'Menlo','Monaco','Consolas',monospace;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.vr-choice:hover {
+  background: rgba(107,189,224,0.12);
+  border-color: #6bbde0;
+  color: #6bbde0;
+}
+.vr-choice.vr-end {
+  color: #f85149;
+  border-color: #3d1f1f;
+}
+.vr-choice.vr-end:hover {
+  background: rgba(248,81,73,0.1);
+  border-color: #f85149;
+}
+
 /* ── 시크릿 접근 모달 ── */
 .ee-secret-overlay {
   position: absolute;
