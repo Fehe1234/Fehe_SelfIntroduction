@@ -596,15 +596,57 @@ export default function EasterEgg() {
         out.push({ type: 'output', text: new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) + ' (KST)' })
         break
 
-      case 'ping':
+      case 'ping': {
         out.push(
           { type: 'output', text: 'PING fehe-self-introduction.vercel.app' },
-          { type: 'accent', text: `64 bytes: icmp_seq=1 ttl=64 time=${Math.floor(Math.random() * 20 + 1)}ms` },
-          { type: 'accent', text: `64 bytes: icmp_seq=2 ttl=64 time=${Math.floor(Math.random() * 20 + 1)}ms` },
-          { type: 'output', text: '--- ping statistics ---' },
-          { type: 'output', text: '2 packets transmitted, 2 received, 0% packet loss' },
+          { type: 'output', text: '접속 정보 확인 중...' },
         )
-        break
+        addLines(out)
+
+        fetch('https://api.ipify.org?format=json')
+          .then(r => r.json())
+          .then(data => {
+            const ua = navigator.userAgent
+            let browser = '알 수 없음'
+            if (ua.includes('Edg/'))     browser = 'Microsoft Edge'
+            else if (ua.includes('OPR/') || ua.includes('Opera/')) browser = 'Opera'
+            else if (ua.includes('Chrome/'))  browser = 'Chrome'
+            else if (ua.includes('Firefox/')) browser = 'Firefox'
+            else if (ua.includes('Safari/'))  browser = 'Safari'
+
+            let os = '알 수 없음'
+            if (ua.includes('Windows NT'))        os = 'Windows'
+            else if (ua.includes('Mac OS X'))     os = 'macOS'
+            else if (ua.includes('Android'))      os = 'Android'
+            else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS'
+            else if (ua.includes('Linux'))        os = 'Linux'
+
+            const t1 = Math.floor(Math.random() * 20 + 1)
+            const t2 = Math.floor(Math.random() * 20 + 1)
+            addLines([
+              { type: 'accent', text: `64 bytes from ${data.ip}: icmp_seq=1 ttl=64 time=${t1}ms` },
+              { type: 'accent', text: `64 bytes from ${data.ip}: icmp_seq=2 ttl=64 time=${t2}ms` },
+              { type: 'output', text: '--- ping statistics ---' },
+              { type: 'output', text: `2 packets transmitted, 2 received, avg ${Math.round((t1+t2)/2)}ms` },
+              { type: 'output', text: '' },
+              { type: 'info',   text: `접속 IP  :  ${data.ip}` },
+              { type: 'info',   text: `브라우저 :  ${browser}` },
+              { type: 'info',   text: `운영체제 :  ${os}` },
+            ])
+          })
+          .catch(() => {
+            const t1 = Math.floor(Math.random() * 20 + 1)
+            const t2 = Math.floor(Math.random() * 20 + 1)
+            addLines([
+              { type: 'accent', text: `64 bytes: icmp_seq=1 ttl=64 time=${t1}ms` },
+              { type: 'accent', text: `64 bytes: icmp_seq=2 ttl=64 time=${t2}ms` },
+              { type: 'output', text: '--- ping statistics ---' },
+              { type: 'output', text: '2 packets transmitted, 2 received, 0% packet loss' },
+              { type: 'error',  text: 'IP 주소를 가져올 수 없습니다. (네트워크 오류)' },
+            ])
+          })
+        return
+      }
 
       case 'matrix':
         out.push({ type: 'accent', text: '빨간 약을 먹으시겠습니까? (y/n) ... y' })
