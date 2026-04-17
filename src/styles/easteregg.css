@@ -143,3 +143,110 @@
   .ee-line { font-size: 0.75rem; }
   .ee-input { font-size: 0.75rem; }
 }
+
+/* ── 시크릿 접근 모달 ── */
+.ee-secret-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 1.25rem;
+}
+
+.ee-secret-modal {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 0.75rem;
+  padding: 1.5rem 1.75rem;
+  width: min(360px, 90%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+}
+
+.ee-secret-modal.shake {
+  animation: ee-shake 0.4s ease;
+}
+@keyframes ee-shake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+.ee-secret-label {
+  font-size: 0.7rem;
+  color: #f85149;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.ee-secret-question {
+  font-size: 0.85rem;
+  color: #e6edf3;
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+
+.ee-secret-input {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: #6bbde0;
+  outline: none;
+  width: 100%;
+  caret-color: #6bbde0;
+  transition: border-color 0.2s;
+}
+.ee-secret-input:focus { border-color: #6bbde0; }
+.ee-secret-input.error { border-color: #f85149; }
+
+.ee-secret-error {
+  font-size: 0.75rem;
+  color: #f85149;
+  letter-spacing: 0.04em;
+}
+
+.ee-secret-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.ee-secret-cancel {
+  background: transparent;
+  border: 1px solid #30363d;
+  color: #8b949e;
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.ee-secret-cancel:hover { border-color: #8b949e; color: #e6edf3; }
+
+.ee-secret-confirm {
+  background: #6bbde0;
+  border: none;
+  color: #0d1117;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ee-secret-confirm:hover { background: #8ecfe8; }

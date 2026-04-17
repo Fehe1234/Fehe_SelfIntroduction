@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 /* ── 매트릭스 비 이펙트 ── */
 function MatrixRain({ onDone }) {
@@ -45,8 +46,62 @@ function MatrixRain({ onDone }) {
   )
 }
 
+/* ── 시크릿 접근 모달 ── */
+function SecretModal({ onClose, onSuccess }) {
+  const [input, setInput] = useState('')
+  const [error, setError] = useState(false)
+  const [shake, setShake] = useState(false)
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    setTimeout(() => inputRef.current?.focus(), 50)
+  }, [])
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const answer = input.trim()
+    if (answer === '어느 조용한 카페') {
+      onSuccess()
+    } else {
+      setError(true)
+      setShake(true)
+      setInput('')
+      setTimeout(() => setShake(false), 500)
+    }
+  }
+
+  return (
+    <div className="ee-secret-overlay" onClick={onClose}>
+      <div
+        className={`ee-secret-modal${shake ? ' shake' : ''}`}
+        onClick={e => e.stopPropagation()}
+      >
+        <p className="ee-secret-label">[ ACCESS CODE REQUIRED ]</p>
+        <p className="ee-secret-question">페헤가 매일 찾아가는 그 세계의 이름은?</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            className={`ee-secret-input${error ? ' error' : ''}`}
+            value={input}
+            onChange={e => { setInput(e.target.value); setError(false) }}
+            placeholder="_ _ _ _ _ _ _ _ _ _"
+            spellCheck={false}
+            autoComplete="off"
+          />
+          {error && <p className="ee-secret-error">접근이 거부되었습니다.</p>}
+          <div className="ee-secret-btns">
+            <button type="button" className="ee-secret-cancel" onClick={onClose}>취소</button>
+            <button type="submit" className="ee-secret-confirm">접속</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 /* ── 메인 컴포넌트 ── */
 export default function EasterEgg() {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
   const [lines, setLines] = useState([
@@ -57,6 +112,7 @@ export default function EasterEgg() {
   const [cmdHistory, setCmdHistory] = useState([])
   const [histIdx, setHistIdx] = useState(-1)
   const [matrix, setMatrix] = useState(false)
+  const [secretModal, setSecretModal] = useState(false)
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
 
@@ -81,6 +137,15 @@ export default function EasterEgg() {
 
   function addLines(newLines) {
     setLines(prev => [...prev, ...newLines])
+  }
+
+  function handleSecretSuccess() {
+    setSecretModal(false)
+    addLines([{ type: 'accent', text: '접속 중...' }])
+    setTimeout(() => {
+      setOpen(false)
+      navigate('/secret')
+    }, 800)
   }
 
   function processCommand(raw) {
@@ -116,8 +181,6 @@ export default function EasterEgg() {
           { type: 'output', text: '페헤 (Fehe)' },
           { type: 'output', text: '개발자 · 인플루언서 · 커뮤니티 빌더' },
           { type: 'output', text: 'uid=1234(fehe) gid=1234(fehe) groups=developer,creator' },
-          { type: 'output', text: '' },
-          { type: 'output', text: '...그리고 당신이 아직 모르는 곳이 하나 있습니다.' },
         )
         break
 
@@ -126,13 +189,14 @@ export default function EasterEgg() {
           { type: 'output', text: '안녕하세요! 저는 페헤입니다.' },
           { type: 'output', text: '2014년부터 인터넷 활동을 해온 개발자입니다.' },
           { type: 'output', text: '' },
-          { type: 'accent', text: '이 터미널을 발견한 당신, 꽤 눈썰미가 있군요. 👀' },
+          { type: 'output', text: '현실이 답답할 때, 그 사람이 매일 찾아가는 세계가 있다.' },
         )
         break
 
       case 'vr': {
         const steps = [
           [0,   [
+            { type: 'input', text: `fehe@site ~ % ${raw}` },
             { type: 'output', text: '[SYS] VRChat 클라이언트 초기화 중...' },
           ]],
           [400, [
@@ -145,18 +209,10 @@ export default function EasterEgg() {
             { type: 'output', text: '' },
             { type: 'output', text: '      월드 불러오는 중...' },
           ]],
-          [1300, [
-            { type: 'output', text: '      ████░░░░░░░░░░░░░░░░  20%' },
-          ]],
-          [1600, [
-            { type: 'output', text: '      ████████░░░░░░░░░░░░  40%' },
-          ]],
-          [1850, [
-            { type: 'output', text: '      ████████████░░░░░░░░  60%' },
-          ]],
-          [2050, [
-            { type: 'output', text: '      ████████████████░░░░  80%' },
-          ]],
+          [1300, [{ type: 'output', text: '      ████░░░░░░░░░░░░░░░░  20%' }]],
+          [1600, [{ type: 'output', text: '      ████████░░░░░░░░░░░░  40%' }]],
+          [1850, [{ type: 'output', text: '      ████████████░░░░░░░░  60%' }]],
+          [2050, [{ type: 'output', text: '      ████████████████░░░░  80%' }]],
           [2200, [
             { type: 'accent', text: '      ████████████████████  100%  ✔' },
             { type: 'output', text: '' },
@@ -178,8 +234,11 @@ export default function EasterEgg() {
             { type: 'output', text: '      (진짜 VRChat은 취미 → 게임 탭에서 확인하세요.)' },
           ]],
         ]
+        // vr는 input 라인을 steps[0]에 포함했으므로 out의 input 라인 제거 후 steps만 실행
+        out.length = 0
         steps.forEach(([delay, ls]) => setTimeout(() => addLines(ls), delay))
-        break
+        addLines(out)
+        return
       }
 
       case 'ls':
@@ -189,7 +248,6 @@ export default function EasterEgg() {
           { type: 'output', text: 'drwxr-xr-x  /youtube    →  YouTube 영상' },
           { type: 'output', text: 'drwxr-xr-x  /hobby      →  취미' },
           { type: 'output', text: 'drwxr-xr-x  /diary      →  일기' },
-          { type: 'output', text: '??????????  /???????    →  [접근 권한 없음]' },
         )
         break
 
@@ -222,23 +280,9 @@ export default function EasterEgg() {
         break
 
       case 'secret':
-        out.push(
-          { type: 'output', text: '...이 명령어를 알고 있었군요.' },
-          { type: 'output', text: '' },
-          { type: 'accent', text: '닫혀 있는 문은 잠겨 있는 문이 아닙니다.' },
-          { type: 'output', text: '' },
-          { type: 'output', text: '디렉터리는 이미 존재합니다 — 이름만 알면 들어갈 수 있어요.' },
-        )
-        break
-
-      case 'cd /secret':
-      case 'cd/secret':
-        out.push({ type: 'accent', text: '접속 중...' })
-        setTimeout(() => {
-          setOpen(false)
-          window.location.href = '/secret'
-        }, 800)
-        break
+        addLines(out)
+        setSecretModal(true)
+        return
 
       case 'sudo rm -rf /':
       case 'sudo rm -rf':
@@ -293,7 +337,8 @@ export default function EasterEgg() {
         return next
       })
     } else if (e.key === 'Escape') {
-      setOpen(false)
+      if (secretModal) setSecretModal(false)
+      else setOpen(false)
     } else if (e.key === '`') {
       e.preventDefault()
       setOpen(false)
@@ -303,7 +348,6 @@ export default function EasterEgg() {
   return (
     <>
       {matrix && <MatrixRain onDone={() => setMatrix(false)} />}
-
 
       {open && (
         <div className="ee-backdrop" onClick={() => setOpen(false)}>
@@ -344,6 +388,14 @@ export default function EasterEgg() {
                 autoCorrect="off"
               />
             </div>
+
+            {/* 시크릿 접근 모달 */}
+            {secretModal && (
+              <SecretModal
+                onClose={() => setSecretModal(false)}
+                onSuccess={handleSecretSuccess}
+              />
+            )}
 
           </div>
         </div>
