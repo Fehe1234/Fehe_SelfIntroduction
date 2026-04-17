@@ -37,6 +37,14 @@ export default function SecretPage() {
   const [stars, setStars] = useState([])
 
   useEffect(() => {
+    if (!sessionStorage.getItem('secret_auth')) {
+      navigate('/', { replace: true })
+      return
+    }
+    sessionStorage.removeItem('secret_auth')
+  }, [navigate])
+
+  useEffect(() => {
     setStars(
       Array.from({ length: 80 }, (_, i) => ({
         id: i,

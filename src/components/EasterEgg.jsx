@@ -144,6 +144,7 @@ export default function EasterEgg() {
     addLines([{ type: 'accent', text: '접속 중...' }])
     setTimeout(() => {
       setOpen(false)
+      sessionStorage.setItem('secret_auth', '1')
       navigate('/secret')
     }, 800)
   }
