@@ -338,24 +338,21 @@ export default function EasterEgg() {
                   { type: 'accent', text: '[OK]  컨트롤러 페어링: L ✔  R ✔' }]],
           [900,  [{ type: 'error',  text: '[!!]  경고: 현실 감각이 일시적으로 차단됩니다.' },
                   { type: 'output', text: '' },
-                  { type: 'output', text: '      월드 불러오는 중...' }]],
-          [1300, [{ type: 'output', text: '      ████░░░░░░░░░░░░░░░░  20%' }]],
-          [1600, [{ type: 'output', text: '      ████████░░░░░░░░░░░░  40%' }]],
-          [1850, [{ type: 'output', text: '      ████████████░░░░░░░░  60%' }]],
-          [2050, [{ type: 'output', text: '      ████████████████░░░░  80%' }]],
-          [2200, [{ type: 'accent', text: '      ████████████████████  100%  ✔' },
+                  { type: 'output', text: '      월드 불러오는 중...' },
+                  { type: 'progress', duration: 2.8 }]],
+          [3900, [{ type: 'accent', text: '[OK]  로드 완료  ✔' },
                   { type: 'output', text: '' },
                   { type: 'output', text: '      월드: 어느 조용한 카페  ·  5 / 10명  ·  ping 9ms' },
                   { type: 'output', text: '' },
                   { type: 'output', text: '      아바타 스폰 중...' }]],
-          [2700, [{ type: 'accent', text: '[OK]  페헤 v4.2 로드됨  (물리 연산: ON)' },
+          [4600, [{ type: 'accent', text: '[OK]  페헤 v4.2 로드됨  (물리 연산: ON)' },
                   { type: 'output', text: '' },
                   { type: 'info',   text: '      ── 입 장 완 료 ──' },
                   { type: 'output', text: '' }]],
-          [3300, [{ type: 'output', text: '      > 누군가 손을 흔들며 인사한다.' }]],
+          [5300, [{ type: 'output', text: '      > 누군가 손을 흔들며 인사한다.' }]],
         ]
         steps.forEach(([delay, ls]) => setTimeout(() => addLines(ls), delay))
-        setTimeout(() => setVrNovel(true), 4400)
+        setTimeout(() => setVrNovel(true), 6400)
         addLines(out)
         return
       }
@@ -485,9 +482,15 @@ export default function EasterEgg() {
 
             <div className="ee-body" onClick={() => inputRef.current?.focus()}>
               {lines.map((line, i) => (
-                <div key={i} className={`ee-line ee-line-${line.type}`}>
-                  {line.text || '\u00A0'}
-                </div>
+                line.type === 'progress' ? (
+                  <div key={i} className="ee-progress-wrap">
+                    <div className="ee-progress-fill" style={{ animationDuration: `${line.duration}s` }} />
+                  </div>
+                ) : (
+                  <div key={i} className={`ee-line ee-line-${line.type}`}>
+                    {line.text || '\u00A0'}
+                  </div>
+                )
               ))}
               <div ref={bottomRef} />
             </div>
