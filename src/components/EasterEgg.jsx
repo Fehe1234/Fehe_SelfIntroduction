@@ -265,11 +265,6 @@ export default function EasterEgg() {
     <>
       {matrix && <MatrixRain onDone={() => setMatrix(false)} />}
 
-      {!open && (
-        <div className="ee-hint" title="숨겨진 터미널 열기">
-          <kbd>`</kbd>
-        </div>
-      )}
 
       {open && (
         <div className="ee-backdrop" onClick={() => setOpen(false)}>
