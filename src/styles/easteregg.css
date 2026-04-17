@@ -144,6 +144,61 @@
   .ee-input { font-size: 0.75rem; }
 }
 
+/* ── VIM 모드 ── */
+.ee-vim {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  border-top: 1px solid #21262d;
+  font-family: 'Menlo','Monaco','Consolas',monospace;
+}
+.ee-vim-body {
+  flex: 1;
+  background: #0d1117;
+  padding: 0.25rem 0;
+  overflow: hidden;
+}
+.ee-vim-titlebar {
+  font-size: 0.75rem;
+  color: #e6edf3;
+  background: #21262d;
+  padding: 0.15rem 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.ee-vim-tilde {
+  font-size: 0.82rem;
+  color: #3d444d;
+  padding: 0 0.75rem;
+  line-height: 1.7;
+}
+.ee-vim-statusbar {
+  font-size: 0.75rem;
+  color: #e6edf3;
+  background: #388bfd22;
+  border-top: 1px solid #21262d;
+  padding: 0.15rem 0.75rem;
+  letter-spacing: 0.04em;
+}
+.ee-vim-cmdline {
+  padding: 0.4rem 0.75rem 0.6rem;
+  border-top: 1px solid #21262d;
+}
+.ee-vim-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: #f85149;
+  caret-color: #f85149;
+}
+.ee-vim-input::placeholder {
+  color: #484f58;
+  font-style: italic;
+}
+
 /* ── VR 로딩 진행 바 ── */
 .ee-progress-wrap {
   margin: 0.5rem 0 0.25rem 1.5rem;

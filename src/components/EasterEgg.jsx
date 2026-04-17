@@ -250,6 +250,9 @@ export default function EasterEgg() {
   const [matrix, setMatrix] = useState(false)
   const [secretModal, setSecretModal] = useState(false)
   const [vrNovel, setVrNovel] = useState(false)
+  const [vimMode, setVimMode] = useState(false)
+  const [vimInput, setVimInput] = useState('')
+  const [vimMsg, setVimMsg] = useState('')
   const inputRef = useRef(null)
   const bottomRef = useRef(null)
 
@@ -703,22 +706,11 @@ export default function EasterEgg() {
       case 'vim':
       case 'vi':
       case 'nano':
-        out.push(
-          { type: 'info',   text: '[No Name]                           0,0-1  All' },
-          { type: 'output', text: '~' },
-          { type: 'output', text: '~  이 에디터에서 나가려면 ESC → :q! 를 입력하세요.' },
-          { type: 'output', text: '~  (저도 처음엔 10분 걸렸어요.)' },
-          { type: 'output', text: '~' },
-          { type: 'error',  text: '-- INSERT --' },
-        )
-        break
-
-      case ':q!':
-      case ':q':
-      case ':wq':
-        out.push({ type: 'output', text: 'vim이 닫혔습니다. 수정 사항은 저장되지 않았습니다.' })
-        out.push({ type: 'output', text: '(삶도 가끔 이렇게 닫힙니다.)' })
-        break
+        addLines(out)
+        setVimMode(true)
+        setVimInput('')
+        setVimMsg('')
+        return
 
       case 'sudo rm -rf /':
       case 'sudo rm -rf':
@@ -754,7 +746,44 @@ export default function EasterEgg() {
     addLines(out)
   }
 
+  function handleVimKeyDown(e) {
+    if (e.key === 'Enter') {
+      const v = vimInput.trim()
+      if (v === ':q!' || v === ':q' || v === ':qa') {
+        setVimMode(false)
+        setVimInput('')
+        addLines([
+          { type: 'input',  text: 'fehe@site ~ % vim' },
+          { type: 'output', text: 'vim 종료됨. 수정 사항은 저장되지 않았습니다.' },
+          { type: 'output', text: '(삶도 가끔 이렇게 닫힙니다.)' },
+        ])
+      } else if (v === ':wq' || v === ':x') {
+        setVimMode(false)
+        setVimInput('')
+        addLines([
+          { type: 'input',  text: 'fehe@site ~ % vim' },
+          { type: 'accent', text: '저장 완료. 하지만 파일을 찾을 수 없습니다.' },
+          { type: 'output', text: '(어쩌면 저장된 건 마음속 어딘가일 수도.)' },
+        ])
+      } else if (v === ':help' || v === ':h') {
+        setVimMsg(':q! 로 나갈 수 있습니다. (처음엔 다들 모릅니다.)')
+        setVimInput('')
+      } else if (v.startsWith(':')) {
+        setVimMsg(`E492: Not an editor command: ${v}`)
+        setVimInput('')
+      } else {
+        setVimInput('')
+      }
+    } else if (e.key === 'Escape') {
+      setVimInput('')
+      setVimMsg('-- NORMAL --  (나가려면 :q! + Enter)')
+    } else if (e.key === '`') {
+      e.preventDefault()
+    }
+  }
+
   function handleKeyDown(e) {
+    if (vimMode) { handleVimKeyDown(e); return }
     if (e.key === 'Enter') {
       processCommand(input)
       setInput('')
@@ -815,6 +844,29 @@ export default function EasterEgg() {
               <div ref={bottomRef} />
             </div>
 
+            {vimMode ? (
+              <div className="ee-vim">
+                <div className="ee-vim-body">
+                  <div className="ee-vim-titlebar">[No Name]                                        0,0-1   All</div>
+                  {Array.from({ length: 7 }).map((_, i) => (
+                    <div key={i} className="ee-vim-tilde">~</div>
+                  ))}
+                </div>
+                <div className="ee-vim-statusbar">-- INSERT --</div>
+                <div className="ee-vim-cmdline">
+                  <input
+                    ref={inputRef}
+                    className="ee-vim-input"
+                    value={vimInput}
+                    onChange={e => { setVimInput(e.target.value); setVimMsg('') }}
+                    onKeyDown={handleKeyDown}
+                    placeholder={vimMsg || '명령 모드: ESC  /  저장 후 종료: :wq  /  강제 종료: :q!'}
+                    spellCheck={false}
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+            ) : (
             <div className="ee-input-row">
               <span className="ee-prompt">fehe@site ~ %</span>
               <input
@@ -828,6 +880,7 @@ export default function EasterEgg() {
                 autoCorrect="off"
               />
             </div>
+            )}
 
             {vrNovel && (
               <VRNovel onEnd={() => {
