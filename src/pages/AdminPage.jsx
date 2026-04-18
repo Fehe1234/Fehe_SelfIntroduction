@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { auth, rtdb } from '../firebase'
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 import { ref, set, remove, onValue } from 'firebase/database'
@@ -65,11 +65,19 @@ function LoginForm() {
 
 /* ── 메인 컴포넌트 ── */
 export default function AdminPage() {
-  const [user, setUser] = useState(undefined) // undefined = 확인 중
+  const [user, setUser] = useState(undefined)
   const [sessions, setSessions] = useState({})
   const [blocked, setBlocked] = useState({})
   const [banInput, setBanInput] = useState('')
   const [msg, setMsg] = useState('')
+  const [toasts, setToasts] = useState([])
+  const prevSessionsRef = useRef(null)
+
+  function addToast(text, type) {
+    const id = Date.now() + Math.random()
+    setToasts(t => [...t, { id, text, type }])
+    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 4000)
+  }
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => setUser(u))
@@ -83,9 +91,21 @@ export default function AdminPage() {
     const unsub = onValue(sessRef, snap => {
       const val = snap.val() || {}
       const { app: _, ...rest } = val
+
+      // 입장/퇴장 감지
+      if (prevSessionsRef.current !== null) {
+        const prev = prevSessionsRef.current
+        Object.entries(rest).forEach(([sid, data]) => {
+          if (!prev[sid]) addToast(`입장: ${data.ip || '알 수 없음'}`, 'join')
+        })
+        Object.entries(prev).forEach(([sid, data]) => {
+          if (!rest[sid]) addToast(`퇴장: ${data.ip || '알 수 없음'}`, 'leave')
+        })
+      }
+      prevSessionsRef.current = rest
+
       setSessions(rest)
-      const blockedData = val?.app?.blocked || {}
-      setBlocked(blockedData)
+      setBlocked(val?.app?.blocked || {})
     })
 
     return () => unsub()
@@ -150,6 +170,14 @@ export default function AdminPage() {
 
   return (
     <div className="admin-page">
+
+      {/* 토스트 알림 */}
+      <div className="admin-toasts">
+        {toasts.map(t => (
+          <div key={t.id} className={`admin-toast admin-toast--${t.type}`}>{t.text}</div>
+        ))}
+      </div>
+
       <div className="admin-container">
 
         <div className="admin-header">

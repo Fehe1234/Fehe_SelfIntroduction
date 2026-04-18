@@ -238,8 +238,47 @@
 }
 .admin-ban-input:focus { border-color: #f85149; }
 
+/* ── 토스트 알림 ── */
+.admin-toasts {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.admin-toast {
+  padding: 0.6rem 1rem;
+  border-radius: 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  animation: toast-in 0.25s ease;
+}
+
+.admin-toast--join {
+  background: rgba(63, 185, 80, 0.15);
+  border: 1px solid rgba(63, 185, 80, 0.35);
+  color: #3fb950;
+}
+
+.admin-toast--leave {
+  background: rgba(248, 81, 73, 0.12);
+  border: 1px solid rgba(248, 81, 73, 0.3);
+  color: #f85149;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 600px) {
   .admin-section { padding: 1rem 1rem; }
   .admin-table th, .admin-table td { padding: 0.5rem 0.6rem; }
   .admin-time { display: none; }
+  .admin-toasts { bottom: 1rem; right: 1rem; left: 1rem; }
 }
