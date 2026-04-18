@@ -75,28 +75,39 @@
   text-align: center;
 }
 
-/* ── 정사각형 그리드 ── */
+/* ── 그리드 ── */
 .diary-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .diary-grid-card {
-  position: relative;
-  aspect-ratio: 1;
-  border-radius: 0.85rem;
+  border-radius: 1rem;
   overflow: hidden;
   cursor: pointer;
   background: var(--card);
   border: 1.5px solid var(--border);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
 }
-.diary-grid-card:hover .diary-grid-overlay {
-  opacity: 1;
+.diary-grid-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(107,189,224,0.15);
+  border-color: var(--sky-deep);
 }
-.diary-grid-card:hover .diary-grid-img,
-.diary-grid-card:hover .diary-grid-noimg {
+.diary-grid-card:hover .diary-grid-img {
   transform: scale(1.04);
+}
+
+/* 썸네일 */
+.diary-grid-thumb {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(107,189,224,0.15), rgba(107,189,224,0.05));
+  flex-shrink: 0;
 }
 
 .diary-grid-img {
@@ -104,72 +115,60 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  display: block;
 }
 
 .diary-grid-noimg {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(107,189,224,0.18), rgba(107,189,224,0.06));
-  transition: transform 0.3s ease;
+  background: linear-gradient(135deg, rgba(107,189,224,0.18), rgba(107,189,224,0.05));
 }
 
-.diary-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+/* 내용 */
+.diary-grid-info {
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.diary-grid-card:not(:has(.diary-grid-img)) .diary-grid-overlay {
-  opacity: 1;
-  background: linear-gradient(to top, rgba(107,189,224,0.25) 0%, transparent 100%);
+  gap: 0.25rem;
+  flex: 1;
 }
 
 .diary-grid-title {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #fff;
-  line-height: 1.3;
+  color: var(--text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.diary-grid-datetime {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.diary-grid-excerpt {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  line-height: 1.55;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-}
-.diary-grid-card:not(:has(.diary-grid-img)) .diary-grid-title {
-  color: var(--text);
-  text-shadow: none;
+  margin-top: 0.1rem;
 }
 
-.diary-grid-date {
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.75);
-  font-weight: 600;
-  margin-top: 0.2rem;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
-.diary-grid-card:not(:has(.diary-grid-img)) .diary-grid-date {
-  color: var(--text-muted);
-  text-shadow: none;
-}
-
-.diary-grid-likes {
+.diary-grid-footer {
   display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.85);
-  font-weight: 700;
-  margin-top: 0.3rem;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  justify-content: flex-end;
+  margin-top: 0.4rem;
 }
-.diary-grid-card:not(:has(.diary-grid-img)) .diary-grid-likes {
-  color: #f87171;
-  text-shadow: none;
+
+.diary-like-btn.small {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.68rem;
 }
 
 /* ── 상세 모달 ── */
@@ -554,9 +553,10 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 600px) {
   .diary-page { padding: calc(var(--header-h) + 2rem) 1.25rem calc(var(--footer-h) + 3rem); }
-  .diary-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+  .diary-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
   .diary-detail-modal { border-radius: 1.25rem; }
   .diary-detail-img { max-height: 220px; }
+  .diary-grid-datetime { display: none; }
 }

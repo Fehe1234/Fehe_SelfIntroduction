@@ -5,6 +5,34 @@ import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { collection, getDocs, deleteDoc, doc, orderBy, query, updateDoc, deleteField } from 'firebase/firestore'
 import '../styles/diary.css'
 
+function formatDateTime(ts) {
+  if (!ts) return ''
+  const d = ts.toDate ? ts.toDate() : new Date(ts)
+  return d.toLocaleString('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric', month: 'long', day: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  })
+}
+
+function LikeBtn({ postId, likes, myIp, onToggle, small }) {
+  const encodedIp = myIp ? myIp.replace(/\./g, '_') : null
+  const liked = encodedIp && likes ? !!likes[encodedIp] : false
+  const count = likes ? Object.keys(likes).length : 0
+  return (
+    <button
+      className={`diary-like-btn${liked ? ' liked' : ''}${small ? ' small' : ''}`}
+      onClick={e => { e.stopPropagation(); onToggle(postId, encodedIp, liked) }}
+      disabled={!myIp}
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      {count > 0 && <span>{count}</span>}
+    </button>
+  )
+}
+
 const DIARY_EMAIL = 'diary@fehe.app'
 
 async function verifyDiaryPassword(pw) {
@@ -68,10 +96,6 @@ function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
   const [showDeletePw, setShowDeletePw] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  const likeCount = post.likes ? Object.keys(post.likes).length : 0
-  const encodedIp = myIp ? myIp.replace(/\./g, '_') : null
-  const liked = encodedIp && post.likes ? !!post.likes[encodedIp] : false
-
   async function handleDeleteConfirm() {
     setDeleting(true)
     setShowDeletePw(false)
@@ -91,24 +115,11 @@ function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
           <div className="diary-detail-top">
             <div>
               <h2 className="diary-detail-title">{post.title}</h2>
-              <p className="diary-detail-date">{post.date}</p>
+              <p className="diary-detail-date">{formatDateTime(post.createdAt)}</p>
             </div>
             <div className="diary-detail-actions">
-              <button
-                className={`diary-like-btn${liked ? ' liked' : ''}`}
-                onClick={() => onLikeToggle(post.id, encodedIp, liked)}
-                disabled={!myIp}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                </svg>
-                {likeCount > 0 && <span>{likeCount}</span>}
-              </button>
-              <button
-                className="diary-delete-btn"
-                onClick={() => setShowDeletePw(true)}
-                disabled={deleting}
-              >
+              <LikeBtn postId={post.id} likes={post.likes} myIp={myIp} onToggle={onLikeToggle} />
+              <button className="diary-delete-btn" onClick={() => setShowDeletePw(true)} disabled={deleting}>
                 {deleting ? '삭제 중...' : '삭제'}
               </button>
             </div>
@@ -254,31 +265,26 @@ export default function DiaryPage() {
         </div>
       ) : (
         <div className="diary-grid">
-          {posts.map(post => {
-            const likeCount = post.likes ? Object.keys(post.likes).length : 0
-            return (
-              <div
-                key={post.id}
-                className="diary-grid-card"
-                onClick={() => setSelected(post.id)}
-              >
+          {posts.map(post => (
+            <div key={post.id} className="diary-grid-card" onClick={() => setSelected(post.id)}>
+              {/* 썸네일 */}
+              <div className="diary-grid-thumb">
                 {post.imageUrl
                   ? <img src={post.imageUrl} alt={post.title} className="diary-grid-img" />
                   : <div className="diary-grid-noimg" />
                 }
-                <div className="diary-grid-overlay">
-                  <p className="diary-grid-title">{post.title}</p>
-                  <p className="diary-grid-date">{post.date}</p>
-                  {likeCount > 0 && (
-                    <p className="diary-grid-likes">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                      {likeCount}
-                    </p>
-                  )}
+              </div>
+              {/* 내용 */}
+              <div className="diary-grid-info">
+                <p className="diary-grid-title">{post.title}</p>
+                <p className="diary-grid-datetime">{formatDateTime(post.createdAt)}</p>
+                <p className="diary-grid-excerpt">{post.content}</p>
+                <div className="diary-grid-footer">
+                  <LikeBtn postId={post.id} likes={post.likes} myIp={myIp} onToggle={handleLikeToggle} small />
                 </div>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       )}
     </div>
