@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db, diaryAuth } from '../firebase'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
@@ -91,10 +91,61 @@ function PasswordModal({ onClose, onSuccess }) {
   )
 }
 
-/* ── 상세 모달 ── */
+/* ── 이미지 캐러셀 ── */
+function ImageCarousel({ images }) {
+  const [idx, setIdx] = useState(0)
+  const touchStartX = useRef(null)
+
+  const prev = () => setIdx(i => Math.max(0, i - 1))
+  const next = () => setIdx(i => Math.min(images.length - 1, i + 1))
+
+  function onTouchStart(e) { touchStartX.current = e.touches[0].clientX }
+  function onTouchEnd(e) {
+    if (touchStartX.current === null) return
+    const dx = e.changedTouches[0].clientX - touchStartX.current
+    if (dx < -40) next()
+    else if (dx > 40) prev()
+    touchStartX.current = null
+  }
+
+  return (
+    <div className="diary-carousel" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <div className="diary-carousel-track" style={{ transform: `translateX(-${idx * 100}%)` }}>
+        {images.map((url, i) => (
+          <img key={i} src={url} alt="" className="diary-carousel-img" />
+        ))}
+      </div>
+
+      {images.length > 1 && (
+        <>
+          {idx > 0 && (
+            <button className="diary-carousel-arrow left" onClick={e => { e.stopPropagation(); prev() }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+          )}
+          {idx < images.length - 1 && (
+            <button className="diary-carousel-arrow right" onClick={e => { e.stopPropagation(); next() }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          )}
+          <div className="diary-carousel-dots">
+            {images.map((_, i) => (
+              <span key={i} className={`diary-carousel-dot${i === idx ? ' active' : ''}`} onClick={e => { e.stopPropagation(); setIdx(i) }} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/* ── 인스타그램 스타일 상세 모달 ── */
 function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
   const [showDeletePw, setShowDeletePw] = useState(false)
   const [deleting, setDeleting] = useState(false)
+
+  const images = post.imageUrls?.length > 0 ? post.imageUrls : post.imageUrl ? [post.imageUrl] : []
+  const hasImages = images.length > 0
 
   async function handleDeleteConfirm() {
     setDeleting(true)
@@ -103,33 +154,34 @@ function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
   }
 
   return (
-    <div className="diary-detail-overlay" onClick={onClose}>
-      <div className="diary-detail-modal" onClick={e => e.stopPropagation()}>
-        <button className="diary-detail-close" onClick={onClose}>✕</button>
+    <div className="diary-ig-overlay" onClick={onClose}>
+      <div className={`diary-ig-modal${hasImages ? '' : ' no-img'}`} onClick={e => e.stopPropagation()}>
+        <button className="diary-ig-close" onClick={onClose}>✕</button>
 
-        {/* 이미지 갤러리 */}
-        {(post.imageUrls?.length > 0 || post.imageUrl) && (
-          <div className="diary-detail-imgs">
-            {(post.imageUrls || [post.imageUrl]).map((url, i) => (
-              <img key={i} src={url} alt={post.title} className="diary-detail-img" />
-            ))}
+        {/* 왼쪽: 이미지 캐러셀 */}
+        {hasImages && (
+          <div className="diary-ig-left">
+            <ImageCarousel images={images} />
           </div>
         )}
 
-        <div className="diary-detail-body">
-          <div className="diary-detail-top">
+        {/* 오른쪽: 내용 */}
+        <div className="diary-ig-right">
+          <div className="diary-ig-header">
             <div>
-              <h2 className="diary-detail-title">{post.title}</h2>
-              <p className="diary-detail-date">{formatDateTime(post.createdAt)}</p>
-            </div>
-            <div className="diary-detail-actions">
-              <LikeBtn postId={post.id} likes={post.likes} myIp={myIp} onToggle={onLikeToggle} />
-              <button className="diary-delete-btn" onClick={() => setShowDeletePw(true)} disabled={deleting}>
-                {deleting ? '삭제 중...' : '삭제'}
-              </button>
+              <h2 className="diary-ig-title">{post.title}</h2>
+              <p className="diary-ig-date">{formatDateTime(post.createdAt)}</p>
             </div>
           </div>
-          <p className="diary-detail-content">{post.content}</p>
+
+          <p className="diary-ig-content">{post.content}</p>
+
+          <div className="diary-ig-footer">
+            <LikeBtn postId={post.id} likes={post.likes} myIp={myIp} onToggle={onLikeToggle} />
+            <button className="diary-delete-btn" onClick={() => setShowDeletePw(true)} disabled={deleting}>
+              {deleting ? '삭제 중...' : '삭제'}
+            </button>
+          </div>
         </div>
 
         {showDeletePw && (
