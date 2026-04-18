@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { rtdb } from '../firebase'
+import { auth, rtdb } from '../firebase'
 import {
   ref, get, set, remove, onValue, onDisconnect, runTransaction
 } from 'firebase/database'
@@ -65,7 +65,7 @@ export default function VisitorGate({ children }) {
         } catch {}
 
         const myIp = myIpRef.current
-        if (myIp) {
+        if (myIp && !auth.currentUser) {
           const blockedKey = myIp.replace(/\./g, '_')
           const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
           if (blockedSnap.exists()) {
