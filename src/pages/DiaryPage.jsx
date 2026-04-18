@@ -2,20 +2,22 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db, diaryAuth } from '../firebase'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/firestore'
+import { collection, getDocs, deleteDoc, doc, orderBy, query, updateDoc, deleteField } from 'firebase/firestore'
+import '../styles/diary.css'
 
 const DIARY_EMAIL = 'diary@fehe.app'
 
 async function verifyDiaryPassword(pw) {
   try {
     await signInWithEmailAndPassword(diaryAuth, DIARY_EMAIL, pw)
-    await signOut(diaryAuth) // 검증 후 즉시 로그아웃
+    await signOut(diaryAuth)
     return true
   } catch {
     return false
   }
 }
 
+/* ── 비밀번호 모달 ── */
 function PasswordModal({ onClose, onSuccess }) {
   const [input, setInput] = useState('')
   const [error, setError] = useState(false)
@@ -38,7 +40,7 @@ function PasswordModal({ onClose, onSuccess }) {
     <div className="diary-modal-overlay" onClick={onClose}>
       <div className="diary-modal" onClick={e => e.stopPropagation()}>
         <p className="diary-modal-title">비밀번호 입력</p>
-        <p className="diary-modal-sub">관리자만 사용할 수 있습니다.</p>
+        <p className="diary-modal-sub">관리자만 삭제할 수 있습니다.</p>
         <form onSubmit={submit}>
           <input
             className={`diary-modal-input${error ? ' error' : ''}`}
@@ -61,38 +63,85 @@ function PasswordModal({ onClose, onSuccess }) {
   )
 }
 
-function DeleteWithAuth({ postId, onDelete }) {
-  const [showModal, setShowModal] = useState(false)
+/* ── 상세 모달 ── */
+function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
+  const [showDeletePw, setShowDeletePw] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
-  function handleSuccess() {
-    setShowModal(false)
-    onDelete(postId)
+  const likeCount = post.likes ? Object.keys(post.likes).length : 0
+  const encodedIp = myIp ? myIp.replace(/\./g, '_') : null
+  const liked = encodedIp && post.likes ? !!post.likes[encodedIp] : false
+
+  async function handleDeleteConfirm() {
+    setDeleting(true)
+    setShowDeletePw(false)
+    await onDelete(post.id)
   }
 
   return (
-    <>
-      {showModal && (
-        <PasswordModal
-          onClose={() => setShowModal(false)}
-          onSuccess={handleSuccess}
-        />
-      )}
-      <button className="diary-delete-btn" onClick={() => setShowModal(true)}>
-        삭제
-      </button>
-    </>
+    <div className="diary-detail-overlay" onClick={onClose}>
+      <div className="diary-detail-modal" onClick={e => e.stopPropagation()}>
+        <button className="diary-detail-close" onClick={onClose}>✕</button>
+
+        {post.imageUrl && (
+          <img src={post.imageUrl} alt={post.title} className="diary-detail-img" />
+        )}
+
+        <div className="diary-detail-body">
+          <div className="diary-detail-top">
+            <div>
+              <h2 className="diary-detail-title">{post.title}</h2>
+              <p className="diary-detail-date">{post.date}</p>
+            </div>
+            <div className="diary-detail-actions">
+              <button
+                className={`diary-like-btn${liked ? ' liked' : ''}`}
+                onClick={() => onLikeToggle(post.id, encodedIp, liked)}
+                disabled={!myIp}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                {likeCount > 0 && <span>{likeCount}</span>}
+              </button>
+              <button
+                className="diary-delete-btn"
+                onClick={() => setShowDeletePw(true)}
+                disabled={deleting}
+              >
+                {deleting ? '삭제 중...' : '삭제'}
+              </button>
+            </div>
+          </div>
+          <p className="diary-detail-content">{post.content}</p>
+        </div>
+
+        {showDeletePw && (
+          <PasswordModal
+            onClose={() => setShowDeletePw(false)}
+            onSuccess={handleDeleteConfirm}
+          />
+        )}
+      </div>
+    </div>
   )
 }
 
+/* ── 메인 ── */
 export default function DiaryPage() {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [showModal, setShowModal] = useState(false)
+  const [showWriteModal, setShowWriteModal] = useState(false)
   const [selected, setSelected] = useState(null)
+  const [myIp, setMyIp] = useState(null)
 
   useEffect(() => {
     fetchPosts()
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(d => setMyIp(d.ip))
+      .catch(() => {})
   }, [])
 
   async function fetchPosts() {
@@ -109,7 +158,7 @@ export default function DiaryPage() {
   }
 
   function handleWriteClick() {
-    setShowModal(true)
+    setShowWriteModal(true)
   }
 
   function handleAuthSuccess() {
@@ -122,17 +171,62 @@ export default function DiaryPage() {
       await deleteDoc(doc(db, 'diary', id))
       setPosts(prev => prev.filter(p => p.id !== id))
       setSelected(null)
-    } catch (e) {
+    } catch {
       alert('삭제 중 오류가 발생했습니다.')
     }
   }
 
+  async function handleLikeToggle(postId, encodedIp, currentlyLiked) {
+    if (!encodedIp) return
+    try {
+      const postRef = doc(db, 'diary', postId)
+      if (currentlyLiked) {
+        await updateDoc(postRef, { [`likes.${encodedIp}`]: deleteField() })
+        setPosts(prev => prev.map(p => {
+          if (p.id !== postId) return p
+          const likes = { ...(p.likes || {}) }
+          delete likes[encodedIp]
+          return { ...p, likes }
+        }))
+      } else {
+        await updateDoc(postRef, { [`likes.${encodedIp}`]: true })
+        setPosts(prev => prev.map(p =>
+          p.id !== postId ? p : { ...p, likes: { ...(p.likes || {}), [encodedIp]: true } }
+        ))
+      }
+      // 열린 모달도 업데이트
+      if (selected?.id === postId) {
+        setSelected(prev => {
+          if (!prev) return prev
+          const likes = { ...(prev.likes || {}) }
+          if (currentlyLiked) delete likes[encodedIp]
+          else likes[encodedIp] = true
+          return { ...prev, likes }
+        })
+      }
+    } catch {
+      alert('오류가 발생했습니다.')
+    }
+  }
+
+  const selectedPost = selected ? posts.find(p => p.id === selected) ?? selected : null
+
   return (
     <div className="diary-page">
-      {showModal && (
+      {showWriteModal && (
         <PasswordModal
-          onClose={() => setShowModal(false)}
+          onClose={() => setShowWriteModal(false)}
           onSuccess={handleAuthSuccess}
+        />
+      )}
+
+      {selectedPost && (
+        <DetailModal
+          post={selectedPost}
+          myIp={myIp}
+          onClose={() => setSelected(null)}
+          onDelete={handleDelete}
+          onLikeToggle={handleLikeToggle}
         />
       )}
 
@@ -150,9 +244,7 @@ export default function DiaryPage() {
       </div>
 
       {loading ? (
-        <div className="diary-empty">
-          <p>불러오는 중...</p>
-        </div>
+        <div className="diary-empty"><p>불러오는 중...</p></div>
       ) : posts.length === 0 ? (
         <div className="diary-empty">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
@@ -161,36 +253,32 @@ export default function DiaryPage() {
           <p>아직 작성된 일기가 없습니다.</p>
         </div>
       ) : (
-        <div className="diary-list">
-          {posts.map(post => (
-            <div
-              key={post.id}
-              className={`diary-card${selected === post.id ? ' expanded' : ''}`}
-              onClick={() => setSelected(selected === post.id ? null : post.id)}
-            >
-              <div className="diary-card-top">
-                <div>
-                  <p className="diary-card-title">{post.title}</p>
-                  <p className="diary-card-date">{post.date}</p>
+        <div className="diary-grid">
+          {posts.map(post => {
+            const likeCount = post.likes ? Object.keys(post.likes).length : 0
+            return (
+              <div
+                key={post.id}
+                className="diary-grid-card"
+                onClick={() => setSelected(post.id)}
+              >
+                {post.imageUrl
+                  ? <img src={post.imageUrl} alt={post.title} className="diary-grid-img" />
+                  : <div className="diary-grid-noimg" />
+                }
+                <div className="diary-grid-overlay">
+                  <p className="diary-grid-title">{post.title}</p>
+                  <p className="diary-grid-date">{post.date}</p>
+                  {likeCount > 0 && (
+                    <p className="diary-grid-likes">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                      {likeCount}
+                    </p>
+                  )}
                 </div>
-                <svg
-                  className="diary-chevron"
-                  style={{ transform: selected === post.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.25s', color: 'var(--text-muted)', flexShrink: 0 }}
-                  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9"/>
-                </svg>
               </div>
-              {selected === post.id && (
-                <div className="diary-card-body">
-                  <p className="diary-card-content">{post.content}</p>
-                  <div className="diary-card-footer" onClick={e => e.stopPropagation()}>
-                    <DeleteWithAuth postId={post.id} onDelete={handleDelete} />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
