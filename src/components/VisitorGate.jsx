@@ -16,7 +16,7 @@ function getSessionId() {
 }
 
 export default function VisitorGate({ children }) {
-  const [status, setStatus] = useState('checking') // checking | allowed | waiting
+  const [status, setStatus] = useState('checking') // checking | allowed | waiting | blocked
   const [activeCount, setActiveCount] = useState(0)
   const [queuePos, setQueuePos] = useState(0)
   const sid = useRef(getSessionId()).current
@@ -29,13 +29,32 @@ export default function VisitorGate({ children }) {
     const allQueueRef = ref(rtdb, 'queue')
 
     async function tryEnter() {
+      // IP 확인 + 차단 체크
+      let myIp = null
+      try {
+        const res = await fetch('https://api.ipify.org?format=json')
+        const data = await res.json()
+        myIp = data.ip
+      } catch {}
+
+      if (myIp) {
+        const blockedKey = myIp.replace(/\./g, '_')
+        const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
+        if (blockedSnap.exists()) {
+          setStatus('blocked')
+          return
+        }
+      }
+
       // 트랜잭션으로 동시 접속 경쟁 방지
       let entered = false
       await runTransaction(ref(rtdb, 'sessions'), (sessions) => {
-        const count = sessions ? Object.keys(sessions).length : 0
-        if (count >= MAX) return sessions // 꽉 참 → 중단
+        const count = sessions
+          ? Object.keys(sessions).filter(k => k !== 'app').length
+          : 0
+        if (count >= MAX) return sessions
         entered = true
-        return { ...sessions, [sid]: { joinedAt: Date.now() } }
+        return { ...sessions, [sid]: { joinedAt: Date.now(), ip: myIp || '알 수 없음' } }
       })
 
       if (entered) {
@@ -44,7 +63,6 @@ export default function VisitorGate({ children }) {
         remove(myQueueRef)
         setStatus('allowed')
       } else {
-        // 대기열에 등록
         const qSnap = await get(myQueueRef)
         if (!qSnap.exists()) {
           await set(myQueueRef, { joinedAt: Date.now() })
@@ -58,7 +76,9 @@ export default function VisitorGate({ children }) {
 
     // 실시간 접속자 수 감지
     const unsubSessions = onValue(sessionsRef, snap => {
-      const count = snap.exists() ? Object.keys(snap.val()).length : 0
+      const count = snap.exists()
+        ? Object.keys(snap.val()).filter(k => k !== 'app').length
+        : 0
       setActiveCount(count)
 
       // 대기 중이었는데 자리 남으면 재시도
@@ -125,6 +145,22 @@ export default function VisitorGate({ children }) {
             <div className="vg-bar-fill" style={{ width: `${(activeCount / MAX) * 100}%` }} />
           </div>
           <p className="vg-hint">창을 닫지 마세요. 자동으로 입장됩니다.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'blocked') {
+    return (
+      <div className="vg-overlay">
+        <div className="vg-box">
+          <div className="vg-icon" style={{ color: '#f85149' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <h1 className="vg-title">접근 차단됨</h1>
+          <p className="vg-desc">이 IP 주소는 관리자에 의해 차단되었습니다.</p>
         </div>
       </div>
     )
