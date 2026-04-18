@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { IconHome, IconYoutube, IconHobby, IconDiary, IconGithub, IconSteam } from './icons'
+import { IconHome, IconYoutube, IconHobby, IconDiary, IconStatus, IconGithub, IconSteam } from './icons'
 
 export default function Header() {
   const navigate = useNavigate()
@@ -57,6 +57,12 @@ export default function Header() {
           onClick={() => switchPage('/diary')}
         >
           <IconDiary /> 일기
+        </button>
+        <button
+          className={`drawer-btn ${activePage === 'status' ? 'active' : ''}`}
+          onClick={() => switchPage('/status')}
+        >
+          <IconStatus /> 서버 상태
         </button>
 
         <div className="drawer-divider" />
