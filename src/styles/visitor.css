@@ -138,3 +138,18 @@
   color: var(--text-muted);
   font-weight: 600;
 }
+
+.vg-reload-btn {
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.4rem;
+  background: rgba(212, 136, 10, 0.15);
+  color: #d4880a;
+  border: 1.5px solid rgba(212, 136, 10, 0.35);
+  border-radius: 0.65rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.vg-reload-btn:hover { background: rgba(212, 136, 10, 0.28); }

@@ -16,11 +16,15 @@ function getSessionId() {
 }
 
 export default function VisitorGate({ children }) {
-  const [status, setStatus] = useState('checking') // checking | allowed | waiting | blocked
+  const [status, setStatus] = useState('checking') // checking | allowed | waiting | blocked | kicked | banned
   const [activeCount, setActiveCount] = useState(0)
   const [queuePos, setQueuePos] = useState(0)
   const sid = useRef(getSessionId()).current
   const allowedRef = useRef(false)
+  const cleaningUp = useRef(false)
+  const ipFetchedRef = useRef(false)
+  const myIpRef = useRef(null)
+  const extraUnsubsRef = useRef([])
 
   useEffect(() => {
     const sessionRef = ref(rtdb, `sessions/${sid}`)
@@ -28,23 +32,51 @@ export default function VisitorGate({ children }) {
     const myQueueRef = ref(rtdb, `queue/${sid}`)
     const allQueueRef = ref(rtdb, 'queue')
 
-    async function tryEnter() {
-      // IP 확인 + 차단 체크
-      let myIp = null
-      try {
-        const res = await fetch('https://api.ipify.org?format=json')
-        const data = await res.json()
-        myIp = data.ip
-      } catch {}
+    function setupKickListener() {
+      const unsub = onValue(sessionRef, snap => {
+        if (!snap.exists() && allowedRef.current && !cleaningUp.current) {
+          allowedRef.current = false
+          setStatus('kicked')
+        }
+      })
+      extraUnsubsRef.current.push(unsub)
+    }
 
-      if (myIp) {
-        const blockedKey = myIp.replace(/\./g, '_')
-        const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
-        if (blockedSnap.exists()) {
-          setStatus('blocked')
-          return
+    function setupBanListener(ip) {
+      const blockedKey = ip.replace(/\./g, '_')
+      const unsub = onValue(ref(rtdb, `sessions/app/blocked/${blockedKey}`), snap => {
+        if (snap.exists() && allowedRef.current && !cleaningUp.current) {
+          allowedRef.current = false
+          remove(sessionRef)
+          setStatus('banned')
+        }
+      })
+      extraUnsubsRef.current.push(unsub)
+    }
+
+    async function tryEnter() {
+      // IP 확인 + 차단 체크 (최초 1회만)
+      if (!ipFetchedRef.current) {
+        ipFetchedRef.current = true
+        try {
+          const res = await fetch('https://api.ipify.org?format=json')
+          const data = await res.json()
+          myIpRef.current = data.ip
+        } catch {}
+
+        const myIp = myIpRef.current
+        if (myIp) {
+          const blockedKey = myIp.replace(/\./g, '_')
+          const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
+          if (blockedSnap.exists()) {
+            setStatus('blocked')
+            return
+          }
+          setupBanListener(myIp)
         }
       }
+
+      const myIp = myIpRef.current
 
       // 트랜잭션으로 동시 접속 경쟁 방지
       let entered = false
@@ -62,6 +94,7 @@ export default function VisitorGate({ children }) {
         onDisconnect(sessionRef).remove()
         remove(myQueueRef)
         setStatus('allowed')
+        setupKickListener()
       } else {
         const qSnap = await get(myQueueRef)
         if (!qSnap.exists()) {
@@ -98,8 +131,10 @@ export default function VisitorGate({ children }) {
     })
 
     return () => {
+      cleaningUp.current = true
       unsubSessions()
       unsubQueue()
+      extraUnsubsRef.current.forEach(fn => fn())
       if (allowedRef.current) remove(sessionRef)
       else remove(myQueueRef)
     }
@@ -145,6 +180,44 @@ export default function VisitorGate({ children }) {
             <div className="vg-bar-fill" style={{ width: `${(activeCount / MAX) * 100}%` }} />
           </div>
           <p className="vg-hint">창을 닫지 마세요. 자동으로 입장됩니다.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'kicked') {
+    return (
+      <div className="vg-overlay">
+        <div className="vg-box">
+          <div className="vg-icon" style={{ color: '#d4880a' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </div>
+          <h1 className="vg-title">강제 퇴장됨</h1>
+          <p className="vg-desc">관리자에 의해 세션이 종료되었습니다.<br/>페이지를 새로고침하면 다시 입장할 수 있습니다.</p>
+          <button
+            className="vg-reload-btn"
+            onClick={() => window.location.reload()}
+          >새로고침</button>
+        </div>
+      </div>
+    )
+  }
+
+  if (status === 'banned') {
+    return (
+      <div className="vg-overlay">
+        <div className="vg-box">
+          <div className="vg-icon" style={{ color: '#f85149' }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <h1 className="vg-title">IP 차단됨</h1>
+          <p className="vg-desc">관리자에 의해 이 IP 주소가 차단되었습니다.</p>
         </div>
       </div>
     )
