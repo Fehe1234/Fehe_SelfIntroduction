@@ -21,8 +21,7 @@ export default function DiaryWritePage() {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [image, setImage] = useState(null)
-  const [preview, setPreview] = useState(null)
+  const [images, setImages] = useState([])   // { file, preview }[]
   const [saving, setSaving] = useState(false)
   const fileRef = useRef()
 
@@ -32,17 +31,16 @@ export default function DiaryWritePage() {
     }
   }, [navigate])
 
-  function handleImage(e) {
-    const file = e.target.files[0]
-    if (!file) return
-    setImage(file)
-    setPreview(URL.createObjectURL(file))
+  function handleImages(e) {
+    const files = Array.from(e.target.files)
+    if (!files.length) return
+    const newImages = files.map(file => ({ file, preview: URL.createObjectURL(file) }))
+    setImages(prev => [...prev, ...newImages])
+    e.target.value = ''
   }
 
-  function removeImage() {
-    setImage(null)
-    setPreview(null)
-    if (fileRef.current) fileRef.current.value = ''
+  function removeImage(idx) {
+    setImages(prev => prev.filter((_, i) => i !== idx))
   }
 
   async function submit(e) {
@@ -51,10 +49,10 @@ export default function DiaryWritePage() {
 
     setSaving(true)
     try {
-      let imageUrl = null
-      if (image) {
-        imageUrl = await uploadToImgBB(image)
-      }
+      // 모든 이미지 병렬 업로드
+      const imageUrls = images.length > 0
+        ? await Promise.all(images.map(img => uploadToImgBB(img.file)))
+        : []
 
       const now = new Date()
       const date = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`
@@ -62,7 +60,7 @@ export default function DiaryWritePage() {
         title: title.trim(),
         content: content.trim(),
         date,
-        imageUrl,
+        imageUrls,
         likes: {},
         createdAt: serverTimestamp(),
       })
@@ -104,29 +102,32 @@ export default function DiaryWritePage() {
         </div>
 
         <div className="diary-form-group">
-          <label className="diary-form-label">사진 (선택)</label>
-          {preview ? (
-            <div className="diary-img-preview-wrap">
-              <img src={preview} alt="미리보기" className="diary-img-preview" />
-              <button type="button" className="diary-img-remove" onClick={removeImage}>✕</button>
-            </div>
-          ) : (
-            <label className="diary-img-upload" htmlFor="diary-img-input">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <label className="diary-form-label">사진 (선택 · 여러 장 가능)</label>
+          <div className="diary-img-list">
+            {images.map((img, i) => (
+              <div key={i} className="diary-img-thumb-wrap">
+                {i === 0 && <span className="diary-img-thumb-badge">대표</span>}
+                <img src={img.preview} alt="" className="diary-img-thumb" />
+                <button type="button" className="diary-img-remove" onClick={() => removeImage(i)}>✕</button>
+              </div>
+            ))}
+            <label className="diary-img-add" htmlFor="diary-img-input">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
-              <span>사진 추가</span>
+              <span>추가</span>
               <input
                 id="diary-img-input"
                 ref={fileRef}
                 type="file"
                 accept="image/*"
-                onChange={handleImage}
+                multiple
+                onChange={handleImages}
                 style={{ display: 'none' }}
               />
             </label>
-          )}
+          </div>
         </div>
 
         <div className="diary-form-group">
@@ -145,7 +146,7 @@ export default function DiaryWritePage() {
           className="diary-submit-btn"
           disabled={!title.trim() || !content.trim() || saving}
         >
-          {saving ? '저장 중...' : '저장하기'}
+          {saving ? `업로드 중... (사진 ${images.length}장)` : '저장하기'}
         </button>
       </form>
     </div>

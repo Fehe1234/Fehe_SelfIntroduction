@@ -107,8 +107,13 @@ function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
       <div className="diary-detail-modal" onClick={e => e.stopPropagation()}>
         <button className="diary-detail-close" onClick={onClose}>✕</button>
 
-        {post.imageUrl && (
-          <img src={post.imageUrl} alt={post.title} className="diary-detail-img" />
+        {/* 이미지 갤러리 */}
+        {(post.imageUrls?.length > 0 || post.imageUrl) && (
+          <div className="diary-detail-imgs">
+            {(post.imageUrls || [post.imageUrl]).map((url, i) => (
+              <img key={i} src={url} alt={post.title} className="diary-detail-img" />
+            ))}
+          </div>
         )}
 
         <div className="diary-detail-body">
@@ -267,10 +272,10 @@ export default function DiaryPage() {
         <div className="diary-grid">
           {posts.map(post => (
             <div key={post.id} className="diary-grid-card" onClick={() => setSelected(post.id)}>
-              {/* 썸네일 */}
+              {/* 썸네일 (첫 번째 사진) */}
               <div className="diary-grid-thumb">
-                {post.imageUrl
-                  ? <img src={post.imageUrl} alt={post.title} className="diary-grid-img" />
+                {(post.imageUrls?.[0] || post.imageUrl)
+                  ? <img src={post.imageUrls?.[0] || post.imageUrl} alt={post.title} className="diary-grid-img" />
                   : <div className="diary-grid-noimg" />
                 }
               </div>
