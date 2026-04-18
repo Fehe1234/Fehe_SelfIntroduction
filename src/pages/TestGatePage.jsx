@@ -16,16 +16,18 @@ export default function TestGatePage() {
   const [screen, setScreen] = useState('waiting')
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="vg-overlay">
       {/* 탭 */}
       <div style={{
-        display: 'flex', gap: '0.5rem', padding: '1.25rem 1.5rem',
-        background: 'rgba(220,240,250,0.82)', backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(168,216,240,0.5)', flexWrap: 'wrap'
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 10000,
+        display: 'flex', gap: '0.5rem', padding: '0.75rem 1.25rem',
+        background: 'rgba(220,240,250,0.92)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(168,216,240,0.5)', flexWrap: 'wrap',
+        alignItems: 'center',
       }}>
         {SCREENS.map(s => (
           <button key={s.key} onClick={() => setScreen(s.key)} style={{
-            padding: '0.4rem 1rem',
+            padding: '0.35rem 0.9rem',
             borderRadius: '0.6rem',
             border: '1.5px solid',
             borderColor: screen === s.key ? 'var(--sky-deep)' : 'var(--border)',
@@ -34,13 +36,10 @@ export default function TestGatePage() {
             fontFamily: 'inherit', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
           }}>{s.label}</button>
         ))}
-        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', alignSelf: 'center', marginLeft: '0.5rem' }}>
+        <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginLeft: '0.25rem' }}>
           * 테스트 페이지
         </span>
       </div>
-
-      {/* 화면 */}
-      <div className="vg-overlay" style={{ position: 'relative', flex: 1 }}>
 
         {screen === 'waiting' && (
           <div className="vg-box">
@@ -109,7 +108,6 @@ export default function TestGatePage() {
           </div>
         )}
 
-      </div>
     </div>
   )
 }
