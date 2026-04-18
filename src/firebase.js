@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getDatabase } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
-import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBbyBjAPMNSKXn_tzd1h0G2LF2ghy5bjj0",
@@ -19,8 +18,6 @@ const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const rtdb = getDatabase(app)
 export const auth = getAuth(app)
-
-export const storage = getStorage(app)
 
 // 일기 전용 Auth 인스턴스 (admin 세션과 독립)
 const diaryApp = initializeApp(firebaseConfig, 'diary')

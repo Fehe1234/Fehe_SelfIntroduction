@@ -1,8 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db, storage } from '../firebase'
+import { db } from '../firebase'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
+
+const IMGBB_KEY = import.meta.env.VITE_IMGBB_KEY
+
+async function uploadToImgBB(file) {
+  const formData = new FormData()
+  formData.append('image', file)
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+    method: 'POST',
+    body: formData,
+  })
+  const data = await res.json()
+  if (!data.success) throw new Error('이미지 업로드 실패')
+  return data.data.url
+}
 
 export default function DiaryWritePage() {
   const navigate = useNavigate()
@@ -40,9 +53,7 @@ export default function DiaryWritePage() {
     try {
       let imageUrl = null
       if (image) {
-        const path = `diary-images/${Date.now()}-${image.name}`
-        const snap = await uploadBytes(storageRef(storage, path), image)
-        imageUrl = await getDownloadURL(snap.ref)
+        imageUrl = await uploadToImgBB(image)
       }
 
       const now = new Date()
