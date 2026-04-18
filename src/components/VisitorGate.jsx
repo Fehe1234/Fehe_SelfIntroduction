@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import { auth, rtdb } from '../firebase'
 import {
   ref, get, set, remove, onValue, onDisconnect, runTransaction
@@ -16,6 +17,11 @@ function getSessionId() {
 }
 
 export default function VisitorGate({ children }) {
+  const location = useLocation()
+
+  // 관리자 페이지는 게이트 없이 통과
+  if (location.pathname === '/admin') return children
+
   const [status, setStatus] = useState('checking') // checking | allowed | waiting | blocked | kicked | banned
   const [activeCount, setActiveCount] = useState(0)
   const [queuePos, setQueuePos] = useState(0)
