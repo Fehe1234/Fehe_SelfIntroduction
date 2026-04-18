@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { rtdb } from '../firebase'
-import { ref, get, set, remove, onValue } from 'firebase/database'
+import { db, rtdb } from '../firebase'
+import { doc, getDoc } from 'firebase/firestore'
+import { ref, set, remove, onValue } from 'firebase/database'
 import '../styles/admin.css'
 
 async function fetchPW() {
-  const snap = await get(ref(rtdb, 'sessions/app/pw'))
-  return snap.val()
+  const snap = await getDoc(doc(db, 'config', 'admin'))
+  return snap.exists() ? snap.data().pw : null
 }
 
 function encodeIp(ip) { return ip.replace(/\./g, '_') }
