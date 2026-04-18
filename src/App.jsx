@@ -13,6 +13,7 @@ import DiaryPage from './pages/DiaryPage'
 import DiaryWritePage from './pages/DiaryWritePage'
 import TestGatePage from './pages/TestGatePage'
 import SecretPage from './pages/SecretPage'
+import StatusPage from './pages/StatusPage'
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/diary/write" element={<DiaryWritePage />} />
         <Route path="/test-gate"   element={<TestGatePage />} />
         <Route path="/secret"      element={<SecretPage />} />
+        <Route path="/status"      element={<StatusPage />} />
       </Routes>
       <Footer />
       <MusicPlayer />
