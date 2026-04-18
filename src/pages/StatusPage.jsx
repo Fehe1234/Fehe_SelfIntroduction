@@ -33,49 +33,73 @@ export default function StatusPage() {
   const [visitors, setVisitors] = useState(null)
   const [version, setVersion] = useState(null)
   const [checkedAt, setCheckedAt] = useState(null)
+  const [secondsAgo, setSecondsAgo] = useState(0)
   const [ua, setUa] = useState({ browser: '', os: '' })
 
   useEffect(() => {
     // User Agent 파싱
     const u = navigator.userAgent
     let browser = '알 수 없음'
-    if (u.includes('Edg/'))     browser = 'Microsoft Edge'
-    else if (u.includes('OPR/')) browser = 'Opera'
+    if (u.includes('Edg/'))          browser = 'Microsoft Edge'
+    else if (u.includes('OPR/'))     browser = 'Opera'
     else if (u.includes('Chrome/'))  browser = 'Chrome'
     else if (u.includes('Firefox/')) browser = 'Firefox'
     else if (u.includes('Safari/'))  browser = 'Safari'
 
     let os = '알 수 없음'
-    if (u.includes('Windows NT'))       os = 'Windows'
-    else if (u.includes('Mac OS X'))    os = 'macOS'
-    else if (u.includes('Android'))     os = 'Android'
+    if (u.includes('Windows NT'))                       os = 'Windows'
+    else if (u.includes('Mac OS X'))                    os = 'macOS'
+    else if (u.includes('Android'))                     os = 'Android'
     else if (u.includes('iPhone') || u.includes('iPad')) os = 'iOS'
-    else if (u.includes('Linux'))       os = 'Linux'
+    else if (u.includes('Linux'))                       os = 'Linux'
     setUa({ browser, os })
 
-    // Firestore 연결 확인
-    const t1 = Date.now()
-    getDoc(doc(db, 'config', 'admin'))
-      .then(() => setFirestore({ state: 'ok', ms: Date.now() - t1 }))
-      .catch(() => setFirestore({ state: 'error', ms: null }))
+    async function runChecks() {
+      setFirestore(p => ({ ...p, state: 'checking' }))
+      setRtdbStatus(p => ({ ...p, state: 'checking' }))
+      setIpApi(p => ({ ...p, state: 'checking' }))
 
-    // RTDB 연결 확인
-    const t2 = Date.now()
-    get(ref(rtdb, 'app/version'))
-      .then(snap => {
-        setRtdbStatus({ state: 'ok', ms: Date.now() - t2 })
-        setVersion(snap.val())
-      })
-      .catch(() => setRtdbStatus({ state: 'error', ms: null }))
+      // 병렬 실행
+      await Promise.all([
+        (async () => {
+          const t = Date.now()
+          try {
+            await getDoc(doc(db, 'config', 'admin'))
+            setFirestore({ state: 'ok', ms: Date.now() - t })
+          } catch {
+            setFirestore({ state: 'error', ms: null })
+          }
+        })(),
+        (async () => {
+          const t = Date.now()
+          try {
+            const snap = await get(ref(rtdb, 'app/version'))
+            setRtdbStatus({ state: 'ok', ms: Date.now() - t })
+            setVersion(snap.val())
+          } catch {
+            setRtdbStatus({ state: 'error', ms: null })
+          }
+        })(),
+        (async () => {
+          const t = Date.now()
+          try {
+            const r = await fetch('https://api.ipify.org?format=json')
+            const data = await r.json()
+            setIpApi({ state: 'ok', ip: data.ip, ms: Date.now() - t })
+          } catch {
+            setIpApi(p => ({ ...p, state: 'error', ms: null }))
+          }
+        })(),
+      ])
 
-    // 외부 IP API 확인
-    const t3 = Date.now()
-    fetch('https://api.ipify.org?format=json')
-      .then(r => r.json())
-      .then(data => setIpApi({ state: 'ok', ip: data.ip, ms: Date.now() - t3 }))
-      .catch(() => setIpApi({ state: 'error', ip: null }))
+      setCheckedAt(new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }))
+      setSecondsAgo(0)
+    }
 
-    setCheckedAt(new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }))
+    runChecks()
+    const pingInterval = setInterval(runChecks, 10000)
+    const tickInterval = setInterval(() => setSecondsAgo(s => s + 1), 1000)
+    return () => { clearInterval(pingInterval); clearInterval(tickInterval) }
   }, [])
 
   // 실시간 접속자 수
@@ -103,7 +127,12 @@ export default function StatusPage() {
             {hasError ? '일부 시스템에 문제가 있습니다' : allOk ? '모든 시스템 정상 작동 중' : '상태 확인 중...'}
           </div>
           <h1 className="status-title">시스템 상태</h1>
-          {checkedAt && <p className="status-checked">마지막 확인: {checkedAt}</p>}
+          {checkedAt && (
+            <p className="status-checked">
+              마지막 확인: {checkedAt}
+              {secondsAgo > 0 && ` (${secondsAgo}초 전)`}
+            </p>
+          )}
         </div>
 
         {/* 서비스 상태 */}
