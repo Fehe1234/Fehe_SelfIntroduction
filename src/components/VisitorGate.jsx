@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { auth, rtdb } from '../firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 import {
   ref, get, set, remove, onValue, onDisconnect, runTransaction
 } from 'firebase/database'
@@ -16,13 +17,9 @@ function getSessionId() {
   return id
 }
 
-export default function VisitorGate({ children }) {
-  const location = useLocation()
-
-  // 관리자 페이지는 게이트 없이 통과
-  if (location.pathname === '/admin') return children
-
-  const [status, setStatus] = useState('checking') // checking | allowed | waiting | blocked | kicked | banned
+/* ── 실제 게이트 로직 ── */
+function GateInner({ children }) {
+  const [status, setStatus] = useState('checking')
   const [activeCount, setActiveCount] = useState(0)
   const [queuePos, setQueuePos] = useState(0)
   const sid = useRef(getSessionId()).current
@@ -61,7 +58,6 @@ export default function VisitorGate({ children }) {
     }
 
     async function tryEnter() {
-      // IP 확인 + 차단 체크 (최초 1회만)
       if (!ipFetchedRef.current) {
         ipFetchedRef.current = true
         try {
@@ -71,7 +67,7 @@ export default function VisitorGate({ children }) {
         } catch {}
 
         const myIp = myIpRef.current
-        if (myIp && !auth.currentUser) {
+        if (myIp) {
           const blockedKey = myIp.replace(/\./g, '_')
           const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
           if (blockedSnap.exists()) {
@@ -84,7 +80,6 @@ export default function VisitorGate({ children }) {
 
       const myIp = myIpRef.current
 
-      // 트랜잭션으로 동시 접속 경쟁 방지
       let entered = false
       await runTransaction(ref(rtdb, 'sessions'), (sessions) => {
         const count = sessions
@@ -113,20 +108,14 @@ export default function VisitorGate({ children }) {
 
     tryEnter()
 
-    // 실시간 접속자 수 감지
     const unsubSessions = onValue(sessionsRef, snap => {
       const count = snap.exists()
         ? Object.keys(snap.val()).filter(k => k !== 'app').length
         : 0
       setActiveCount(count)
-
-      // 대기 중이었는데 자리 남으면 재시도
-      if (!allowedRef.current && count < MAX) {
-        tryEnter()
-      }
+      if (!allowedRef.current && count < MAX) tryEnter()
     })
 
-    // 대기 순서 감지
     const unsubQueue = onValue(allQueueRef, snap => {
       if (!snap.exists()) { setQueuePos(0); return }
       const all = snap.val()
@@ -169,7 +158,6 @@ export default function VisitorGate({ children }) {
           </div>
           <h1 className="vg-title">대기 중</h1>
           <p className="vg-desc">현재 접속자가 가득 찼습니다.<br/>자리가 나면 자동으로 입장됩니다.</p>
-
           <div className="vg-stats">
             <div className="vg-stat">
               <span className="vg-stat-num">{queuePos}</span>
@@ -181,7 +169,6 @@ export default function VisitorGate({ children }) {
               <span className="vg-stat-label">현재 접속자</span>
             </div>
           </div>
-
           <div className="vg-bar-wrap">
             <div className="vg-bar-fill" style={{ width: `${(activeCount / MAX) * 100}%` }} />
           </div>
@@ -204,10 +191,7 @@ export default function VisitorGate({ children }) {
           </div>
           <h1 className="vg-title">강제 퇴장됨</h1>
           <p className="vg-desc">관리자에 의해 세션이 종료되었습니다.<br/>페이지를 새로고침하면 다시 입장할 수 있습니다.</p>
-          <button
-            className="vg-reload-btn"
-            onClick={() => window.location.reload()}
-          >새로고침</button>
+          <button className="vg-reload-btn" onClick={() => window.location.reload()}>새로고침</button>
         </div>
       </div>
     )
@@ -246,4 +230,26 @@ export default function VisitorGate({ children }) {
   }
 
   return children
+}
+
+/* ── 외부 래퍼: 관리자 여부 확인 후 분기 ── */
+export default function VisitorGate({ children }) {
+  const location = useLocation()
+  const [isAdmin, setIsAdmin] = useState(undefined)
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, user => setIsAdmin(!!user))
+    return () => unsub()
+  }, [])
+
+  // /admin 경로는 무조건 통과
+  if (location.pathname === '/admin') return children
+
+  // Firebase Auth 확인 중 (깜빡임 방지)
+  if (isAdmin === undefined) return null
+
+  // 로그인된 관리자는 세션 등록 없이 통과
+  if (isAdmin) return children
+
+  return <GateInner>{children}</GateInner>
 }
