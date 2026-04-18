@@ -1,25 +1,36 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { db } from '../firebase'
-import { collection, getDocs, deleteDoc, doc, orderBy, query, getDoc } from 'firebase/firestore'
+import { db, diaryAuth } from '../firebase'
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/firestore'
 
-async function fetchPW() {
-  const snap = await getDoc(doc(db, 'config', 'admin'))
-  return snap.exists() ? snap.data().pw : null
+const DIARY_EMAIL = 'diary@fehe.app'
+
+async function verifyDiaryPassword(pw) {
+  try {
+    await signInWithEmailAndPassword(diaryAuth, DIARY_EMAIL, pw)
+    await signOut(diaryAuth) // 검증 후 즉시 로그아웃
+    return true
+  } catch {
+    return false
+  }
 }
 
 function PasswordModal({ onClose, onSuccess }) {
   const [input, setInput] = useState('')
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   async function submit(e) {
     e.preventDefault()
-    const pw = await fetchPW()
-    if (input === pw) {
+    setLoading(true)
+    const ok = await verifyDiaryPassword(input)
+    if (ok) {
       onSuccess()
     } else {
       setError(true)
       setInput('')
+      setLoading(false)
     }
   }
 
@@ -39,8 +50,10 @@ function PasswordModal({ onClose, onSuccess }) {
           />
           {error && <p className="diary-modal-error">비밀번호가 틀렸습니다.</p>}
           <div className="diary-modal-btns">
-            <button type="button" className="diary-modal-cancel" onClick={onClose}>취소</button>
-            <button type="submit" className="diary-modal-confirm">확인</button>
+            <button type="button" className="diary-modal-cancel" onClick={onClose} disabled={loading}>취소</button>
+            <button type="submit" className="diary-modal-confirm" disabled={loading}>
+              {loading ? '확인 중...' : '확인'}
+            </button>
           </div>
         </form>
       </div>

@@ -18,3 +18,7 @@ const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const rtdb = getDatabase(app)
 export const auth = getAuth(app)
+
+// 일기 전용 Auth 인스턴스 (admin 세션과 독립)
+const diaryApp = initializeApp(firebaseConfig, 'diary')
+export const diaryAuth = getAuth(diaryApp)
