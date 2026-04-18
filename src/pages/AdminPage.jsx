@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react'
-import { db, rtdb } from '../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { auth, rtdb } from '../firebase'
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 import { ref, set, remove, onValue } from 'firebase/database'
 import '../styles/admin.css'
-
-async function fetchPW() {
-  const snap = await getDoc(doc(db, 'config', 'admin'))
-  return snap.exists() ? snap.data().pw : null
-}
 
 function encodeIp(ip) { return ip.replace(/\./g, '_') }
 function decodeIp(key) { return key.replace(/_/g, '.') }
@@ -17,38 +12,51 @@ function formatTime(ts) {
   return new Date(ts).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })
 }
 
-/* ── 비밀번호 모달 ── */
-function PasswordModal({ onSuccess }) {
-  const [input, setInput] = useState('')
-  const [error, setError] = useState(false)
+/* ── 로그인 폼 ── */
+function LoginForm() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   async function submit(e) {
     e.preventDefault()
-    const pw = await fetchPW()
-    if (input === pw) {
-      onSuccess()
-    } else {
-      setError(true)
-      setInput('')
+    setLoading(true)
+    setError('')
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+    } catch {
+      setError('이메일 또는 비밀번호가 틀렸습니다.')
+      setLoading(false)
     }
   }
 
   return (
     <div className="admin-auth">
       <div className="admin-auth-box">
-        <p className="admin-auth-title">관리자 인증</p>
-        <p className="admin-auth-sub">비밀번호를 입력하세요.</p>
+        <p className="admin-auth-title">관리자 로그인</p>
+        <p className="admin-auth-sub">관리자 계정으로 로그인하세요.</p>
         <form onSubmit={submit}>
+          <input
+            className="admin-auth-input"
+            type="email"
+            placeholder="이메일"
+            value={email}
+            autoFocus
+            onChange={e => setEmail(e.target.value)}
+            style={{ marginBottom: '0.5rem' }}
+          />
           <input
             className={`admin-auth-input${error ? ' error' : ''}`}
             type="password"
             placeholder="비밀번호"
-            value={input}
-            autoFocus
-            onChange={e => { setInput(e.target.value); setError(false) }}
+            value={password}
+            onChange={e => { setPassword(e.target.value); setError('') }}
           />
-          {error && <p className="admin-auth-error">비밀번호가 틀렸습니다.</p>}
-          <button type="submit" className="admin-auth-btn">확인</button>
+          {error && <p className="admin-auth-error">{error}</p>}
+          <button type="submit" className="admin-auth-btn" disabled={loading}>
+            {loading ? '로그인 중...' : '로그인'}
+          </button>
         </form>
       </div>
     </div>
@@ -57,28 +65,31 @@ function PasswordModal({ onSuccess }) {
 
 /* ── 메인 컴포넌트 ── */
 export default function AdminPage() {
-  const [authed, setAuthed] = useState(false)
+  const [user, setUser] = useState(undefined) // undefined = 확인 중
   const [sessions, setSessions] = useState({})
   const [blocked, setBlocked] = useState({})
   const [banInput, setBanInput] = useState('')
   const [msg, setMsg] = useState('')
 
   useEffect(() => {
-    if (!authed) return
+    const unsub = onAuthStateChanged(auth, u => setUser(u))
+    return () => unsub()
+  }, [])
+
+  useEffect(() => {
+    if (!user) return
 
     const sessRef = ref(rtdb, 'sessions')
     const unsub = onValue(sessRef, snap => {
       const val = snap.val() || {}
-      // app 키 제외
       const { app: _, ...rest } = val
       setSessions(rest)
-      // blocked 목록은 sessions/app/blocked 안에 있음
       const blockedData = val?.app?.blocked || {}
       setBlocked(blockedData)
     })
 
     return () => unsub()
-  }, [authed])
+  }, [user])
 
   async function kickSession(sid) {
     await remove(ref(rtdb, `sessions/${sid}`))
@@ -117,7 +128,22 @@ export default function AdminPage() {
     setBanInput('')
   }
 
-  if (!authed) return <PasswordModal onSuccess={() => setAuthed(true)} />
+  async function handleSignOut() {
+    await signOut(auth)
+  }
+
+  // 인증 상태 확인 중
+  if (user === undefined) {
+    return (
+      <div className="admin-auth">
+        <div className="admin-auth-box">
+          <p className="admin-auth-sub">확인 중...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) return <LoginForm />
 
   const sessionList = Object.entries(sessions)
   const blockedList = Object.entries(blocked)
@@ -128,7 +154,10 @@ export default function AdminPage() {
 
         <div className="admin-header">
           <h1 className="admin-title">관리 페이지</h1>
-          {msg && <div className="admin-msg">{msg}</div>}
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            {msg && <div className="admin-msg">{msg}</div>}
+            <button className="admin-btn admin-btn--kick" onClick={handleSignOut}>로그아웃</button>
+          </div>
         </div>
 
         {/* 현재 접속자 */}
@@ -183,7 +212,6 @@ export default function AdminPage() {
             <span className="admin-badge admin-badge--red">{blockedList.length}개</span>
           </div>
 
-          {/* 수동 IP 차단 */}
           <form className="admin-ban-form" onSubmit={manualBan}>
             <input
               className="admin-ban-input"
