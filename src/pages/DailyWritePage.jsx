@@ -17,7 +17,7 @@ async function uploadToImgBB(file) {
   return data.data.url
 }
 
-export default function DiaryWritePage() {
+export default function DailyWritePage() {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')

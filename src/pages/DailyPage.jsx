@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { db, diaryAuth } from '../firebase'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { collection, getDocs, deleteDoc, doc, orderBy, query, updateDoc, deleteField } from 'firebase/firestore'
-import '../styles/diary.css'
+import '../styles/daily.css'
 
 function formatDateTime(ts) {
   if (!ts) return ''
@@ -196,7 +196,7 @@ function DetailModal({ post, myIp, onClose, onDelete, onLikeToggle }) {
 }
 
 /* ── 메인 ── */
-export default function DiaryPage() {
+export default function DailyPage() {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)

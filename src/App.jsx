@@ -9,8 +9,8 @@ import VersionWatcher from './components/VersionWatcher'
 import HomePage from './pages/HomePage'
 import YoutubePage from './pages/YoutubePage'
 import HobbyPage from './pages/HobbyPage'
-import DiaryPage from './pages/DiaryPage'
-import DiaryWritePage from './pages/DiaryWritePage'
+import DailyPage from './pages/DailyPage'
+import DailyWritePage from './pages/DailyWritePage'
 import TestGatePage from './pages/TestGatePage'
 import SecretPage from './pages/SecretPage'
 import StatusPage from './pages/StatusPage'
@@ -26,8 +26,8 @@ export default function App() {
         <Route path="/youtube"     element={<YoutubePage />} />
         <Route path="/hobby"        element={<HobbyPage />} />
         <Route path="/hobby/:tab"   element={<HobbyPage />} />
-        <Route path="/diary"       element={<DiaryPage />} />
-        <Route path="/diary/write" element={<DiaryWritePage />} />
+        <Route path="/diary"       element={<DailyPage />} />
+        <Route path="/diary/write" element={<DailyWritePage />} />
         <Route path="/test-gate"   element={<TestGatePage />} />
         <Route path="/secret"      element={<SecretPage />} />
         <Route path="/status"      element={<StatusPage />} />

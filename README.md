@@ -48,8 +48,8 @@ src/
     HomePage.jsx      # 홈 (히스토리, 기술 스택)
     YoutubePage.jsx   # 유튜브 영상 목록
     HobbyPage.jsx     # 취미 소개
-    DiaryPage.jsx     # 소소한 일상 목록
-    DiaryWritePage.jsx# 소소한 일상 글 작성
+    DailyPage.jsx     # 소소한 일상 목록
+    DailyWritePage.jsx# 소소한 일상 글 작성
   styles/
     base.css          # 변수, 리셋, 배경 장식
     header.css        # 헤더, 햄버거, 드로어
@@ -58,7 +58,7 @@ src/
     hobby.css         # 취미 페이지
     footer.css        # 푸터
     musicplayer.css   # BGM 플레이어
-    diary.css         # 소소한 일상 페이지
+    daily.css         # 소소한 일상 페이지
     visitor.css       # 접속자 대기실
   firebase.js         # Firebase 초기화 (Firestore, Realtime Database)
 ```
