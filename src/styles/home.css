@@ -84,8 +84,8 @@
 .hero-link.steam:hover { box-shadow: 0 6px 20px rgba(23,107,167,0.2); }
 
 .scroll-hint {
-  position: absolute; bottom: calc(var(--footer-h) + 1.5rem); left: 50%;
-  transform: translateX(-50%);
+  position: absolute; bottom: calc(var(--footer-h) + 1.5rem);
+  left: 0; right: 0; margin: 0 auto; width: fit-content;
   display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
   color: var(--text-muted); font-size: 0.65rem;
   letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
@@ -93,8 +93,8 @@
 }
 .scroll-hint svg { width:18px; height:18px; stroke:var(--sky-deep); }
 @keyframes bounce {
-  0%,100% { transform:translateX(-50%) translateY(0); }
-  50%      { transform:translateX(-50%) translateY(7px); }
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(7px); }
 }
 
 /* ── TIMELINE ── */
