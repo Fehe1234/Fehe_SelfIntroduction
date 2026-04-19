@@ -63,6 +63,11 @@ const SKILLS = [
     cls: 'db',
   },
   {
+    label: '클라우드',
+    items: ['AWS'],
+    cls: 'server',
+  },
+  {
     label: '서버',
     items: ['Node.js', 'Linux (Kali)', 'Linux (Ubuntu)'],
     cls: 'server',
