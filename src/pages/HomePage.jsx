@@ -17,9 +17,9 @@ const TIMELINE = [
     body: '다수의 크리에이터 디스코드 서버를 운영·관리하며 커뮤니티 빌딩 경험을 쌓아왔습니다.',
     managed: [
       { name: '약 10만 구독자 유튜버', desc: '서버 매니저', note: '비공개', active: true },
-      { name: '시류', desc: '게임 크리에이터 서버 관리자', note: '비활동으로 관리 종료', active: false },
+      { name: '시류', desc: '병맛·개그 크리에이터 서버 관리자', note: '비활동으로 관리 종료', active: false },
       { name: '단풍나무', desc: '오버워치 크리에이터 서버 관리자', note: '비활동으로 관리 종료', active: false },
-      { name: '대타맨', desc: '게임 크리에이터 서버 관리자', note: '현재 관리 중', active: true },
+      { name: '대타맨', desc: '게임 스토리 크리에이터 서버 관리자', note: '현재 관리 중', active: true },
     ],
   },
   {
