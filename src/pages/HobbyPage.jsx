@@ -147,6 +147,13 @@ function MusicPanel() {
           desc="xi가 BMS 콘테스트를 위해 제작한 오리지널 곡으로, osu!와 SOUND VOLTEX 등 수많은 리듬게임에 이식된 전설적인 초고난도 곡입니다."
           tags={['xi', 'BMS', 'osu!', 'SOUND VOLTEX']}
         />
+        <GameCard
+          image="https://i.namu.wiki/i/avjM8hr6efg-4Fz8mUxNox0LwlKckVnx2Lhesr8JcObOSCb3GiVZHr0iNieDmh4Uf9vdnmWW7ozPGf3fnEmN55rKgku9Q4NyxYO-oUNhKfrkkFaU1kcdgV4MXujJaReXhKY5kfZypJOoiPwo4bXsPA.webp"
+          name="666"
+          full="RoughSketch — SOUND VOLTEX"
+          desc="RoughSketch가 제작한 SOUND VOLTEX 수록곡입니다. 강렬한 하드코어 사운드와 고난도 패턴으로 리듬게임 유저들에게 잘 알려진 곡입니다."
+          tags={['RoughSketch', 'SOUND VOLTEX', 'SDVX']}
+        />
         <CollapsibleGroup nested label="t+pazolite" count={2}>
           <GameCard
             image="https://lh3.googleusercontent.com/pWi4f8rB0xt88SEWsMMzizcoDZOlyoPG9tMSlyKGRHvtOG15g1ZN9IMeqBu1IDWfHx9073rA0x84LfeU=w544-h544-l90-rj"
@@ -163,13 +170,6 @@ function MusicPanel() {
             tags={['t+pazolite', 'maimai', 'CHUNITHM', 'Groove Coaster']}
           />
         </CollapsibleGroup>
-        <GameCard
-          image="https://i.namu.wiki/i/avjM8hr6efg-4Fz8mUxNox0LwlKckVnx2Lhesr8JcObOSCb3GiVZHr0iNieDmh4Uf9vdnmWW7ozPGf3fnEmN55rKgku9Q4NyxYO-oUNhKfrkkFaU1kcdgV4MXujJaReXhKY5kfZypJOoiPwo4bXsPA.webp"
-          name="666"
-          full="RoughSketch — SOUND VOLTEX"
-          desc="RoughSketch가 제작한 SOUND VOLTEX 수록곡입니다. 강렬한 하드코어 사운드와 고난도 패턴으로 리듬게임 유저들에게 잘 알려진 곡입니다."
-          tags={['RoughSketch', 'SOUND VOLTEX', 'SDVX']}
-        />
       </CollapsibleGroup>
       <CollapsibleGroup label="DJMAX" count={9}>
         <CollapsibleGroup nested label="기본 수록" count={2}>
