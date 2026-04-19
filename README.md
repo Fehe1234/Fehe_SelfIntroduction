@@ -50,7 +50,6 @@ src/
     HobbyPage.jsx     # 취미 소개
     DiaryPage.jsx     # 일기 목록
     DiaryWritePage.jsx# 일기 작성
-    TestGatePage.jsx  # 대기실 UI 테스트 (/test-gate)
   styles/
     base.css          # 변수, 리셋, 배경 장식
     header.css        # 헤더, 햄버거, 드로어
