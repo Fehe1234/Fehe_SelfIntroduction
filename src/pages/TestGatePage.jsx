@@ -1,11 +1,13 @@
 // 대기실 UI 테스트용 페이지 — /test-gate
 import { useState } from 'react'
+import '../styles/versionbanner.css'
 
 const SCREENS = [
   { key: 'waiting',  label: '대기 중' },
   { key: 'kicked',   label: '강제 퇴장' },
   { key: 'banned',   label: 'IP 차단 (접속 중)' },
   { key: 'blocked',  label: 'IP 차단 (재접속)' },
+  { key: 'update',   label: '업데이트 알림' },
 ]
 
 const activeCount = 10
@@ -105,6 +107,34 @@ export default function TestGatePage() {
             </div>
             <h1 className="vg-title">접근 차단됨</h1>
             <p className="vg-desc">이 IP 주소는 관리자에 의해 차단되었습니다.</p>
+          </div>
+        )}
+
+        {screen === 'update' && (
+          <div className="vg-box">
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '2rem' }}>
+              아래는 실제 배너가 표시되는 모습입니다.
+            </p>
+            {/* 배너 미리보기 — static (position: relative로 덮어씀) */}
+            <div className="version-banner" style={{ position: 'relative', top: 'auto', left: 'auto', transform: 'none', animation: 'none' }}>
+              <span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                새 버전이 배포되었어요.
+              </span>
+              <button className="version-banner-reload">새로고침</button>
+              <button className="version-banner-close" aria-label="닫기">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+              </button>
+            </div>
+            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '1.5rem' }}>
+              배포 시 화면 상단에 고정되어 표시됩니다.
+            </p>
           </div>
         )}
 
