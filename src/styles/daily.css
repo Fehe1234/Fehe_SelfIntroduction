@@ -164,6 +164,8 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1.5px solid rgba(80,160,200,0.8);
 }
 
 .diary-like-btn.small {
