@@ -326,10 +326,10 @@ export default function DailyPage() {
             <div key={post.id} className="diary-grid-card" onClick={() => setSelected(post.id)}>
               {/* 썸네일 (첫 번째 사진) */}
               <div className="diary-grid-thumb">
-                {(post.imageUrls?.[0] || post.imageUrl)
-                  ? <img src={post.imageUrls?.[0] || post.imageUrl} alt={post.title} className="diary-grid-img" />
+                {(() => { const thumb = post.imageUrls?.[0] || post.imageUrl; return thumb
+                  ? <img src={thumb} alt={post.title} className="diary-grid-img" />
                   : <div className="diary-grid-noimg"><span>사진 없음</span></div>
-                }
+                })()}
               </div>
               {/* 내용 */}
               <div className="diary-grid-info">
