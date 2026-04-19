@@ -400,6 +400,40 @@ function RhythmPanel() {
 function DevicePanel() {
   return (
     <div className="game-cards">
+      <CollapsibleGroup label="삼성" count={4}>
+        <GameCard
+          icon="버즈"
+          iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
+          name="갤럭시 버즈 2 프로"
+          full="Samsung Galaxy Buds2 Pro"
+          desc="삼성의 노이즈 캔슬링 무선 이어버드입니다."
+          tags={['Samsung', '이어버드', 'ANC']}
+        />
+        <GameCard
+          icon="S6U"
+          iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
+          name="갤럭시 S6 울트라 512GB"
+          full="Samsung Galaxy S25 Ultra 512GB"
+          desc="삼성의 플래그십 스마트폰으로, 512GB 스토리지 모델입니다."
+          tags={['Samsung', '스마트폰', 'Android']}
+        />
+        <GameCard
+          icon="GWU"
+          iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
+          name="갤럭시 워치 울트라"
+          full="Samsung Galaxy Watch Ultra"
+          desc="삼성의 프리미엄 스마트워치입니다."
+          tags={['Samsung', '스마트워치', 'Wear OS']}
+        />
+        <GameCard
+          icon="GB5"
+          iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
+          name="갤럭시 북 5 프로"
+          full="Samsung Galaxy Book5 Pro — 35.6cm 그레이"
+          desc="Windows 11 Home · Intel Core Ultra 7 · RAM 32GB · SSD 1TB · 그레이 · 35.6cm(14인치)"
+          tags={['Samsung', '노트북', 'Windows 11']}
+        />
+      </CollapsibleGroup>
       <GameCard
         icon="Q2"
         iconStyle={{ background: 'linear-gradient(135deg,#5b21b6,#7c3aed)' }}
