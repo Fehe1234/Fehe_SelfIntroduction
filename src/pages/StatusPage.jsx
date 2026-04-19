@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { db, rtdb } from '../firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { ref, get, onValue } from 'firebase/database'
+import { SITE_VERSION } from '../version'
 import '../styles/status.css'
 
 function StatusDot({ state }) {
@@ -187,7 +188,7 @@ export default function StatusPage() {
             </div>
             <div className="status-info-item">
               <span className="status-info-label">사이트 버전</span>
-              <span className="status-info-value">{version != null ? `v${version}` : '—'}</span>
+              <span className="status-info-value">{SITE_VERSION}</span>
             </div>
           </div>
         </div>
