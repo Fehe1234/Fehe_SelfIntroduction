@@ -354,14 +354,6 @@ function RhythmPanel() {
             />
           </CollapsibleGroup>
         </CollapsibleGroup>
-        <GameCard
-          icon="VR"
-          iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
-          name="VRChat"
-          full="VRChat"
-          desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
-          tags={['VRChat Inc.', 'PC / VR', '소셜']}
-        />
         <CollapsibleGroup nested label="공포게임" count={2}>
           <GameCard
             icon="DS"
@@ -380,6 +372,14 @@ function RhythmPanel() {
             tags={['공포', 'Steam']}
           />
         </CollapsibleGroup>
+        <GameCard
+          icon="VR"
+          iconStyle={{ background: 'linear-gradient(135deg,#10b981,#059669)' }}
+          name="VRChat"
+          full="VRChat"
+          desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
+          tags={['VRChat Inc.', 'PC / VR', '소셜']}
+        />
       </CollapsibleGroup>
       <CollapsibleGroup label="콘솔 게임" count={1}>
         <CollapsibleGroup nested label="닌텐도" count={0}>
