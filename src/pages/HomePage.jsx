@@ -35,13 +35,11 @@ const TIMELINE = [
     year: '2025 — 2027',
     heading: '키오스크 회사 국가근로장학생',
     body: '결제 단말기 및 키오스크 솔루션 전문 기업에서 IT 운영 지원 업무를 담당하고 있습니다.',
-    extra: (
-      <ul style={{ margin: '0.5rem 0 0', paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem', fontSize: '0.83rem', color: 'var(--text-soft)' }}>
-        <li>씨트롤 · K-Remote를 활용한 원격 현장 장애 대응 및 기술 지원</li>
-        <li>크라이저를 활용한 키오스크 기기 관리 · 설정 · 유지보수 보조</li>
-        <li>VAN사 연동 결제 시스템 운영 · 설정 · 장애 처리</li>
-      </ul>
-    ),
+    duties: [
+      { label: '원격 지원', desc: '씨트롤 · K-Remote 활용, 현장 장애 대응 및 기술 지원' },
+      { label: '기기 관리', desc: '크라이저 활용, 키오스크 설정 · 유지보수 보조' },
+      { label: 'VAN 결제', desc: 'VAN사 연동 결제 시스템 운영 · 설정 · 장애 처리' },
+    ],
   },
   {
     year: '2024. 05. 16 — 무기한',
@@ -158,6 +156,12 @@ export default function HomePage() {
               <h2 className="timeline-heading">{item.heading}</h2>
               {item.body && <p className="timeline-body">{item.body}</p>}
               {item.extra && <div className="timeline-body">{item.extra}</div>}
+              {item.duties && item.duties.map((d, di) => (
+                <p key={di} className="timeline-body" style={{ marginTop: di === 0 ? '0.6rem' : '0.3rem', paddingTop: di === 0 ? '0.6rem' : 0, borderTop: di === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
+                  <strong style={{ color: 'var(--sky-deep)' }}>{d.label}</strong>
+                  &nbsp; {d.desc}
+                </p>
+              ))}
               {item.projects && item.projects.map((proj, pi) => (
                 <p key={pi} className="timeline-body" style={{ marginTop: pi === 0 ? '0.6rem' : '0.3rem', paddingTop: pi === 0 ? '0.6rem' : 0, borderTop: pi === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
                   <strong style={{ color: 'var(--sky-deep)' }}>프로젝트</strong>
