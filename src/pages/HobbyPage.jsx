@@ -430,7 +430,7 @@ function DevicePanel() {
           iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
           name="갤럭시 북 5 프로"
           full="Samsung Galaxy Book5 Pro — 35.6cm 그레이"
-          desc="Windows 11 Home · Intel Core Ultra 7 · RAM 32GB · SSD 1TB · 그레이 · 35.6cm(14인치)"
+          desc={<>OS: Windows 11 Home<br/>CPU: Intel Core Ultra 7<br/>RAM: 32GB &nbsp;·&nbsp; SSD: 1TB<br/>색상: 그레이 &nbsp;·&nbsp; 크기: 35.6cm</>}
           tags={['Samsung', '노트북', 'Windows 11']}
         />
       </CollapsibleGroup>
