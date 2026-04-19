@@ -379,17 +379,19 @@ function RhythmPanel() {
           tags={['VRChat Inc.', 'PC / VR', '소셜']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="콘솔 게임" count={1}>
+      <CollapsibleGroup label="콘솔 게임" count={2}>
         <CollapsibleGroup nested label="닌텐도" count={0}>
         </CollapsibleGroup>
-        <GameCard
-          icon="BS"
-          iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
-          name="Beat Saber"
-          full="Beat Saber"
-          desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
-          tags={['Beat Games', 'VR', '콘솔']}
-        />
+        <CollapsibleGroup nested label="VR" count={1}>
+          <GameCard
+            icon="BS"
+            iconStyle={{ background: 'linear-gradient(135deg,#f43f5e,#be123c)' }}
+            name="Beat Saber"
+            full="Beat Saber"
+            desc="Beat Games의 VR 리듬게임으로, 광선검으로 날아오는 블록을 리듬에 맞춰 자르는 직관적인 게임플레이가 특징입니다."
+            tags={['Beat Games', 'VR', '콘솔']}
+          />
+        </CollapsibleGroup>
       </CollapsibleGroup>
     </div>
   )
