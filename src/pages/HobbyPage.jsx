@@ -410,12 +410,12 @@ function DevicePanel() {
           tags={['Samsung', '이어버드', 'ANC']}
         />
         <GameCard
-          icon="S6U"
+          icon="S26"
           iconStyle={{ background: 'linear-gradient(135deg,#1428a0,#2563eb)' }}
-          name="갤럭시 S6 울트라 512GB"
-          full="Samsung Galaxy S25 Ultra 512GB"
-          desc="삼성의 플래그십 스마트폰으로, 512GB 스토리지 모델입니다."
-          tags={['Samsung', '스마트폰', 'Android']}
+          name="갤럭시 S26 울트라 512GB"
+          full="Samsung Galaxy S26 Ultra 512GB"
+          desc="삼성의 2025년 플래그십 스마트폰입니다. Snapdragon 8 Elite 탑재, S펜 내장, 512GB 스토리지 모델입니다."
+          tags={['Samsung', '스마트폰', 'Android', 'S펜']}
         />
         <GameCard
           icon="GWU"
