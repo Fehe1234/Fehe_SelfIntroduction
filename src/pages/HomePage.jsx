@@ -195,18 +195,22 @@ export default function HomePage() {
                   <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>({proj.period})</span>
                 </p>
               ))}
-              {item.discord && (
-                <a className="timeline-link" href="https://discord.gg/6K2CT7fUZA" target="_blank" rel="noopener noreferrer">
-                  <IconDiscord /> Discord 서버 참가
-                </a>
-              )}
-              {item.bot && (
-                <p className="timeline-bot">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
-                  단독봇 운영 중 — <strong>{item.bot}</strong>
-                </p>
+              {(item.discord || item.bot) && (
+                <div className="timeline-badge-row">
+                  {item.discord && (
+                    <a className="timeline-link" href="https://discord.gg/6K2CT7fUZA" target="_blank" rel="noopener noreferrer">
+                      <IconDiscord /> Discord 서버 참가
+                    </a>
+                  )}
+                  {item.bot && (
+                    <p className="timeline-bot">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      </svg>
+                      단독봇 운영 중 — <strong>{item.bot}</strong>
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           ))}
