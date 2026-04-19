@@ -56,7 +56,7 @@ export default function Header() {
           className={`drawer-btn ${activePage === 'diary' ? 'active' : ''}`}
           onClick={() => switchPage('/diary')}
         >
-          <IconDiary /> 일기
+          <IconDiary /> 소소한 일상
         </button>
         <button
           className={`drawer-btn ${activePage === 'status' ? 'active' : ''}`}

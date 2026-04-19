@@ -300,7 +300,7 @@ export default function DiaryPage() {
 
       <div className="diary-header-row">
         <div>
-          <h1 className="diary-page-title">일기</h1>
+          <h1 className="diary-page-title">소소한 일상</h1>
           <p className="diary-page-sub">페헤의 소소한 기록들</p>
         </div>
         <button className="diary-write-btn" onClick={handleWriteClick}>

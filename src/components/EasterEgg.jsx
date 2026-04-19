@@ -580,7 +580,7 @@ export default function EasterEgg() {
           { type: 'output', text: 'drwxr-xr-x  /           →  홈' },
           { type: 'output', text: 'drwxr-xr-x  /youtube    →  YouTube 영상' },
           { type: 'output', text: 'drwxr-xr-x  /hobby      →  취미' },
-          { type: 'output', text: 'drwxr-xr-x  /diary      →  일기' },
+          { type: 'output', text: 'drwxr-xr-x  /diary      →  소소한 일상' },
         )
         break
 
