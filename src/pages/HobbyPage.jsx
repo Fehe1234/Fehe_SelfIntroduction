@@ -343,16 +343,14 @@ function RhythmPanel() {
       </CollapsibleGroup>
       <CollapsibleGroup label="PC 게임" count={4}>
         <CollapsibleGroup nested label="리듬게임" count={1}>
-          <CollapsibleGroup nested label="DJMAX" count={1}>
-            <GameCard
-              icon="DM"
-              iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
-              name="DJMAX RESPECT V"
-              full="DJMAX RESPECT V"
-              desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
-              tags={['NEOWIZ', 'PC', 'Steam']}
-            />
-          </CollapsibleGroup>
+          <GameCard
+            icon="DM"
+            iconStyle={{ background: 'linear-gradient(135deg,#0ea5e9,#2563eb)' }}
+            name="DJMAX RESPECT V"
+            full="DJMAX RESPECT V"
+            desc="NEOWIZ의 PC 리듬게임으로, 다양한 키 모드와 방대한 수록곡이 특징입니다. 한국 리듬게임의 대표작 중 하나입니다."
+            tags={['NEOWIZ', 'PC', 'Steam']}
+          />
         </CollapsibleGroup>
         <CollapsibleGroup nested label="공포게임" count={2}>
           <GameCard
