@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const HOBBY_TABS = [
   { key: 'music',  label: '음악' },
-  { key: 'rhythm', label: '게임' },
+  { key: 'game', label: '게임' },
   { key: 'device', label: '보유 기기' },
 ]
 
@@ -420,7 +420,7 @@ function DevicePanel() {
   )
 }
 
-const PANELS = { music: MusicPanel, rhythm: RhythmPanel, device: DevicePanel }
+const PANELS = { music: MusicPanel, game: RhythmPanel, device: DevicePanel }
 
 export default function HobbyPage() {
   const { tab } = useParams()

@@ -15,7 +15,7 @@
 |--------|-----|------|
 | 홈 | `/` | 프로필, 활동 히스토리, 기술 스택 (언어, DB, 서버, 클라우드, 디자인, 하드웨어, IDE / 에디터, 자격증) |
 | YouTube | `/youtube` | 업로드 영상 및 라이브 목록 |
-| 취미 | `/hobby/:tab` | 음악 (`/hobby/music`), 게임 (`/hobby/rhythm`), 보유 기기 (`/hobby/device`) |
+| 취미 | `/hobby/:tab` | 음악 (`/hobby/music`), 게임 (`/hobby/game`), 보유 기기 (`/hobby/device`) |
 | 소소한 일상 | `/diary` | 비밀번호 인증 후 글 작성/삭제, Firebase Firestore 저장 (기기 간 공유) |
 
 ## ✨ 특수 기능
