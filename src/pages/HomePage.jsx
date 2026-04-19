@@ -32,9 +32,16 @@ const TIMELINE = [
     ],
   },
   {
-    year: '2025 — 2026',
+    year: '2025 — 2027',
     heading: '키오스크 회사 국가근로장학생',
-    body: '원격 프로그램 활용, VAN 프로그램 활용',
+    body: '결제 단말기 및 키오스크 솔루션 전문 기업에서 IT 운영 지원 업무를 담당하고 있습니다.',
+    extra: (
+      <ul style={{ margin: '0.5rem 0 0', paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem', fontSize: '0.83rem', color: 'var(--text-soft)' }}>
+        <li>원격 지원 프로그램을 활용한 현장 장애 대응 및 기술 지원</li>
+        <li>VAN사 연동 결제 시스템 운영 · 설정 · 장애 처리</li>
+        <li>키오스크 기기 초기 설정, 업데이트 배포 및 유지보수 보조</li>
+      </ul>
+    ),
   },
   {
     year: '2024. 05. 16 — 무기한',
@@ -150,7 +157,7 @@ export default function HomePage() {
               </div>
               <h2 className="timeline-heading">{item.heading}</h2>
               {item.body && <p className="timeline-body">{item.body}</p>}
-              {item.extra && <p className="timeline-body">{item.extra}</p>}
+              {item.extra && <div className="timeline-body">{item.extra}</div>}
               {item.projects && item.projects.map((proj, pi) => (
                 <p key={pi} className="timeline-body" style={{ marginTop: pi === 0 ? '0.6rem' : '0.3rem', paddingTop: pi === 0 ? '0.6rem' : 0, borderTop: pi === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
                   <strong style={{ color: 'var(--sky-deep)' }}>프로젝트</strong>
