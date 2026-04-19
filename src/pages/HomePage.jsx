@@ -12,15 +12,15 @@ const TIMELINE = [
     body: '본격적인 디스코드 서버 활동을 시작하며 커뮤니티를 확장했습니다. 다양한 사람들과 교류하며 개발자이자 인플루언서로서의 역량을 키워나갔습니다.',
   },
   {
-    year: '2022 — 2023',
-    heading: '유튜버 서버 매니저',
-    body: null,
-    extra: (
-      <>
-        10만명 구독자를 가진 유튜버의 서버 매니저로 약 1년 반 동안 활동했습니다.<br />
-        <small style={{ color: 'var(--text-muted)', fontSize: '0.78rem' }}>* 해당 유튜버는 비공개입니다.</small>
-      </>
-    ),
+    year: '2022 — 무기한',
+    heading: '디스코드 서버 매니저 & 관리자',
+    body: '다수의 크리에이터 디스코드 서버를 운영·관리하며 커뮤니티 빌딩 경험을 쌓아왔습니다.',
+    managed: [
+      { name: '약 10만 구독자 유튜버', desc: '서버 매니저', note: '비공개', active: true },
+      { name: '시류', desc: '게임 크리에이터 서버 관리자', note: '비활동으로 관리 종료', active: false },
+      { name: '단풍나무', desc: '오버워치 크리에이터 서버 관리자', note: '비활동으로 관리 종료', active: false },
+      { name: '대타맨', desc: '게임 크리에이터 서버 관리자', note: '현재 관리 중', active: true },
+    ],
   },
   {
     year: '2024',
@@ -156,6 +156,13 @@ export default function HomePage() {
               <h2 className="timeline-heading">{item.heading}</h2>
               {item.body && <p className="timeline-body">{item.body}</p>}
               {item.extra && <div className="timeline-body">{item.extra}</div>}
+              {item.managed && item.managed.map((m, mi) => (
+                <p key={mi} className="timeline-body" style={{ marginTop: mi === 0 ? '0.6rem' : '0.3rem', paddingTop: mi === 0 ? '0.6rem' : 0, borderTop: mi === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
+                  <strong style={{ color: m.active ? 'var(--sky-deep)' : 'var(--text-muted)' }}>{m.name}</strong>
+                  {' '}&mdash; {m.desc}{' '}
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>({m.note})</span>
+                </p>
+              ))}
               {item.duties && item.duties.map((d, di) => (
                 <p key={di} className="timeline-body" style={{ marginTop: di === 0 ? '0.6rem' : '0.3rem', paddingTop: di === 0 ? '0.6rem' : 0, borderTop: di === 0 ? '1px solid var(--border)' : 'none', fontSize: '0.82rem' }}>
                   <strong style={{ color: 'var(--sky-deep)' }}>{d.label}</strong>
