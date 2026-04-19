@@ -155,6 +155,14 @@
 }
 .timeline-link svg { width:13px;height:13px;fill:#5865f2;flex-shrink:0; }
 
+.timeline-bot {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  margin-top:0.5rem; padding:0.3rem 0.85rem; border-radius:999px;
+  font-size:0.75rem; font-weight:600; color:var(--text-soft);
+  background:rgba(168,216,240,0.18); border:1.5px solid var(--border);
+}
+.timeline-bot strong { color:var(--text); font-weight:800; }
+
 /* ── SKILLS ── */
 .skills-section {
   max-width: 700px; margin: 0 auto;

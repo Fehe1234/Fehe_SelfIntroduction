@@ -59,6 +59,7 @@ const TIMELINE = [
     heading: 'Hello! VRChat World! 디스코드 서버 운영',
     body: 'VRChat 비공식 친목 서버 Hello! VRChat World!를 개설하여 현재까지 운영 중입니다. VRChat 유저들이 편하게 모여 교류할 수 있는 커뮤니티를 만들어가고 있습니다.',
     discord: true,
+    bot: 'HVW_Bot',
   },
 ]
 
@@ -198,6 +199,14 @@ export default function HomePage() {
                 <a className="timeline-link" href="https://discord.gg/6K2CT7fUZA" target="_blank" rel="noopener noreferrer">
                   <IconDiscord /> Discord 서버 참가
                 </a>
+              )}
+              {item.bot && (
+                <p className="timeline-bot">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                  단독봇 운영 중 — <strong>{item.bot}</strong>
+                </p>
               )}
             </div>
           ))}
