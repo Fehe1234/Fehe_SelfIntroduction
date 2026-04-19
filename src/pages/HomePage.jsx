@@ -37,9 +37,9 @@ const TIMELINE = [
     body: '결제 단말기 및 키오스크 솔루션 전문 기업에서 IT 운영 지원 업무를 담당하고 있습니다.',
     extra: (
       <ul style={{ margin: '0.5rem 0 0', paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.3rem', fontSize: '0.83rem', color: 'var(--text-soft)' }}>
-        <li>원격 지원 프로그램을 활용한 현장 장애 대응 및 기술 지원</li>
+        <li>씨트롤 · K-Remote를 활용한 원격 현장 장애 대응 및 기술 지원</li>
+        <li>크라이저를 활용한 키오스크 기기 관리 · 설정 · 유지보수 보조</li>
         <li>VAN사 연동 결제 시스템 운영 · 설정 · 장애 처리</li>
-        <li>키오스크 기기 초기 설정, 업데이트 배포 및 유지보수 보조</li>
       </ul>
     ),
   },
