@@ -125,7 +125,7 @@ function MusicPanel() {
           tags={['보컬로이드', 'ルシノ', 'rusino', '初音ミク']}
         />
       </CollapsibleGroup>
-      <CollapsibleGroup label="리듬게임 수록곡" count={6}>
+      <CollapsibleGroup label="리듬게임 수록곡" count={7}>
         <GameCard
           image="https://lh3.googleusercontent.com/E2TJv1LWVKHSkH1aDXWpidNBTBkMOzhd4oNKzDV9u0WLAsgBlCjbmLQHQiAvy_bktvms30WRJzzBGDyi=w544-h544-l90-rj"
           name="竹 (feat. Choko)"
@@ -153,6 +153,13 @@ function MusicPanel() {
           full="RoughSketch — SOUND VOLTEX"
           desc="RoughSketch가 제작한 SOUND VOLTEX 수록곡입니다. 강렬한 하드코어 사운드와 고난도 패턴으로 리듬게임 유저들에게 잘 알려진 곡입니다."
           tags={['RoughSketch', 'SOUND VOLTEX', 'SDVX']}
+        />
+        <GameCard
+          image="https://i.namu.wiki/i/3XxQ-0jV3Yo2r0q-q_4m8drQssf9cBchCZfWzu1ktnNLAVSwo7HaxW2YQpJCLxfDQHs2AVwWlprAfzThDgvBwt-Xmza5UtBXSXFVOajoetIdNE9qUij2rZfGEVd_gJPDzHTpoNYTNbIB1P3GSRH3HA.webp"
+          name="Galaxy Collapse"
+          full="黒皇帝 (Kurokotei) — 동방 프로젝트 리믹스"
+          desc="프랑스 출신 전자음악 아티스트 黒皇帝가 동방 프로젝트의 Heian Alien을 원곡으로 제작한 리믹스입니다. 극단적인 BPM 변화와 강렬한 사운드가 특징이며 CHUNITHM, Pump It Up 등 다양한 리듬게임에 수록되었습니다."
+          tags={['黒皇帝', 'Kurokotei', 'CHUNITHM', 'Pump It Up', '동방']}
         />
         <CollapsibleGroup nested label="t+pazolite" count={2}>
           <GameCard
