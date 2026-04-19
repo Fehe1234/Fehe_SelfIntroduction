@@ -162,7 +162,7 @@ function MusicPanel() {
           tags={['t+pazolite', 'maimai', 'CHUNITHM', 'Groove Coaster']}
         />
         <GameCard
-          image="https://i.namu.wiki/i/ozhHL13HYAitmd6CYKZk66YESzgn-o8LZMmPFxYefnjFU1lS1TrrAHFT4l33t4BXXzAY0VKN95jw9nMEXU0seZXOrIo_eYcBf-RssVKCAS95oDTtCVg1rwBw0nHzrmJdgaYEBfD_20YBPmPfi-ppSw.webp"
+          image="https://i.namu.wiki/i/avjM8hr6efg-4Fz8mUxNox0LwlKckVnx2Lhesr8JcObOSCb3GiVZHr0iNieDmh4Uf9vdnmWW7ozPGf3fnEmN55rKgku9Q4NyxYO-oUNhKfrkkFaU1kcdgV4MXujJaReXhKY5kfZypJOoiPwo4bXsPA.webp"
           name="666"
           full="RoughSketch — SOUND VOLTEX"
           desc="RoughSketch가 제작한 SOUND VOLTEX 수록곡입니다. 강렬한 하드코어 사운드와 고난도 패턴으로 리듬게임 유저들에게 잘 알려진 곡입니다."
