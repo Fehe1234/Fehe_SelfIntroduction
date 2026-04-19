@@ -208,6 +208,7 @@
 }
 .diary-ig-modal.no-img .diary-ig-right {
   border-left: none;
+  width: 100%;
 }
 .diary-ig-modal.no-img .diary-ig-header {
   border-bottom: none;
