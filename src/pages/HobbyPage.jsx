@@ -362,22 +362,24 @@ function RhythmPanel() {
           desc="다양한 유저 제작 월드와 아바타로 소통하는 VR 소셜 플랫폼입니다. 리듬게임 월드를 비롯한 다양한 콘텐츠를 즐길 수 있습니다."
           tags={['VRChat Inc.', 'PC / VR', '소셜']}
         />
-        <GameCard
-          icon="DS"
-          iconStyle={{ background: 'linear-gradient(135deg,#1c1c2e,#4a0e0e)' }}
-          name="The Deadseat"
-          full="Curious Fox Sox — Steam"
-          desc="뒷좌석에서 부모님의 싸움을 피해 핸드헬드 게임을 하는 공포 게임입니다. 게임 속 세계가 현실을 반영하기 시작하며 뒷좌석으로 침입하려는 괴물을 막아야 합니다."
-          tags={['공포', 'Steam', 'Curious Fox Sox']}
-        />
-        <GameCard
-          icon="PS"
-          iconStyle={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}
-          name="A Pet Shop After Dark"
-          full="A Pet Shop After Dark — Steam"
-          desc="밤에 혼자 남겨진 펫샵을 배경으로 한 공포 게임입니다."
-          tags={['공포', 'Steam']}
-        />
+        <CollapsibleGroup nested label="공포게임" count={2}>
+          <GameCard
+            icon="DS"
+            iconStyle={{ background: 'linear-gradient(135deg,#1c1c2e,#4a0e0e)' }}
+            name="The Deadseat"
+            full="Curious Fox Sox — Steam"
+            desc="뒷좌석에서 부모님의 싸움을 피해 핸드헬드 게임을 하는 공포 게임입니다. 게임 속 세계가 현실을 반영하기 시작하며 뒷좌석으로 침입하려는 괴물을 막아야 합니다."
+            tags={['공포', 'Steam', 'Curious Fox Sox']}
+          />
+          <GameCard
+            icon="PS"
+            iconStyle={{ background: 'linear-gradient(135deg,#f97316,#ea580c)' }}
+            name="A Pet Shop After Dark"
+            full="A Pet Shop After Dark — Steam"
+            desc="밤에 혼자 남겨진 펫샵을 배경으로 한 공포 게임입니다."
+            tags={['공포', 'Steam']}
+          />
+        </CollapsibleGroup>
       </CollapsibleGroup>
       <CollapsibleGroup label="콘솔 게임" count={1}>
         <CollapsibleGroup nested label="닌텐도" count={0}>
