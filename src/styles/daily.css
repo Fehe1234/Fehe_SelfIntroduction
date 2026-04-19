@@ -283,7 +283,7 @@
 
 .diary-ig-footer {
   padding: 0.85rem 1.25rem;
-  border-top: 1px solid rgba(168,216,240,0.9);
+  border-top: 2px solid rgba(100,170,210,1);
   display: flex;
   align-items: center;
   justify-content: space-between;
