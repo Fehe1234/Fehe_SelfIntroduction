@@ -328,7 +328,7 @@ export default function DailyPage() {
               <div className="diary-grid-thumb">
                 {(post.imageUrls?.[0] || post.imageUrl)
                   ? <img src={post.imageUrls?.[0] || post.imageUrl} alt={post.title} className="diary-grid-img" />
-                  : <div className="diary-grid-noimg" />
+                  : <div className="diary-grid-noimg"><span>사진 없음</span></div>
                 }
               </div>
               {/* 내용 */}
