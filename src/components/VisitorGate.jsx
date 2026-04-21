@@ -26,10 +26,10 @@ function GateInner({ children }) {
   const allowedRef = useRef(false)
   const cleaningUp = useRef(false)
   const rejectedRef = useRef(false)
-  const ipFetchedRef = useRef(false)
   const myIpRef = useRef(null)
   const extraUnsubsRef = useRef([])
   const healthIntervalRef = useRef(null)
+  const ipCheckPromiseRef = useRef(null)
 
   useEffect(() => {
     const sessionRef = ref(rtdb, `sessions/${sid}`)
@@ -89,30 +89,34 @@ function GateInner({ children }) {
       extraUnsubsRef.current.push(unsub)
     }
 
-    async function tryEnter() {
-      if (rejectedRef.current) return
-      if (!ipFetchedRef.current) {
-        ipFetchedRef.current = true
+    function buildIpCheckPromise() {
+      return (async () => {
         try {
           const res = await fetch('https://api.ipify.org?format=json')
-          const data = await res.json()
-          myIpRef.current = data.ip
+          const d = await res.json()
+          myIpRef.current = d.ip
         } catch {}
-
-        const myIp = myIpRef.current
-        if (myIp) {
-          const blockedKey = myIp.replace(/\./g, '_')
-          const blockedSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
-          if (blockedSnap.exists()) {
-            setStatus('blocked')
-            return
-          }
-          setupBanListener(myIp)
+        const ip = myIpRef.current
+        if (ip) {
+          const key = ip.replace(/\./g, '_')
+          try {
+            const snap = await get(ref(rtdb, `sessions/app/blocked/${key}`))
+            if (snap.exists()) return 'blocked'
+          } catch {}
+          setupBanListener(ip)
         }
-      }
+        return 'ok'
+      })()
+    }
+
+    async function tryEnter() {
+      if (rejectedRef.current) return
+      if (!ipCheckPromiseRef.current) ipCheckPromiseRef.current = buildIpCheckPromise()
+      const ipResult = await /** @type {Promise<string>} */ (ipCheckPromiseRef.current)
+      if (rejectedRef.current) return
+      if (ipResult === 'blocked') { setStatus('blocked'); return }
 
       const myIp = myIpRef.current
-
       let entered = false
       await runTransaction(ref(rtdb, 'sessions'), (sessions) => {
         const count = sessions
