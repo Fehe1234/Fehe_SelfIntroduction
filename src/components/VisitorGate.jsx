@@ -25,6 +25,7 @@ function GateInner({ children }) {
   const sid = useRef(getSessionId()).current
   const allowedRef = useRef(false)
   const cleaningUp = useRef(false)
+  const rejectedRef = useRef(false)
   const ipFetchedRef = useRef(false)
   const myIpRef = useRef(null)
   const extraUnsubsRef = useRef([])
@@ -39,6 +40,7 @@ function GateInner({ children }) {
       const unsub = onValue(sessionRef, snap => {
         if (!snap.exists() && allowedRef.current && !cleaningUp.current) {
           allowedRef.current = false
+          rejectedRef.current = true
           setStatus('kicked')
         }
       })
@@ -50,6 +52,7 @@ function GateInner({ children }) {
       const unsub = onValue(ref(rtdb, `sessions/app/blocked/${blockedKey}`), snap => {
         if (snap.exists() && allowedRef.current && !cleaningUp.current) {
           allowedRef.current = false
+          rejectedRef.current = true
           remove(sessionRef)
           setStatus('banned')
         }
@@ -58,6 +61,7 @@ function GateInner({ children }) {
     }
 
     async function tryEnter() {
+      if (rejectedRef.current) return
       if (!ipFetchedRef.current) {
         ipFetchedRef.current = true
         try {
@@ -113,7 +117,7 @@ function GateInner({ children }) {
         ? Object.keys(snap.val()).filter(k => k !== 'app').length
         : 0
       setActiveCount(count)
-      if (!allowedRef.current && count < MAX) tryEnter()
+      if (!allowedRef.current && !rejectedRef.current && count < MAX) tryEnter()
     })
 
     const unsubQueue = onValue(allQueueRef, snap => {
