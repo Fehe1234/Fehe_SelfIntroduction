@@ -29,12 +29,41 @@ function GateInner({ children }) {
   const ipFetchedRef = useRef(false)
   const myIpRef = useRef(null)
   const extraUnsubsRef = useRef([])
+  const healthIntervalRef = useRef(null)
 
   useEffect(() => {
     const sessionRef = ref(rtdb, `sessions/${sid}`)
     const sessionsRef = ref(rtdb, 'sessions')
     const myQueueRef = ref(rtdb, `queue/${sid}`)
     const allQueueRef = ref(rtdb, 'queue')
+
+    function startHealthCheck() {
+      if (healthIntervalRef.current) return
+      healthIntervalRef.current = setInterval(async () => {
+        if (!allowedRef.current || cleaningUp.current || rejectedRef.current) return
+        try {
+          const snap = await get(sessionRef)
+          if (!snap.exists()) {
+            allowedRef.current = false
+            rejectedRef.current = true
+            clearInterval(healthIntervalRef.current)
+            setStatus('kicked')
+            return
+          }
+          if (myIpRef.current) {
+            const blockedKey = myIpRef.current.replace(/\./g, '_')
+            const banSnap = await get(ref(rtdb, `sessions/app/blocked/${blockedKey}`))
+            if (banSnap.exists()) {
+              allowedRef.current = false
+              rejectedRef.current = true
+              clearInterval(healthIntervalRef.current)
+              remove(sessionRef)
+              setStatus('banned')
+            }
+          }
+        } catch {}
+      }, 8000)
+    }
 
     function setupKickListener() {
       const unsub = onValue(sessionRef, snap => {
@@ -100,6 +129,7 @@ function GateInner({ children }) {
         remove(myQueueRef)
         setStatus('allowed')
         setupKickListener()
+        startHealthCheck()
       } else {
         const qSnap = await get(myQueueRef)
         if (!qSnap.exists()) {
@@ -131,6 +161,7 @@ function GateInner({ children }) {
 
     return () => {
       cleaningUp.current = true
+      if (healthIntervalRef.current) clearInterval(healthIntervalRef.current)
       unsubSessions()
       unsubQueue()
       extraUnsubsRef.current.forEach(fn => fn())
