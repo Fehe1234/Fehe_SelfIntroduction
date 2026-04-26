@@ -57,7 +57,6 @@ src/
     AdminPage.jsx        # 관리자 페이지
     StatusPage.jsx       # 서버 상태 페이지
     SecretPage.jsx       # 시크릿 페이지
-    TestGatePage.jsx     # 접속 게이트 테스트
   styles/
     base.css             # 변수, 리셋, 배경 장식
     header.css           # 헤더, 햄버거, 드로어
