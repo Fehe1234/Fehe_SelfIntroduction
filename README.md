@@ -78,12 +78,16 @@ src/
 ## ⚙️ 실행 방법
 
 ```bash
-# 의존성 설치
+# 1. 저장소 클론
+git clone https://github.com/Fehe1234/Fehe_SelfIntroduction.git
+cd Fehe_SelfIntroduction
+
+# 2. 의존성 설치
 npm install
 
-# 개발 서버 실행
+# 3. 개발 서버 실행
 npm run dev
 
-# 빌드
+# 4. 빌드 (배포용)
 npm run build
 ```
