@@ -24,7 +24,6 @@
 - **BGM 플레이어**: 우하단 고정, 재생/일시정지·볼륨·재생바 조절, 수동 재생 후 반복 재생
 - **접속자 제한**: 동시 접속 10명 초과 시 대기실 표시, 관리자 강제퇴장·IP 차단 지원 (Firebase Realtime Database)
 - **버전 감지**: 배포 시 자동 버전 업데이트, 접속 중인 사용자에게 새 버전 알림
-- **이스터에그**: 특정 키 입력 시 숨겨진 페이지 이동
 
 ## 🛠 기술 스택
 
@@ -48,7 +47,6 @@ src/
     Footer.jsx           # 푸터
     MusicPlayer.jsx      # BGM 플레이어
     VisitorGate.jsx      # 접속자 제한 대기실 & IP 차단
-    EasterEgg.jsx        # 이스터에그
     VersionWatcher.jsx   # 배포 버전 감지 배너
   pages/
     HomePage.jsx         # 홈 (히스토리, 기술 스택)
@@ -71,7 +69,6 @@ src/
     daily.css            # 소소한 일상 페이지
     visitor.css          # 접속자 대기실
     admin.css            # 관리자 페이지
-    easteregg.css        # 이스터에그
     secret.css           # 시크릿 페이지
     status.css           # 상태 페이지
     versionbanner.css    # 버전 알림 배너
